@@ -207,6 +207,7 @@
           const sampleTx = {
             card_id: "CARD_" + Math.floor(1000 + Math.random() * 9000),
             amount: +(Math.random() * 2500 + 10).toFixed(2),
+            merchant_id: "M_STORE_" + Math.floor(10 + Math.random() * 90),
             merchant_category: ["GROCERY", "ELECTRONICS", "LUXURY_JEWELRY", "CRYPTO_EXCHANGE"][Math.floor(Math.random() * 4)],
             country_code: "US"
           };
@@ -268,8 +269,9 @@
       const res = await fetch("/api/v1/transactions/score", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ card_id, amount, merchant_category, failed_pin_attempts_24h, country_code: "US" })
+        body: JSON.stringify({ card_id, amount, merchant_id: "M_MANUAL_TEST", merchant_category, failed_pin_attempts_24h, country_code: "US" })
       });
+
       const data = await res.json();
       if (data.success) {
         const d = data.data;
