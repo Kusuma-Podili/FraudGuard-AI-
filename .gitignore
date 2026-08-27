@@ -81,3 +81,7 @@ Desktop.ini
 *.onnx
 *.parquet
 !ml_engine/data/sample_*.parquet
+*.db
+*.sqlite
+*.sqlite3
+
