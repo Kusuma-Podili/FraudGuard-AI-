@@ -3,7 +3,8 @@ name: Docker Multi-Image Build & Security Audit
 on:
   push:
     branches: [ main ]
-    tags: [ 'v*.*.*' ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build-and-test-containers:
@@ -13,21 +14,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: actions/setup-buildx-action@v3
-
       - name: Build Backend Gateway Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile.backend
-          push: false
-          tags: fraudguard-backend:latest
+        run: |
+          docker build -f Dockerfile.backend -t fraudguard-backend:latest .
 
       - name: Build Simulator Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile.simulator
-          push: false
-          tags: fraudguard-simulator:latest
+        run: |
+          docker build -f Dockerfile.simulator -t fraudguard-simulator:latest .
+
+      - name: Build Frontend Next.js Image
+        run: |
+          docker build -f Dockerfile.frontend -t fraudguard-frontend:latest .

@@ -1,12 +1,8 @@
 # Multi-stage build for Next.js 14 Dashboard
-FROM node:20-alpine AS deps
-WORKDIR /app
-COPY frontend/package.json frontend/package-lock.json* ./
-RUN npm ci || npm install
-
 FROM node:20-alpine AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+COPY frontend/package.json ./
+RUN npm install --legacy-peer-deps || npm install
 COPY frontend/ ./
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build || true
@@ -18,7 +14,6 @@ ENV PORT=3000
 
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/public ./public 2>/dev/null || true
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/src ./src
 
