@@ -14,9 +14,10 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+/lib/
+/lib64/
 parts/
+
 sdist/
 var/
 wheels/
@@ -81,3 +82,7 @@ Desktop.ini
 *.onnx
 *.parquet
 !ml_engine/data/sample_*.parquet
+*.db
+*.sqlite
+*.sqlite3
+
