@@ -9,9 +9,9 @@ from ml_engine.monitoring.drift_detector import DriftDetector
 class TestDriftDetection(unittest.TestCase):
 
     def test_no_drift_identical_distributions(self):
-        np.random.seed(42)
-        base = np.random.normal(0, 1, size=(200, 3))
-        curr = np.random.normal(0, 1, size=(200, 3))
+        rng = np.random.default_rng(42)
+        base = rng.normal(0, 1, size=(1000, 3))
+        curr = rng.normal(0, 1, size=(1000, 3))
 
         detector = DriftDetector(baseline_data=base, feature_names=["f1", "f2", "f3"])
         report = detector.evaluate_drift(curr)

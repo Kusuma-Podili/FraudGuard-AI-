@@ -4,7 +4,7 @@ from ml_engine.data.geodistance import calculate_haversine_distance, calculate_t
 from ml_engine.data.preprocessors import TabularPreprocessor, CyclicalTimeEncoder, RobustOutlierScaler
 from ml_engine.data.balance_handlers import BalanceHandler, SMOTEHandler, ClassWeightCalculator
 from ml_engine.data.feature_registry import FeatureDefinition, FeatureRegistry, default_registry
-from ml_engine.data.velocity_engine import VelocityEngine, SlidingWindowCounter
+from ml_engine.data.velocity_engine import VelocityEngine, CardholderVelocityProfile
 from ml_engine.data.feature_store import FeatureStore, get_feature_store
 from ml_engine.data.dataset_generator import SyntheticTransactionGenerator, generate_fraud_dataset
 
@@ -21,9 +21,10 @@ __all__ = [
     "FeatureRegistry",
     "default_registry",
     "VelocityEngine",
-    "SlidingWindowCounter",
+    "CardholderVelocityProfile",
     "FeatureStore",
     "get_feature_store",
     "SyntheticTransactionGenerator",
     "generate_fraud_dataset",
 ]
+

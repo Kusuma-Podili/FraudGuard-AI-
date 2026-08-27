@@ -7,7 +7,7 @@ real-time sub-20ms inference pipelines (online).
 from __future__ import annotations
 from enum import Enum
 from dataclasses import dataclass, field
-from typing import Dict, List, Any, Optional, Set
+from typing import Dict, List, Any, Optional, Set, Tuple
 
 
 class FeatureDataType(str, Enum):
