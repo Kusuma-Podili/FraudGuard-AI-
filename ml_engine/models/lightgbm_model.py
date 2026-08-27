@@ -248,6 +248,10 @@ class LightGBMFraudClassifier(BaseModel):
 
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         n_samples = len(X)
+        if not self.is_trained:
+            default_scores = np.full(n_samples, 0.05, dtype=np.float64)
+            return np.column_stack([1.0 - default_scores, default_scores])
+
         raw_scores = np.full(n_samples, self.base_score, dtype=np.float64)
 
         for tree in self.trees:
@@ -256,3 +260,4 @@ class LightGBMFraudClassifier(BaseModel):
 
         probs = self._sigmoid(raw_scores)
         return np.column_stack([1.0 - probs, probs])
+

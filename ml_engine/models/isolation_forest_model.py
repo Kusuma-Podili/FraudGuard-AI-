@@ -126,6 +126,10 @@ class IsolationForestAnomalyDetector(BaseModel):
 
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         n_samples = len(X)
+        if not self.trees:
+            default_scores = np.full(n_samples, 0.05, dtype=np.float64)
+            return np.column_stack([1.0 - default_scores, default_scores])
+
         avg_path_lengths = np.zeros(n_samples, dtype=np.float64)
 
         for tree in self.trees:
@@ -137,3 +141,4 @@ class IsolationForestAnomalyDetector(BaseModel):
         # Anomaly score formula
         scores = 2.0 ** (-avg_path_lengths / max(self.c_subsample, 1e-6))
         return np.column_stack([1.0 - scores, scores])
+

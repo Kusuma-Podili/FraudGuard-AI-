@@ -142,6 +142,9 @@ class DeepAutoencoderAnomalyDetector(BaseModel):
         return self
 
     def _compute_reconstruction_error(self, X: np.ndarray) -> np.ndarray:
+        if not self.weights:
+            self._init_weights(X.shape[1])
+            self.reconstruction_threshold = 1.0
         activations, _ = self._forward(X)
         X_recon = activations[-1]
         mse = np.mean((X - X_recon) ** 2, axis=1)
@@ -149,8 +152,15 @@ class DeepAutoencoderAnomalyDetector(BaseModel):
 
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         """Map reconstruction error to a calibrated anomaly probability in [0, 1]."""
+        n_samples = len(X)
+        if not self.is_trained:
+            default_scores = np.full(n_samples, 0.05, dtype=np.float64)
+            return np.column_stack([1.0 - default_scores, default_scores])
+
         errors = self._compute_reconstruction_error(X)
         # Scaled sigmoid centered at reconstruction threshold
         scaled_diff = (errors - self.reconstruction_threshold) / (self.reconstruction_threshold + 1e-6)
         probs = 1.0 / (1.0 + np.exp(-np.clip(scaled_diff * 3.0, -10.0, 10.0)))
         return np.column_stack([1.0 - probs, probs])
+
+
