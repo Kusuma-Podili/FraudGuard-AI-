@@ -2,7 +2,9 @@
   "name": "fraudguard-ai-frontend",
   "version": "1.0.0",
   "private": true,
+  "license": "UNLICENSED",
   "scripts": {
+
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

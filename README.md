@@ -1,17 +1,10 @@
-# 🛡️ FraudGuard AI: Enterprise Real-Time Credit Card Fraud Detection & Defense Platform
+# FraudGuard AI: Enterprise Real-Time Credit Card Fraud Detection & Defense Platform
 
-[![CI/CD Pipeline](https://github.com/kusuma-podili/credit/actions/workflows/ci.yml/badge.svg)](https://github.com/kusuma-podili/credit/actions)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.111.0-009688.svg?logo=fastapi)](https://fastapi.tiangolo.com)
-[![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black.svg?logo=next.js)](https://nextjs.org)
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg?logo=python)](https://python.org)
-[![TypeScript 5.4](https://img.shields.io/badge/TypeScript-5.4-3178C6.svg?logo=typescript)](https://www.typescriptlang.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
-**FraudGuard AI** is a production-grade, enterprise-scale real-time credit card fraud detection and risk intelligence platform. Engineered from scratch, it combines **sub-20ms inference latency**, a **hybrid 6-model ML ensemble**, an in-memory **sliding window velocity engine**, safe **AST boolean rule parsing**, **TreeSHAP explainability**, an **adversarial stream attack sandbox**, and a **Next.js 14 analyst workbench**.
+FraudGuard AI is a production-grade, enterprise-scale real-time credit card fraud detection and risk intelligence platform. Engineered from scratch, it combines **sub-20ms inference latency**, a **hybrid 6-model ML ensemble**, an in-memory **sliding window velocity engine**, safe **AST boolean rule parsing**, **TreeSHAP explainability**, an **adversarial stream attack sandbox**, and a **Next.js 14 analyst workbench**.
 
 ---
 
-## 🏛️ System Architecture
+## Architecture Overview
 
 ```mermaid
 flowchart TD
@@ -81,107 +74,136 @@ flowchart TD
 
 ---
 
-## ⚡ Key Highlights & Benchmarks
+## Dependencies
 
-| Capability | Specification | Benchmark Result |
-| :--- | :--- | :--- |
-| **Inference SLA** | Sub-20ms P99 Latency | **`5.48 ms` (P99) / `0.33 ms` (P50)** |
-| **Throughput** | High-Concurrency Gateway | **`1,806.3 RPS` per worker node** |
-| **ROC-AUC** | Ensemble Classification | **`0.988`** |
-| **PR-AUC** | Extreme Imbalance (1:200) | **`0.942`** |
-| **Explainability** | Individual Transaction Attribution | **Exact TreeSHAP Waterfall & FCRA Counterfactuals** |
-| **Attack Sandbox** | 6 Adversarial Fraud Scenarios | **Card Testing, ATO, Impossible Travel, Crypto Surge** |
-| **Test Coverage** | Automated Test Suites | **46 passing Unit, Integration & E2E tests** |
+### Backend & ML Engine
+- **Python**: `>= 3.10`
+- **FastAPI**: `0.111.0`
+- **Uvicorn**: `0.30.1`
+- **Pydantic v2**: `2.7.4`
+- **SQLAlchemy**: `2.0.31`
+- **NumPy**: `1.26.4`
+- **Pandas**: `2.2.2`
+- **Scikit-Learn**: `1.5.0`
+- **AIOSQLite**: `0.20.0`
+- **Passlib & Argon2**: `1.7.4`
+- **Python-Jose**: `3.3.0`
+- **WebSockets**: `12.0`
+
+### Frontend Dashboard
+- **Node.js**: `>= 18.0.0`
+- **Next.js**: `14.2.3`
+- **React**: `18.3.1`
+- **Tailwind CSS**: `3.4.3`
+- **Recharts**: `2.12.7`
+- **Lucide React**: `0.378.0`
+- **Axios**: `1.6.8`
 
 ---
 
-## 🚀 Quick Start (Docker Compose)
+## Installation
 
+### 1. Python Environment Setup
 ```bash
 # Clone the repository
-git clone <REPO_URL>
-cd credit
+git clone https://github.com/Kusuma-Podili/FraudGuard-AI-.git
+cd FraudGuard-AI-
 
-# Build and start all services
-docker compose up --build -d
+# Create and activate Python virtual environment
+python -m venv venv
 
-# Open Dashboard & API Documentation:
-# Frontend Dashboard: http://localhost:3000
-# Backend Swagger API Docs: http://localhost:8000/api/v1/docs
+# On Linux/macOS:
+source venv/bin/activate
+# On Windows PowerShell:
+.\venv\Scripts\Activate.ps1
+
+# Install backend dependencies
+pip install -r backend/requirements.txt
+```
+
+### 2. Frontend Dependencies Setup
+```bash
+# Navigate to frontend directory and install dependencies
+cd frontend
+npm install
+cd ..
 ```
 
 ---
 
-## 🧪 Running Automated Test Suites
+## Build
 
+### 1. Build Frontend Assets
 ```bash
-# 1. Run ML Engine Tests (Features, Ensemble Models, SHAP XAI, Drift)
+cd frontend
+npm run build
+cd ..
+```
+
+### 2. Build Multi-Stage Docker Images
+```bash
+# Build Backend Gateway Container
+docker build -f Dockerfile.backend -t fraudguard-backend:latest .
+
+# Build Simulator Container
+docker build -f Dockerfile.simulator -t fraudguard-simulator:latest .
+
+# Build Frontend Container
+docker build -f Dockerfile.frontend -t fraudguard-frontend:latest .
+```
+
+---
+
+## Run
+
+### Option A: Local Python & FastAPI Server
+```bash
+# Run using the main application entry point
+python main.py
+
+# Or run using the CLI runner:
+python run.py
+
+# Access Interactive Defense Portal: http://localhost:8000/
+# Access Swagger OpenAPI Documentation: http://localhost:8000/api/v1/docs
+```
+
+### Option B: Run via Docker Compose
+```bash
+docker compose up --build -d
+```
+
+---
+
+## Usage
+
+### 1. Real-Time Transaction Scoring (<20ms SLA)
+```bash
+curl -X POST http://127.0.0.1:8000/api/v1/transactions/score \
+  -H "Content-Type: application/json" \
+  -d '{
+    "card_id": "CARD_4829_1092",
+    "amount": 1850.00,
+    "merchant_id": "M_APPLE_NYC_01",
+    "merchant_category": "ELECTRONICS",
+    "country_code": "US"
+  }'
+```
+
+### 2. Run High-Throughput Latency Benchmark
+```bash
+python -m simulator.cli benchmark --requests 1000 --concurrency 8
+```
+
+### 3. Run Test Suites
+```bash
 python -m unittest discover -s ml_engine/tests
-
-# 2. Run Backend Gateway Tests (Auth, AST Rules, Decision Engine, API Endpoints)
 python -m unittest discover -s backend/tests
-
-# 3. Run Adversarial Simulator Tests (Attack Archetypes, Load Generator)
 python -m unittest discover -s simulator/tests
-
-# 4. Run End-to-End Comprehensive Lifecycle Tests
 python -m unittest discover -s tests/e2e
 ```
 
 ---
 
-## 📁 Repository Structure
-
-```
-credit/
-├── .github/
-│   └── workflows/
-│       ├── ci.yml                 # Automated test matrix & latency SLA gate
-│       └── docker-build.yml       # Multi-stage container build and security audit
-├── backend/                       # FastAPI Sub-20ms Decision Engine & API
-│   ├── app/
-│   │   ├── api/v1/endpoints/      # REST API routers (Auth, Score, Cases, Rules, Models, Explain)
-│   │   ├── core/                  # Security (JWT, Argon2), Logging, Middleware, Exceptions
-│   │   ├── db/                    # SQLAlchemy async models & database seeders
-│   │   ├── models/                # ORM entities (Transactions, Cases, Rules, Audit, Merchants)
-│   │   ├── schemas/               # Pydantic v2 validation DTOs
-│   │   ├── services/              # Decision Engine, Safe AST Evaluator, Case Triage
-│   │   └── streaming/             # WebSocket real-time connection pool
-│   └── tests/                     # 15 backend unit and integration tests
-├── docs/                          # Comprehensive architecture and runbook documentation
-│   ├── ARCHITECTURE.md
-│   ├── API_REFERENCE.md
-│   ├── BENCHMARKS.md
-│   └── RUNBOOK.md
-├── frontend/                      # Next.js 14 / React 18 / TypeScript Dashboard
-│   ├── src/
-│   │   ├── app/                   # App router pages (Live Radar, Workbench, Rules, MLOps, Analytics)
-│   │   ├── components/            # UI components, Recharts visualizations, XAI waterfall
-│   │   ├── hooks/                 # WebSocket streaming & state management hooks
-│   │   ├── lib/                   # Axios API client, formatting helpers
-│   │   └── types/                 # Strict TypeScript interface definitions
-├── ml_engine/                     # Pure ML Engine & Explainability Core
-│   ├── data/                      # Geodesic math, sliding velocity engine, feature store
-│   ├── explainability/            # TreeSHAP waterfall, LIME surrogates, Counterfactuals
-│   ├── models/                    # XGBoost, LightGBM, CatBoost, Random Forest, Autoencoder, IF, Graph
-│   ├── monitoring/                # Population Stability Index (PSI) and KS drift detector
-│   └── tests/                     # 18 ML engine unit tests
-├── simulator/                     # Adversarial Attack & Stream Simulator Subsystem
-│   ├── archetypes/                # Card testing, ATO, impossible travel, crypto surge generators
-│   ├── cli.py                     # CLI benchmark & test generation tool
-│   ├── engine.py                  # High-throughput async streaming generator
-│   ├── load_generator.py          # Concurrency latency benchmarker
-│   └── tests/                     # 10 simulator unit and load generator tests
-├── tests/
-│   └── e2e/                       # End-to-end system lifecycle tests
-├── docker-compose.yml             # Production multi-container orchestration
-├── Dockerfile.backend             # Python 3.10 multi-stage build
-├── Dockerfile.frontend            # Next.js 14 standalone build
-├── Dockerfile.simulator           # Containerized benchmark runner
-└── README.md
-```
-
----
-
-## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## Proprietary Notice
+Copyright © 2026 FraudGuard AI Systems. All Rights Reserved. Proprietary and confidential.
