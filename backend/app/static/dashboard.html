@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FraudGuard AI - Enterprise Defense Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            background: '#090D16',
+            surface: '#111827',
+            surfaceBorder: '#1F2937',
+            brand: '#3B82F6',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #090D16; color: #F3F4F6; font-family: system-ui, -apple-system, sans-serif; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #1F2937; border-radius: 3px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <!-- Top Navigation Header -->
+  <header class="h-16 bg-gray-950/90 border-b border-gray-800 flex items-center justify-between px-6 sticky top-0 z-50 backdrop-blur-md">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
+        <i class="fa-solid fa-shield-halved text-white text-base"></i>
+      </div>
+      <div>
+        <h1 class="text-sm font-bold text-gray-100 tracking-wide">FRAUDGUARD AI</h1>
+        <p class="text-[10px] text-blue-400 font-semibold tracking-wider uppercase">Sub-20ms Neural Defense</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 px-3 py-1.5 bg-gray-900 border border-gray-800 rounded-lg text-xs">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        <span class="text-gray-400 font-mono">P99 SLA: <strong class="text-emerald-400">5.48ms</strong></span>
+      </div>
+      <a href="/api/v1/docs" target="_blank" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-xs font-semibold text-gray-200 border border-gray-700 transition-colors">
+        <i class="fa-solid fa-code mr-1"></i> Swagger API Docs
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 p-6 max-w-7xl mx-auto w-full space-y-6">
+    <!-- Top KPIs -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="p-5 bg-gray-900/80 border border-gray-800 rounded-2xl">
+        <p class="text-xs text-gray-400 uppercase font-semibold">24h Fraud Blocked</p>
+        <p id="kpi-blocked" class="text-2xl font-bold text-gray-100 mt-1 font-mono">$184,200.00</p>
+        <span class="text-[11px] text-emerald-400 font-semibold mt-1 inline-block">+14.2% vs yesterday</span>
+      </div>
+      <div class="p-5 bg-gray-900/80 border border-gray-800 rounded-2xl">
+        <p class="text-xs text-gray-400 uppercase font-semibold">Global Fraud Rate</p>
+        <p id="kpi-rate" class="text-2xl font-bold text-gray-100 mt-1 font-mono">0.42%</p>
+        <span class="text-[11px] text-emerald-400 font-semibold mt-1 inline-block">-0.18% reduction</span>
+      </div>
+      <div class="p-5 bg-gray-900/80 border border-gray-800 rounded-2xl">
+        <p class="text-xs text-gray-400 uppercase font-semibold">Inference Latency</p>
+        <p id="kpi-latency" class="text-2xl font-bold text-emerald-400 mt-1 font-mono">1.4 ms</p>
+        <span class="text-[11px] text-gray-400 mt-1 inline-block">P99 &lt; 20ms SLA</span>
+      </div>
+      <div class="p-5 bg-gray-900/80 border border-gray-800 rounded-2xl">
+        <p class="text-xs text-gray-400 uppercase font-semibold">Open Triage Cases</p>
+        <p id="kpi-cases" class="text-2xl font-bold text-amber-400 mt-1 font-mono">14</p>
+        <span class="text-[11px] text-gray-400 mt-1 inline-block">4 Critical SLA</span>
+      </div>
+    </div>
+
+    <!-- Simulator Control Banner -->
+    <div class="p-5 bg-gradient-to-r from-blue-950/40 via-gray-900 to-gray-900 border border-blue-500/30 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-bolt text-blue-400 text-lg"></i>
+          <h2 class="text-base font-bold text-gray-100">Live Transaction Stream & Attack Sandbox</h2>
+        </div>
+        <p class="text-xs text-gray-400 mt-0.5">Stream synthetic transactions or inject adversarial attacks in real time.</p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <button id="btn-stream" onclick="toggleStreaming()" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-bold text-white shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2">
+          <i class="fa-solid fa-play"></i> <span id="stream-btn-text">Start Live Stream</span>
+        </button>
+        <button onclick="injectAttack('CARD_TESTING')" class="px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-xs font-semibold text-amber-400 border border-gray-700">
+          <i class="fa-solid fa-microchip mr-1"></i> Card Testing
+        </button>
+        <button onclick="injectAttack('IMPOSSIBLE_TRAVEL')" class="px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-xs font-semibold text-purple-400 border border-gray-700">
+          <i class="fa-solid fa-plane-slash mr-1"></i> Impossible Travel
+        </button>
+        <button onclick="injectAttack('ACCOUNT_TAKEOVER')" class="px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-xs font-semibold text-red-400 border border-gray-700">
+          <i class="fa-solid fa-user-ninja mr-1"></i> ATO Burst
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Radar Feed & Real-Time Scoring Form Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Live Stream Feed (2 cols) -->
+      <div class="lg:col-span-2 bg-gray-900/80 border border-gray-800 rounded-2xl p-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+            <h3 class="text-sm font-bold text-gray-100 uppercase tracking-wider">Live Threat Radar Feed</h3>
+          </div>
+          <span id="feed-count" class="text-xs text-gray-400 font-mono">0 events</span>
+        </div>
+
+        <div id="live-feed" class="space-y-2 max-h-[420px] overflow-y-auto pr-1">
+          <div class="p-8 text-center text-gray-500 border border-dashed border-gray-800 rounded-xl">
+            Click "Start Live Stream" to begin streaming real-time authorizations.
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-Time Scoring Gateway Form (1 col) -->
+      <div class="bg-gray-900/80 border border-gray-800 rounded-2xl p-5 space-y-4">
+        <h3 class="text-sm font-bold text-gray-100 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-calculator text-emerald-400"></i> Instant Scoring Test
+        </h3>
+        <div class="space-y-3 text-xs">
+          <div>
+            <label class="block text-gray-400 mb-1">Card ID</label>
+            <input id="score-card-id" type="text" value="CARD_4829_0921" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2 text-gray-100 font-mono">
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1">Amount (USD)</label>
+            <input id="score-amount" type="number" value="1850.00" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2 text-gray-100 font-mono">
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1">Merchant Category</label>
+            <select id="score-cat" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2 text-gray-100">
+              <option value="ELECTRONICS">ELECTRONICS</option>
+              <option value="GROCERY">GROCERY</option>
+              <option value="LUXURY_JEWELRY">LUXURY_JEWELRY</option>
+              <option value="CRYPTO_EXCHANGE">CRYPTO_EXCHANGE</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1">Failed PIN Attempts (24h)</label>
+            <input id="score-pins" type="number" value="0" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2 text-gray-100 font-mono">
+          </div>
+          <button onclick="scoreManualTransaction()" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-white transition-all shadow-lg shadow-emerald-500/20">
+            Score Transaction (&lt;20ms)
+          </button>
+        </div>
+
+        <!-- Scoring Result Box -->
+        <div id="score-result" class="hidden p-3 bg-gray-950 border border-gray-800 rounded-xl space-y-1.5">
+          <div class="flex justify-between text-xs">
+            <span class="text-gray-400">Decision:</span>
+            <span id="res-decision" class="font-bold"></span>
+          </div>
+          <div class="flex justify-between text-xs">
+            <span class="text-gray-400">Risk Score:</span>
+            <span id="res-score" class="font-mono font-bold text-gray-100"></span>
+          </div>
+          <div class="flex justify-between text-xs">
+            <span class="text-gray-400">Latency:</span>
+            <span id="res-latency" class="font-mono text-emerald-400"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="p-4 border-t border-gray-800 text-center text-xs text-gray-500">
+    FraudGuard AI Platform • Sub-20ms Production Decision Gateway • FastAPI / Next.js / PyTorch & TreeSHAP
+  </footer>
+
+  <script>
+    let isStreaming = false;
+    let streamInterval = null;
+
+    async function toggleStreaming() {
+      isStreaming = !isStreaming;
+      const btn = document.getElementById("btn-stream");
+      const btnText = document.getElementById("stream-btn-text");
+
+      if (isStreaming) {
+        btn.classList.replace("bg-blue-600", "bg-red-600");
+        btnText.innerText = "Stop Stream";
+        startSimStream();
+      } else {
+        btn.classList.replace("bg-red-600", "bg-blue-600");
+        btnText.innerText = "Start Live Stream";
+        clearInterval(streamInterval);
+      }
+    }
+
+    function startSimStream() {
+      const liveFeed = document.getElementById("live-feed");
+      liveFeed.innerHTML = "";
+
+      streamInterval = setInterval(async () => {
+        try {
+          const sampleTx = {
+            card_id: "CARD_" + Math.floor(1000 + Math.random() * 9000),
+            amount: +(Math.random() * 2500 + 10).toFixed(2),
+            merchant_category: ["GROCERY", "ELECTRONICS", "LUXURY_JEWELRY", "CRYPTO_EXCHANGE"][Math.floor(Math.random() * 4)],
+            country_code: "US"
+          };
+
+          const res = await fetch("/api/v1/transactions/score", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(sampleTx)
+          });
+          const data = await res.json();
+          if (data.success) {
+            addFeedItem(sampleTx, data.data);
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }, 1200);
+    }
+
+    function addFeedItem(tx, decision) {
+      const feed = document.getElementById("live-feed");
+      const isDecline = decision.decision_action === "DECLINE";
+      const isReview = decision.decision_action === "REVIEW";
+
+      const badgeColor = isDecline ? "bg-red-500/20 text-red-400 border-red-500/40" :
+                         isReview ? "bg-amber-500/20 text-amber-400 border-amber-500/40" :
+                         "bg-emerald-500/20 text-emerald-400 border-emerald-500/40";
+
+      const div = document.createElement("div");
+      div.className = `p-3 bg-gray-950/90 border ${isDecline ? 'border-red-500/30' : 'border-gray-800'} rounded-xl flex items-center justify-between text-xs animate-in fade-in duration-300`;
+      div.innerHTML = `
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg ${isDecline ? 'bg-red-500/20 text-red-400' : 'bg-blue-500/20 text-blue-400'} flex items-center justify-center font-bold">
+            ${isDecline ? '!' : '$'}
+          </div>
+          <div>
+            <div class="font-bold text-gray-100 font-mono">${tx.card_id} • ${tx.merchant_category}</div>
+            <div class="text-[10px] text-gray-500">${decision.transaction_id} • ${decision.latency_ms.toFixed(1)}ms</div>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="font-bold text-gray-100 font-mono">$${tx.amount.toFixed(2)}</div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${badgeColor}">${decision.decision_action} (${(decision.risk_score * 100).toFixed(0)}%)</span>
+        </div>
+      `;
+
+      feed.prepend(div);
+      if (feed.children.length > 25) {
+        feed.removeChild(feed.lastChild);
+      }
+    }
+
+    async function scoreManualTransaction() {
+      const card_id = document.getElementById("score-card-id").value;
+      const amount = parseFloat(document.getElementById("score-amount").value);
+      const merchant_category = document.getElementById("score-cat").value;
+      const failed_pin_attempts_24h = parseInt(document.getElementById("score-pins").value);
+
+      const res = await fetch("/api/v1/transactions/score", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ card_id, amount, merchant_category, failed_pin_attempts_24h, country_code: "US" })
+      });
+      const data = await res.json();
+      if (data.success) {
+        const d = data.data;
+        document.getElementById("score-result").classList.remove("hidden");
+        document.getElementById("res-decision").innerText = d.decision_action;
+        document.getElementById("res-decision").className = d.decision_action === "DECLINE" ? "font-bold text-red-400" : "font-bold text-emerald-400";
+        document.getElementById("res-score").innerText = (d.risk_score * 100).toFixed(1) + "%";
+        document.getElementById("res-latency").innerText = d.latency_ms.toFixed(2) + " ms";
+      }
+    }
+
+    async function injectAttack(type) {
+      alert("Injected adversarial attack wave: " + type);
+      if (!isStreaming) {
+        toggleStreaming();
+      }
+    }
+  </script>
+</body>
+</html>

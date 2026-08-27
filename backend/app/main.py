@@ -69,7 +69,15 @@ app.add_exception_handler(FraudGuardException, fraudguard_exception_handler)
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 
-@app.get("/", include_in_schema=False)
-async def root_redirect():
-    """Redirect root traffic to OpenAPI interactive documentation."""
+from starlette.responses import HTMLResponse, FileResponse
+import os
+
+@app.get("/", response_class=HTMLResponse, include_in_schema=False)
+@app.get("/dashboard", response_class=HTMLResponse, include_in_schema=False)
+async def serve_dashboard():
+    """Serve real-time interactive FraudGuard defense dashboard."""
+    dashboard_file = os.path.join(os.path.dirname(__file__), "static", "dashboard.html")
+    if os.path.exists(dashboard_file):
+        return FileResponse(dashboard_file)
     return RedirectResponse(url=f"{settings.API_V1_STR}/docs")
+
