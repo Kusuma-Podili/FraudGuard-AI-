@@ -1,0 +1,14 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+ENV PYTHONUNBUFFERED=1
+
+COPY backend/requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY ml_engine/ /app/ml_engine/
+COPY backend/ /app/backend/
+COPY simulator/ /app/simulator/
+
+CMD ["python", "-m", "simulator.cli", "benchmark", "--requests", "1000", "--concurrency", "8"]
