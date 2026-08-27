@@ -130,7 +130,11 @@ class BalancedRandomForestClassifier(BaseModel):
 
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         n_samples = len(X)
-        tree_preds = np.zeros((self.n_estimators, n_samples), dtype=np.float64)
+        if not self.trees:
+            default_scores = np.full(n_samples, 0.05, dtype=np.float64)
+            return np.column_stack([1.0 - default_scores, default_scores])
+
+        tree_preds = np.zeros((len(self.trees), n_samples), dtype=np.float64)
 
         for t_idx, tree in enumerate(self.trees):
             for i in range(n_samples):
@@ -139,3 +143,4 @@ class BalancedRandomForestClassifier(BaseModel):
         # Average probabilities across forest
         mean_p1 = np.mean(tree_preds, axis=0)
         return np.column_stack([1.0 - mean_p1, mean_p1])
+
