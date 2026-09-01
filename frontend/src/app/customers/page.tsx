@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { api } from "@/lib/api";
@@ -82,26 +82,26 @@ export default function CustomersPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <UserCheck className="w-6 h-6 text-[#5F8F83]" />
-            <h1 className="text-2xl font-bold text-[#29332F] tracking-tight">Customer & Card 360° Intelligence</h1>
+            <UserCheck className="w-6 h-6 text-gray-800" />
+            <h1 className="text-2xl font-bold text-[#111827] tracking-tight">Customer & Card 360° Intelligence</h1>
           </div>
-          <p className="text-xs text-[#69736E] mt-1">
+          <p className="text-xs text-[#4B5563] mt-1">
             Cardholder identity dossiers, behavioral baseline profiling, and historic fraud risk indicators.
           </p>
         </div>
       </div>
 
       {/* Filter Bar */}
-      <Card className="p-4 bg-[#FFFDFC] border-[#E5DED5]">
+      <Card className="p-4 bg-white border-[#E5E7EB]">
         <form onSubmit={handleSearch} className="flex flex-wrap items-center gap-3">
           <div className="relative flex-1 min-w-[240px]">
-            <Search className="w-4 h-4 text-[#929A95] absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by customer name, card number (e.g. 4829), email..."
-              className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg pl-9 pr-3 py-1.5 text-xs text-[#29332F] placeholder-[#929A95] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+              className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg pl-9 pr-3 py-1.5 text-xs text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
             />
           </div>
 
@@ -111,7 +111,7 @@ export default function CustomersPage() {
               setRiskTier(e.target.value);
               setPage(1);
             }}
-            className="bg-[#F7F4EF] border border-[#E5DED5] rounded-lg px-3 py-1.5 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+            className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg px-3 py-1.5 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
           >
             <option value="ALL">All Risk Profiles</option>
             <option value="LOW">Low Risk</option>
@@ -132,15 +132,15 @@ export default function CustomersPage() {
           const riskBadge = getRiskColor(cust.risk_tier);
 
           return (
-            <Card key={cust.id} className="p-5 space-y-4 hover:border-[#CCD9D2] transition-all bg-[#FFFDFC]">
+            <Card key={cust.id} className="p-5 space-y-4 hover:border-gray-300 transition-all bg-white">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#5F8F83]/15 flex items-center justify-center text-[#5F8F83] font-bold text-sm">
+                  <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center text-gray-800 font-bold text-sm">
                     {cust.full_name.charAt(0)}
                   </div>
                   <div>
-                    <h3 className="font-bold text-[#29332F] text-sm">{cust.full_name}</h3>
-                    <p className="text-[11px] text-[#69736E] font-mono">{cust.email}</p>
+                    <h3 className="font-bold text-[#111827] text-sm">{cust.full_name}</h3>
+                    <p className="text-[11px] text-[#4B5563] font-mono">{cust.email}</p>
                   </div>
                 </div>
                 <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${riskBadge.badge}`}>
@@ -149,14 +149,14 @@ export default function CustomersPage() {
               </div>
 
               {/* Card Meta */}
-              <div className="p-3 bg-[#F7F4EF] border border-[#E5DED5] rounded-xl space-y-1">
+              <div className="p-3 bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-mono font-bold text-[#29332F]">{cust.masked_card}</span>
-                  <span className="text-[10px] font-semibold text-[#69736E]">{cust.card_network} • {cust.card_type}</span>
+                  <span className="font-mono font-bold text-[#111827]">{cust.masked_card}</span>
+                  <span className="text-[10px] font-semibold text-[#4B5563]">{cust.card_network} • {cust.card_type}</span>
                 </div>
-                <div className="flex items-center justify-between text-[11px] text-[#69736E] pt-1">
+                <div className="flex items-center justify-between text-[11px] text-[#4B5563] pt-1">
                   <span>Card Status:</span>
-                  <span className={`font-semibold ${cust.card_status === "ACTIVE" ? "text-[#35604B]" : "text-[#7B3030]"}`}>
+                  <span className={`font-semibold ${cust.card_status === "ACTIVE" ? "text-gray-900" : "text-[#EA580C]"}`}>
                     {cust.card_status}
                   </span>
                 </div>
@@ -164,13 +164,13 @@ export default function CustomersPage() {
 
               {/* Behavioral Telemetry */}
               <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="p-2.5 bg-[#F7F4EF] rounded-lg border border-[#E5DED5]">
-                  <span className="text-[10px] text-[#69736E]">30d Avg Amount</span>
-                  <p className="font-bold text-[#29332F] mt-0.5">${cust.avg_amount_30d.toFixed(2)}</p>
+                <div className="p-2.5 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]">
+                  <span className="text-[10px] text-[#4B5563]">30d Avg Amount</span>
+                  <p className="font-bold text-[#111827] mt-0.5">${cust.avg_amount_30d.toFixed(2)}</p>
                 </div>
-                <div className="p-2.5 bg-[#F7F4EF] rounded-lg border border-[#E5DED5]">
-                  <span className="text-[10px] text-[#69736E]">Total Tx Count</span>
-                  <p className="font-bold text-[#29332F] mt-0.5">{cust.total_transactions_count}</p>
+                <div className="p-2.5 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]">
+                  <span className="text-[10px] text-[#4B5563]">Total Tx Count</span>
+                  <p className="font-bold text-[#111827] mt-0.5">{cust.total_transactions_count}</p>
                 </div>
               </div>
 
@@ -181,7 +181,7 @@ export default function CustomersPage() {
                 className="w-full text-xs font-semibold"
                 onClick={() => handleOpenDossier(cust)}
               >
-                <Eye className="w-3.5 h-3.5 mr-1.5 text-[#5F8F83]" />
+                <Eye className="w-3.5 h-3.5 mr-1.5 text-gray-700" />
                 View 360° Dossier
               </Button>
             </Card>
@@ -197,65 +197,65 @@ export default function CustomersPage() {
         size="lg"
       >
         {isLoadingDossier ? (
-          <div className="py-16 text-center text-xs text-[#69736E]">Loading comprehensive customer dossier...</div>
+          <div className="py-16 text-center text-xs text-[#4B5563]">Loading comprehensive customer dossier...</div>
         ) : (
           <div className="space-y-5">
             {/* Identity Header */}
-            <div className="p-4 bg-[#F7F4EF] border border-[#E5DED5] rounded-xl flex items-center justify-between">
+            <div className="p-4 bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold text-[#29332F]">{selectedCustomer?.full_name}</h3>
-                <p className="text-xs text-[#69736E] font-mono mt-0.5">{selectedCustomer?.email} • {selectedCustomer?.phone}</p>
+                <h3 className="text-sm font-bold text-[#111827]">{selectedCustomer?.full_name}</h3>
+                <p className="text-xs text-[#4B5563] font-mono mt-0.5">{selectedCustomer?.email} • {selectedCustomer?.phone}</p>
               </div>
               <div className="text-right">
-                <span className="font-mono text-xs font-bold text-[#29332F]">{selectedCustomer?.masked_card}</span>
-                <p className="text-[10px] text-[#35604B] font-semibold">{selectedCustomer?.card_network} ({selectedCustomer?.card_status})</p>
+                <span className="font-mono text-xs font-bold text-[#111827]">{selectedCustomer?.masked_card}</span>
+                <p className="text-[10px] text-gray-700 font-semibold">{selectedCustomer?.card_network} ({selectedCustomer?.card_status})</p>
               </div>
             </div>
 
             {/* Behavioral Baselines */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-3 bg-[#F7F4EF] border border-[#E5DED5] rounded-lg">
-                <span className="text-[10px] text-[#69736E] font-semibold">30d Avg Amount</span>
-                <p className="text-sm font-bold text-[#35604B] mt-1">${(dossier?.behavioral_baseline?.avg_amount_30d || 145.00).toFixed(2)}</p>
+              <div className="p-3 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg">
+                <span className="text-[10px] text-[#4B5563] font-semibold">30d Avg Amount</span>
+                <p className="text-sm font-bold text-gray-900 mt-1">${(dossier?.behavioral_baseline?.avg_amount_30d || 145.00).toFixed(2)}</p>
               </div>
-              <div className="p-3 bg-[#F7F4EF] border border-[#E5DED5] rounded-lg">
-                <span className="text-[10px] text-[#69736E] font-semibold">Max Historic Amount</span>
-                <p className="text-sm font-bold text-[#795B20] mt-1">${(dossier?.behavioral_baseline?.max_amount_single || 1800.00).toFixed(2)}</p>
+              <div className="p-3 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg">
+                <span className="text-[10px] text-[#4B5563] font-semibold">Max Historic Amount</span>
+                <p className="text-sm font-bold text-gray-900 mt-1">${(dossier?.behavioral_baseline?.max_amount_single || 1800.00).toFixed(2)}</p>
               </div>
-              <div className="p-3 bg-[#F7F4EF] border border-[#E5DED5] rounded-lg">
-                <span className="text-[10px] text-[#69736E] font-semibold">Total Tx Records</span>
-                <p className="text-sm font-bold text-[#29332F] mt-1">{dossier?.behavioral_baseline?.total_transactions || 64}</p>
+              <div className="p-3 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg">
+                <span className="text-[10px] text-[#4B5563] font-semibold">Total Tx Records</span>
+                <p className="text-sm font-bold text-[#111827] mt-1">{dossier?.behavioral_baseline?.total_transactions || 64}</p>
               </div>
-              <div className="p-3 bg-[#F7F4EF] border border-[#E5DED5] rounded-lg">
-                <span className="text-[10px] text-[#69736E] font-semibold">Prior Fraud Flags</span>
-                <p className="text-sm font-bold text-[#7B3030] mt-1">{dossier?.behavioral_baseline?.total_alerts || 0}</p>
+              <div className="p-3 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg">
+                <span className="text-[10px] text-[#4B5563] font-semibold">Prior Fraud Flags</span>
+                <p className="text-sm font-bold text-[#EA580C] mt-1">{dossier?.behavioral_baseline?.total_alerts || 0}</p>
               </div>
             </div>
 
             {/* Locations and Devices */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-3.5 bg-[#F7F4EF] border border-[#E5DED5] rounded-xl space-y-2">
-                <span className="text-xs font-bold text-[#29332F] uppercase tracking-wider flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[#5F8F83]" />
+              <div className="p-3.5 bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl space-y-2">
+                <span className="text-xs font-bold text-[#111827] uppercase tracking-wider flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-gray-700" />
                   Typical Geographies
                 </span>
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {(dossier?.behavioral_baseline?.typical_locations || ["New York, US"]).map((loc, i) => (
-                    <span key={i} className="px-2 py-0.5 rounded bg-[#DCE7E1] text-[#26332F] text-xs">
+                    <span key={i} className="px-2 py-0.5 rounded bg-gray-100 text-gray-800 text-xs">
                       {loc}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <div className="p-3.5 bg-[#F7F4EF] border border-[#E5DED5] rounded-xl space-y-2">
-                <span className="text-xs font-bold text-[#29332F] uppercase tracking-wider flex items-center gap-1.5">
-                  <Smartphone className="w-3.5 h-3.5 text-[#A99BBE]" />
+              <div className="p-3.5 bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl space-y-2">
+                <span className="text-xs font-bold text-[#111827] uppercase tracking-wider flex items-center gap-1.5">
+                  <Smartphone className="w-3.5 h-3.5 text-gray-700" />
                   Known Device Hardware
                 </span>
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {(dossier?.behavioral_baseline?.known_devices || ["dev_fp_apple_safari_1"]).map((dev, i) => (
-                    <span key={i} className="px-2 py-0.5 rounded bg-[#DCE7E1] text-[#26332F] font-mono text-[11px]">
+                    <span key={i} className="px-2 py-0.5 rounded bg-gray-100 text-gray-800 font-mono text-[11px]">
                       {dev}
                     </span>
                   ))}
@@ -264,21 +264,21 @@ export default function CustomersPage() {
             </div>
 
             {/* Recent Transaction History */}
-            <div className="p-4 bg-[#F7F4EF] border border-[#E5DED5] rounded-xl space-y-2">
-              <h4 className="text-xs font-bold text-[#29332F] uppercase tracking-wider">Recent Card Authorizations</h4>
-              <div className="divide-y divide-[#E5DED5] max-h-48 overflow-y-auto">
+            <div className="p-4 bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl space-y-2">
+              <h4 className="text-xs font-bold text-[#111827] uppercase tracking-wider">Recent Card Authorizations</h4>
+              <div className="divide-y divide-[#E5E7EB] max-h-48 overflow-y-auto">
                 {(dossier?.recent_transactions || []).length === 0 ? (
-                  <p className="text-xs text-[#929A95] py-3">No historic transactions recorded for this card.</p>
+                  <p className="text-xs text-[#9CA3AF] py-3">No historic transactions recorded for this card.</p>
                 ) : (
                   dossier?.recent_transactions.map((tx) => (
                     <div key={tx.transaction_id} className="py-2 flex items-center justify-between text-xs">
                       <div>
-                        <span className="font-mono font-bold text-[#29332F]">{tx.transaction_id}</span>
-                        <p className="text-[10px] text-[#69736E]">{tx.merchant_name || tx.merchant_id} • {tx.merchant_category}</p>
+                        <span className="font-mono font-bold text-[#111827]">{tx.transaction_id}</span>
+                        <p className="text-[10px] text-[#4B5563]">{tx.merchant_name || tx.merchant_id} • {tx.merchant_category}</p>
                       </div>
                       <div className="text-right">
-                        <span className="font-bold text-[#29332F]">{formatCurrency(tx.amount)}</span>
-                        <p className="text-[10px] text-[#35604B] font-semibold">{tx.decision_action}</p>
+                        <span className="font-bold text-[#111827]">{formatCurrency(tx.amount)}</span>
+                        <p className="text-[10px] text-gray-700 font-semibold">{tx.decision_action}</p>
                       </div>
                     </div>
                   ))
@@ -286,7 +286,7 @@ export default function CustomersPage() {
               </div>
             </div>
 
-            <div className="flex justify-end pt-2 border-t border-[#E5DED5]">
+            <div className="flex justify-end pt-2 border-t border-[#E5E7EB]">
               <Button variant="secondary" size="sm" onClick={() => setIsDossierOpen(false)}>
                 Close Dossier
               </Button>

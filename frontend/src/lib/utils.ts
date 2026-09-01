@@ -22,32 +22,32 @@ export function getRiskColor(tier: string): { bg: string; text: string; border: 
   switch (tier?.toUpperCase()) {
     case "CRITICAL":
       return {
-        bg: "bg-[#D99A9A]/20",
-        text: "text-[#7B3030]",
-        border: "border-[#D99A9A]/60",
-        badge: "bg-[#D99A9A] text-[#7B3030] border border-[#C98A8A]",
+        bg: "bg-[#FFEDD5]",
+        text: "text-[#EA580C]",
+        border: "border-[#FDBA74]",
+        badge: "bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74]",
       };
     case "HIGH":
       return {
-        bg: "bg-[#E8A98A]/20",
-        text: "text-[#8A472E]",
-        border: "border-[#E8A98A]/60",
-        badge: "bg-[#E8A98A] text-[#8A472E] border border-[#D8997A]",
+        bg: "bg-[#FFF7ED]",
+        text: "text-[#C2410C]",
+        border: "border-[#FED7AA]",
+        badge: "bg-[#FFF7ED] text-[#C2410C] border border-[#FED7AA]",
       };
     case "MEDIUM":
       return {
-        bg: "bg-[#E8C98A]/20",
-        text: "text-[#795B20]",
-        border: "border-[#E8C98A]/60",
-        badge: "bg-[#E8C98A] text-[#795B20] border border-[#D8B97A]",
+        bg: "bg-gray-100",
+        text: "text-gray-800",
+        border: "border-gray-200",
+        badge: "bg-gray-100 text-gray-800 border border-gray-300",
       };
     case "LOW":
     default:
       return {
-        bg: "bg-[#A8C5B5]/20",
-        text: "text-[#35604B]",
-        border: "border-[#A8C5B5]/60",
-        badge: "bg-[#A8C5B5] text-[#35604B] border border-[#98B5A5]",
+        bg: "bg-gray-50",
+        text: "text-gray-700",
+        border: "border-gray-200",
+        badge: "bg-gray-100 text-gray-700 border border-gray-200",
       };
   }
 }
@@ -57,23 +57,23 @@ export function getActionBadge(action: string): { label: string; className: stri
     case "DECLINE":
       return {
         label: "DECLINED",
-        className: "bg-[#D99A9A]/30 text-[#7B3030] border border-[#D99A9A]",
+        className: "bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74]",
       };
     case "CHALLENGE_3DS":
       return {
         label: "3DS CHALLENGE",
-        className: "bg-[#A99BBE]/30 text-[#4C3B66] border border-[#A99BBE]",
+        className: "bg-gray-100 text-gray-800 border border-gray-300",
       };
     case "REVIEW":
       return {
         label: "MANUAL REVIEW",
-        className: "bg-[#E8C98A]/30 text-[#795B20] border border-[#E8C98A]",
+        className: "bg-[#FFF7ED] text-[#C2410C] border border-[#FED7AA]",
       };
     case "ALLOW":
     default:
       return {
         label: "APPROVED",
-        className: "bg-[#A8C5B5]/30 text-[#35604B] border border-[#A8C5B5]",
+        className: "bg-gray-100 text-gray-800 border border-gray-200",
       };
   }
 }

@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
-import { ShapWaterfallChart } from "@/components/xai/ShapWaterfallChart";
 import { TransactionRecord, ExplainabilityData } from "@/types";
 import { api } from "@/lib/api";
 import { formatCurrency, getRiskColor, getActionBadge } from "@/lib/utils";
@@ -15,10 +14,6 @@ import {
   AlertTriangle,
   CheckCircle2,
   XCircle,
-  HelpCircle,
-  Building,
-  Calendar,
-  Layers,
 } from "lucide-react";
 
 interface Props {
@@ -52,7 +47,6 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
     setIsLoadingXai(true);
     setActionSuccess(null);
     try {
-      // 1. Load XAI explanation
       const explainRes = await api.getExplanation(tx.transaction_id, {
         transaction_id: tx.transaction_id,
         amount: tx.amount,
@@ -64,7 +58,6 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
       });
       setXaiData(explainRes);
 
-      // 2. Load Customer baseline
       try {
         const detailRes = await api.getTransactionDetail(tx.transaction_id);
         if (detailRes && detailRes.customer_baseline) {
@@ -135,26 +128,26 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
     >
       <div className="space-y-5">
         {/* Top Header Card */}
-        <div className="p-4 bg-[#F7F4EF] border border-[#E5DED5] rounded-xl flex flex-wrap items-center justify-between gap-4">
+        <div className="p-4 bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#5F8F83]/15 flex items-center justify-center text-[#5F8F83]">
+            <div className="w-10 h-10 rounded-xl bg-[#FFEDD5] flex items-center justify-center text-[#EA580C]">
               <CreditCard className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-sm font-bold text-[#29332F]">{maskedCard}</span>
+                <span className="font-mono text-sm font-bold text-[#111827]">{maskedCard}</span>
                 <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${riskBadge.badge}`}>
                   {riskTier}
                 </span>
               </div>
-              <p className="text-xs text-[#69736E] mt-0.5">
+              <p className="text-xs text-[#4B5563] mt-0.5">
                 Auth at {new Date(transaction.created_at).toLocaleString()} • {transaction.entry_mode || "CNP"}
               </p>
             </div>
           </div>
 
           <div className="text-right">
-            <span className="text-xl font-bold text-[#29332F] block font-mono">
+            <span className="text-xl font-bold text-[#111827] block font-mono">
               {formatCurrency(transaction.amount, transaction.currency)}
             </span>
             <span className={`px-2 py-0.5 rounded text-[10px] font-bold inline-block mt-0.5 ${actionBadge.className}`}>
@@ -164,7 +157,7 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex items-center gap-1.5 border-b border-[#E5DED5] pb-2">
+        <div className="flex items-center gap-1.5 border-b border-[#E5E7EB] pb-2">
           {[
             { id: "overview", label: "Overview & Metadata" },
             { id: "customer", label: "Customer 360 Baseline" },
@@ -176,8 +169,8 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 activeTab === tab.id
-                  ? "bg-[#5F8F83] text-white shadow-sm"
-                  : "text-[#69736E] hover:text-[#29332F] hover:bg-[#F7F4EF]"
+                  ? "bg-[#FB923C] text-white shadow-sm"
+                  : "text-[#4B5563] hover:text-[#111827] hover:bg-gray-100"
               }`}
             >
               {tab.label}
@@ -189,36 +182,36 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
         {activeTab === "overview" && (
           <div className="space-y-4">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-              <div className="p-3 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
-                <span className="text-[#69736E] block font-medium">Risk Score</span>
-                <span className="text-base font-bold text-[#7B3030] font-mono mt-0.5 block">
+              <div className="p-3 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB]">
+                <span className="text-[#4B5563] block font-medium">Risk Score</span>
+                <span className="text-base font-bold text-[#EA580C] font-mono mt-0.5 block">
                   {(transaction.risk_score * 100).toFixed(1)}%
                 </span>
               </div>
-              <div className="p-3 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
-                <span className="text-[#69736E] block font-medium">Merchant</span>
-                <span className="text-xs font-bold text-[#29332F] mt-0.5 block truncate">
+              <div className="p-3 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB]">
+                <span className="text-[#4B5563] block font-medium">Merchant</span>
+                <span className="text-xs font-bold text-[#111827] mt-0.5 block truncate">
                   {transaction.merchant_name || transaction.merchant_id}
                 </span>
               </div>
-              <div className="p-3 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
-                <span className="text-[#69736E] block font-medium">MCC Category</span>
-                <span className="text-xs font-bold text-[#29332F] mt-0.5 block">
+              <div className="p-3 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB]">
+                <span className="text-[#4B5563] block font-medium">MCC Category</span>
+                <span className="text-xs font-bold text-[#111827] mt-0.5 block">
                   {transaction.merchant_category}
                 </span>
               </div>
-              <div className="p-3 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
-                <span className="text-[#69736E] block font-medium">Origin Country</span>
-                <span className="text-xs font-bold text-[#29332F] mt-0.5 block">
+              <div className="p-3 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB]">
+                <span className="text-[#4B5563] block font-medium">Origin Country</span>
+                <span className="text-xs font-bold text-[#111827] mt-0.5 block">
                   {transaction.country_code || "US"} ({transaction.city || "Online"})
                 </span>
               </div>
             </div>
 
             {/* Triggered Rule Indicators */}
-            <div className="p-4 bg-[#F7F4EF] border border-[#E5DED5] rounded-xl space-y-2">
-              <span className="text-xs font-bold text-[#29332F] uppercase tracking-wider flex items-center gap-1.5">
-                <AlertTriangle className="w-3.5 h-3.5 text-[#795B20]" />
+            <div className="p-4 bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl space-y-2">
+              <span className="text-xs font-bold text-[#111827] uppercase tracking-wider flex items-center gap-1.5">
+                <AlertTriangle className="w-3.5 h-3.5 text-[#EA580C]" />
                 Triggered Rule Indicators
               </span>
               <div className="flex flex-wrap gap-2 pt-1">
@@ -226,7 +219,7 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
                   (rule, idx) => (
                     <span
                       key={idx}
-                      className="px-2.5 py-1 bg-[#D99A9A]/20 text-[#7B3030] border border-[#D99A9A] rounded-lg text-xs font-mono font-medium"
+                      className="px-2.5 py-1 bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74] rounded-lg text-xs font-mono font-medium"
                     >
                       ✓ {rule}
                     </span>
@@ -241,41 +234,41 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
         {activeTab === "customer" && (
           <div className="space-y-4">
             <div className="grid grid-cols-3 gap-3 text-xs">
-              <div className="p-3.5 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
-                <span className="text-[#69736E] block">30d Avg Amount</span>
-                <span className="text-base font-bold text-[#35604B] font-mono mt-0.5 block">
+              <div className="p-3.5 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB]">
+                <span className="text-[#4B5563] block">30d Avg Amount</span>
+                <span className="text-base font-bold text-gray-900 font-mono mt-0.5 block">
                   ${(customerBaseline?.avg_amount_30d || 145.0).toFixed(2)}
                 </span>
               </div>
-              <div className="p-3.5 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
-                <span className="text-[#69736E] block">Tx vs Baseline Ratio</span>
-                <span className="text-base font-bold text-[#795B20] font-mono mt-0.5 block">
+              <div className="p-3.5 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB]">
+                <span className="text-[#4B5563] block">Tx vs Baseline Ratio</span>
+                <span className="text-base font-bold text-[#EA580C] font-mono mt-0.5 block">
                   {(transaction.amount / (customerBaseline?.avg_amount_30d || 145.0)).toFixed(1)}x Baseline
                 </span>
               </div>
-              <div className="p-3.5 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
-                <span className="text-[#69736E] block">Historic Authorizations</span>
-                <span className="text-base font-bold text-[#29332F] font-mono mt-0.5 block">
+              <div className="p-3.5 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB]">
+                <span className="text-[#4B5563] block">Historic Authorizations</span>
+                <span className="text-base font-bold text-[#111827] font-mono mt-0.5 block">
                   {customerBaseline?.previous_tx_count || 64} transactions
                 </span>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="p-3.5 bg-[#F7F4EF] rounded-xl border border-[#E5DED5] space-y-1">
-                <span className="text-xs font-bold text-[#29332F] flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[#5F8F83]" /> Typical Physical Geographies
+              <div className="p-3.5 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] space-y-1">
+                <span className="text-xs font-bold text-[#111827] flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-gray-700" /> Typical Physical Geographies
                 </span>
-                <p className="text-xs text-[#69736E] pt-1">
+                <p className="text-xs text-[#4B5563] pt-1">
                   {(customerBaseline?.typical_locations || ["New York, US"]).join(", ")}
                 </p>
               </div>
 
-              <div className="p-3.5 bg-[#F7F4EF] rounded-xl border border-[#E5DED5] space-y-1">
-                <span className="text-xs font-bold text-[#29332F] flex items-center gap-1.5">
-                  <Smartphone className="w-3.5 h-3.5 text-[#A99BBE]" /> Known Device Signatures
+              <div className="p-3.5 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] space-y-1">
+                <span className="text-xs font-bold text-[#111827] flex items-center gap-1.5">
+                  <Smartphone className="w-3.5 h-3.5 text-gray-700" /> Known Device Signatures
                 </span>
-                <p className="text-xs text-[#69736E] pt-1 font-mono">
+                <p className="text-xs text-[#4B5563] pt-1 font-mono">
                   {(customerBaseline?.known_devices || ["dev_fp_apple_safari_1"]).join(", ")}
                 </p>
               </div>
@@ -287,20 +280,20 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
         {activeTab === "xai" && (
           <div className="space-y-4">
             {/* Natural Language Explanation */}
-            <div className="p-4 bg-[#DCE7E1]/50 border border-[#A8C5B5] rounded-xl space-y-1.5">
-              <h4 className="text-xs font-bold text-[#35604B] uppercase tracking-wider flex items-center gap-1.5">
-                <BrainCircuit className="w-4 h-4 text-[#5F8F83]" />
+            <div className="p-4 bg-[#FFEDD5]/40 border border-[#FDBA74] rounded-xl space-y-1.5">
+              <h4 className="text-xs font-bold text-[#9A3412] uppercase tracking-wider flex items-center gap-1.5">
+                <BrainCircuit className="w-4 h-4 text-[#EA580C]" />
                 Human-Readable Decision Explanation
               </h4>
-              <p className="text-xs text-[#29332F] leading-relaxed">
+              <p className="text-xs text-[#111827] leading-relaxed">
                 {xaiData?.human_readable ||
                   `This transaction was flagged with risk score ${(transaction.risk_score * 100).toFixed(1)}% due to an abnormal transaction amount ratio relative to 30-day baseline, unexpected geographic corridor, and an unrecognized hardware device fingerprint.`}
               </p>
             </div>
 
             {/* SHAP Factors */}
-            <div className="p-4 bg-[#F7F4EF] border border-[#E5DED5] rounded-xl space-y-3">
-              <span className="text-xs font-bold text-[#29332F] uppercase tracking-wider">
+            <div className="p-4 bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl space-y-3">
+              <span className="text-xs font-bold text-[#111827] uppercase tracking-wider">
                 Top Contributing Risk Factors (SHAP Weights)
               </span>
               <div className="space-y-2 text-xs">
@@ -311,9 +304,9 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
                   { feature_name: "geographic_speed_kmh", attribution_value: 0.10, display_name: "Geographic Velocity Anomaly", importance_pct: 10 },
                   { feature_name: "trusted_country_origin", attribution_value: -0.08, display_name: "Domestic Merchant MCC Match", importance_pct: 5 },
                 ]).map((feat, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-2 bg-[#FFFDFC] border border-[#E5DED5] rounded-lg">
-                    <span className="font-medium text-[#29332F]">{feat.display_name || feat.feature_name}</span>
-                    <span className={`font-mono font-bold ${feat.attribution_value > 0 ? "text-[#7B3030]" : "text-[#35604B]"}`}>
+                  <div key={idx} className="flex items-center justify-between p-2 bg-white border border-[#E5E7EB] rounded-lg">
+                    <span className="font-medium text-[#111827]">{feat.display_name || feat.feature_name}</span>
+                    <span className={`font-mono font-bold ${feat.attribution_value > 0 ? "text-[#EA580C]" : "text-gray-600"}`}>
                       {feat.attribution_value > 0 ? `+${feat.attribution_value.toFixed(2)}` : feat.attribution_value.toFixed(2)}
                     </span>
                   </div>
@@ -327,8 +320,8 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
         {activeTab === "workflow" && (
           <div className="space-y-4">
             {actionSuccess && (
-              <div className="p-3 bg-[#A8C5B5]/20 border border-[#A8C5B5] rounded-xl text-xs text-[#35604B] flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#35604B] shrink-0" />
+              <div className="p-3 bg-gray-100 border border-gray-300 rounded-xl text-xs text-gray-900 flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-gray-900 shrink-0" />
                 <span>{actionSuccess}</span>
               </div>
             )}
@@ -337,7 +330,7 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
               <button
                 onClick={handleConfirmFraud}
                 disabled={isSubmitting}
-                className="p-3.5 bg-[#D99A9A]/30 hover:bg-[#D99A9A]/50 border border-[#D99A9A] text-[#7B3030] font-bold text-xs rounded-xl shadow-sm flex items-center justify-center gap-2 transition-all"
+                className="p-3.5 bg-[#FFEDD5] hover:bg-[#FED7AA] border border-[#FDBA74] text-[#9A3412] font-bold text-xs rounded-xl shadow-sm flex items-center justify-center gap-2 transition-all"
               >
                 <XCircle className="w-4 h-4" />
                 Confirm Fraud & Block Card
@@ -346,7 +339,7 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
               <button
                 onClick={handleMarkFalsePositive}
                 disabled={isSubmitting}
-                className="p-3.5 bg-[#A8C5B5]/30 hover:bg-[#A8C5B5]/50 border border-[#A8C5B5] text-[#35604B] font-bold text-xs rounded-xl shadow-sm flex items-center justify-center gap-2 transition-all"
+                className="p-3.5 bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-900 font-bold text-xs rounded-xl shadow-sm flex items-center justify-center gap-2 transition-all"
               >
                 <CheckCircle2 className="w-4 h-4" />
                 Mark False Positive
@@ -354,12 +347,12 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
             </div>
 
             <div className="space-y-2 pt-2">
-              <label className="text-xs font-bold text-[#29332F]">Append Investigation Note</label>
+              <label className="text-xs font-bold text-[#111827]">Append Investigation Note</label>
               <textarea
                 value={noteContent}
                 onChange={(e) => setNoteContent(e.target.value)}
                 placeholder="Document evidence gathered, customer confirmation, or merchant contact..."
-                className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-xl p-3 text-xs text-[#29332F] placeholder-[#929A95] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+                className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-xl p-3 text-xs text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
                 rows={3}
               />
               <div className="flex justify-end">
@@ -379,7 +372,7 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
           </div>
         )}
 
-        <div className="flex justify-end pt-3 border-t border-[#E5DED5]">
+        <div className="flex justify-end pt-3 border-t border-[#E5E7EB]">
           <Button variant="secondary" size="sm" onClick={onClose}>
             Close Dossier
           </Button>

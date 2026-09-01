@@ -12,56 +12,47 @@
       theme: {
         extend: {
           colors: {
-            workspace: '#F7F4EF',
-            sidebarBg: '#DCE7E1',
-            sidebarSelected: '#C7D9D0',
-            sidebarText: '#26332F',
-            sidebarSelectedText: '#17231F',
-            cardBg: '#FFFDFC',
-            cardBorder: '#E5DED5',
-            primaryTeal: '#5F8F83',
-            primaryTealHover: '#4F7D72',
-            secondaryLavender: '#A99BBE',
-            infoDustyBlue: '#9DB7C5',
-            riskLowBg: '#A8C5B5',
-            riskLowText: '#35604B',
-            riskMedBg: '#E8C98A',
-            riskMedText: '#795B20',
-            riskHighBg: '#E8A98A',
-            riskHighText: '#8A472E',
-            riskCritBg: '#D99A9A',
-            riskCritText: '#7B3030',
-            textPrimary: '#29332F',
-            textSecondary: '#69736E',
-            textMuted: '#929A95',
+            workspace: '#FFFFFF',
+            sidebarBg: '#FFFFFF',
+            sidebarSelected: '#FFF7ED',
+            sidebarText: '#374151',
+            sidebarSelectedText: '#9A3412',
+            cardBg: '#FFFFFF',
+            cardBorder: '#E5E7EB',
+            primaryOrange: '#FB923C',
+            primaryOrangeHover: '#F97316',
+            orangeMutedBg: '#FFEDD5',
+            textPrimary: '#111827',
+            textSecondary: '#4B5563',
+            textMuted: '#9CA3AF',
           }
         }
       }
     }
   </script>
   <style>
-    body { background-color: #F7F4EF; color: #29332F; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; overflow-x: hidden; }
+    body { background-color: #FAFAFA; color: #111827; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; overflow-x: hidden; }
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #F7F4EF; }
-    ::-webkit-scrollbar-thumb { background: #DCE7E1; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #C7D9D0; }
-    .fintech-card { background: #FFFDFC; border: 1px solid #E5DED5; border-radius: 12px; box-shadow: 0 1px 3px rgba(41, 51, 47, 0.04); }
-    .nav-btn-active { background-color: #C7D9D0 !important; color: #17231F !important; font-weight: 600; border-left: 3px solid #5F8F83; }
+    ::-webkit-scrollbar-track { background: #FFFFFF; }
+    ::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #D1D5DB; }
+    .clean-card { background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 10px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03); }
+    .nav-btn-active { background-color: #FFF7ED !important; color: #9A3412 !important; font-weight: 600; border-left: 3px solid #FB923C; }
   </style>
 </head>
-<body class="min-h-screen flex">
+<body class="min-h-screen flex bg-[#FAFAFA]">
 
-  <!-- SAGE SIDEBAR -->
-  <aside class="w-64 bg-[#DCE7E1] border-r border-[#E5DED5] flex flex-col justify-between shrink-0 h-screen sticky top-0 z-40 shadow-sm">
+  <!-- WHITE SIDEBAR -->
+  <aside class="w-64 bg-white border-r border-[#E5E7EB] flex flex-col justify-between shrink-0 h-screen sticky top-0 z-40 shadow-sm">
     <div>
       <!-- Brand Header -->
-      <div class="h-16 flex items-center gap-3 px-5 border-b border-[#CCD9D2] bg-[#DCE7E1]">
-        <div class="w-9 h-9 rounded-xl bg-[#5F8F83] flex items-center justify-center shadow-sm">
-          <i class="fa-solid fa-shield-halved text-white text-base"></i>
+      <div class="h-16 flex items-center gap-3 px-5 border-b border-[#E5E7EB] bg-white">
+        <div class="w-8 h-8 rounded-lg bg-[#FFEDD5] text-[#EA580C] flex items-center justify-center font-bold text-sm border border-[#FDBA74]">
+          <i class="fa-solid fa-shield-halved"></i>
         </div>
         <div>
-          <h1 class="text-sm font-bold text-[#26332F] tracking-tight">FraudGuard AI</h1>
-          <p id="sidebar-role-label" class="text-[10px] text-[#4F7D72] font-semibold tracking-wider uppercase">Admin Console</p>
+          <h1 class="text-sm font-bold text-[#111827] tracking-tight">FraudGuard AI</h1>
+          <p id="sidebar-role-label" class="text-[10px] text-[#6B7280] font-semibold tracking-wider uppercase">Admin Console</p>
         </div>
       </div>
 
@@ -71,21 +62,21 @@
       </nav>
     </div>
 
-    <!-- User Profile & Quick Switch Footer -->
-    <div class="p-3 border-t border-[#CCD9D2] m-3 rounded-xl bg-[#E6EFEA] border border-[#CCD9D2]">
+    <!-- User Profile & Role Switcher Footer -->
+    <div class="p-3 border-t border-[#E5E7EB] m-3 rounded-lg bg-[#F9FAFB] border">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2.5 min-w-0">
-          <div class="w-7 h-7 rounded-lg bg-[#5F8F83]/20 flex items-center justify-center text-[#5F8F83] shrink-0 font-bold text-xs">
-            <i class="fa-solid fa-user-shield"></i>
+          <div class="w-7 h-7 rounded-md bg-[#FFEDD5] flex items-center justify-center text-[#EA580C] shrink-0 font-bold text-xs">
+            <i class="fa-solid fa-user"></i>
           </div>
           <div class="min-w-0">
-            <p id="user-display-name" class="text-[11px] font-bold text-[#26332F] truncate">Alexander Wright</p>
-            <span id="user-role-badge" class="text-[9px] px-1.5 py-0.2 rounded bg-[#C7D9D0] text-[#17231F] font-semibold">
+            <p id="user-display-name" class="text-[11px] font-bold text-[#111827] truncate">Alexander Wright</p>
+            <span id="user-role-badge" class="text-[9px] px-1.5 py-0.2 rounded bg-gray-200 text-gray-700 font-semibold">
               ADMIN
             </span>
           </div>
         </div>
-        <button onclick="toggleRole()" class="text-[10px] text-[#4F7D72] hover:text-[#26332F] font-semibold px-2 py-1 bg-[#DCE7E1] hover:bg-[#C7D9D0] rounded border border-[#CCD9D2] transition-colors" title="Toggle Demo Role">
+        <button onclick="toggleRole()" class="text-[10px] text-[#EA580C] hover:text-[#9A3412] font-semibold px-2 py-1 bg-white hover:bg-[#FFF7ED] rounded border border-[#E5E7EB] transition-colors" title="Toggle Demo Role">
           Switch
         </button>
       </div>
@@ -93,42 +84,36 @@
   </aside>
 
   <!-- MAIN WORKSPACE -->
-  <div class="flex-1 flex flex-col min-w-0 min-h-screen bg-[#F7F4EF]">
+  <div class="flex-1 flex flex-col min-w-0 min-h-screen bg-[#FAFAFA]">
     <!-- TOP HEADER -->
-    <header class="h-16 bg-[#FFFDFC]/90 border-b border-[#E5DED5] flex items-center justify-between px-8 sticky top-0 z-30 backdrop-blur-md">
+    <header class="h-16 bg-white/95 border-b border-[#E5E7EB] flex items-center justify-between px-8 sticky top-0 z-30 backdrop-blur-sm">
       <!-- Search Input -->
       <div class="w-96 relative">
-        <i class="fa-solid fa-magnifying-glass text-[#929A95] absolute left-3 top-1/2 -translate-y-1/2 text-xs"></i>
+        <i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 text-xs"></i>
         <input
           id="global-search"
           type="text"
           onkeyup="handleGlobalSearch(event)"
           placeholder="Search card (e.g. 4829), Tx ID, merchant, case..."
-          class="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg pl-9 pr-4 py-1.5 text-xs text-[#29332F] placeholder-[#929A95] focus:outline-none focus:ring-1 focus:ring-[#5F8F83] focus:border-[#5F8F83]"
+          class="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg pl-9 pr-4 py-1.5 text-xs text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#FB923C] focus:border-[#FB923C]"
         />
       </div>
 
       <!-- Action Tray -->
       <div class="flex items-center gap-4">
         <!-- Latency Pill -->
-        <div class="flex items-center gap-2 px-3 py-1.5 bg-[#FFFDFC] border border-[#E5DED5] rounded-lg text-xs">
-          <span class="w-2 h-2 rounded-full bg-[#5F8F83]"></span>
-          <span class="text-[#69736E] font-mono">P99 SLA: <strong class="text-[#35604B]">14.2ms</strong></span>
-        </div>
-
-        <!-- Live Radar Status -->
-        <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-[#A8C5B5]/20 border border-[#A8C5B5]/50 rounded-lg">
-          <i class="fa-solid fa-shield-check text-[#35604B] text-xs"></i>
-          <span class="text-xs text-[#35604B] font-semibold">Engine Active</span>
+        <div class="flex items-center gap-2 px-3 py-1.5 bg-white border border-[#E5E7EB] rounded-lg text-xs">
+          <span class="w-2 h-2 rounded-full bg-[#FB923C]"></span>
+          <span class="text-gray-500 font-mono">P99 SLA: <strong class="text-gray-900">14.2ms</strong></span>
         </div>
 
         <!-- Alert Notification Bell -->
-        <button onclick="switchTab('alerts')" class="p-2 bg-[#FFFDFC] border border-[#E5DED5] rounded-lg text-[#69736E] hover:text-[#29332F] transition-colors relative" title="View Alerts">
+        <button onclick="switchTab('alerts')" class="p-2 bg-white border border-[#E5E7EB] rounded-lg text-gray-500 hover:text-gray-900 transition-colors relative" title="View Alerts">
           <i class="fa-solid fa-bell text-xs"></i>
-          <span class="w-2 h-2 rounded-full bg-[#D99A9A] absolute top-1.5 right-1.5"></span>
+          <span class="w-2 h-2 rounded-full bg-[#FB923C] absolute top-1.5 right-1.5"></span>
         </button>
 
-        <a href="/api/v1/docs" target="_blank" class="px-3.5 py-1.5 rounded-lg bg-[#5F8F83] hover:bg-[#4F7D72] text-xs font-semibold text-white shadow-sm transition-all">
+        <a href="/api/v1/docs" target="_blank" class="px-3.5 py-1.5 rounded-lg bg-[#FB923C] hover:bg-[#F97316] text-xs font-semibold text-white shadow-sm transition-all">
           <i class="fa-solid fa-code mr-1"></i> API Docs
         </a>
       </div>
@@ -141,14 +126,13 @@
       <!-- TAB 1: EXECUTIVE OVERVIEW / DASHBOARD -->
       <!-- ======================================================== -->
       <section id="tab-dashboard" class="space-y-6">
-        <!-- Top Banner -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 class="text-2xl font-bold text-[#29332F] tracking-tight" id="dash-title">Executive Defense Overview</h2>
-            <p class="text-xs text-[#69736E] mt-1">Real-time telemetry, dollar savings, and machine learning gateway health.</p>
+            <h2 class="text-2xl font-bold text-[#111827] tracking-tight" id="dash-title">Executive Defense Overview</h2>
+            <p class="text-xs text-gray-500 mt-1">Real-time telemetry, dollar savings, and machine learning gateway health.</p>
           </div>
           <div class="flex items-center gap-3">
-            <button onclick="switchTab('live-monitor')" class="px-3.5 py-2 rounded-xl bg-[#5F8F83] hover:bg-[#4F7D72] text-xs font-semibold text-white shadow-sm flex items-center gap-2 transition-all">
+            <button onclick="switchTab('live-monitor')" class="px-3.5 py-2 rounded-lg bg-[#FB923C] hover:bg-[#F97316] text-xs font-semibold text-white shadow-sm flex items-center gap-2 transition-all">
               <i class="fa-solid fa-tower-broadcast"></i> Live Radar
             </button>
           </div>
@@ -156,70 +140,70 @@
 
         <!-- KPI Cards Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="p-5 fintech-card space-y-1">
-            <div class="flex items-center justify-between text-[#69736E] text-xs font-semibold uppercase">
+          <div class="p-5 clean-card space-y-1">
+            <div class="flex items-center justify-between text-gray-500 text-xs font-semibold uppercase">
               <span>Fraud Prevented (24h)</span>
-              <span class="w-6 h-6 rounded-lg bg-[#A8C5B5]/25 text-[#35604B] flex items-center justify-center text-xs">
+              <span class="w-6 h-6 rounded bg-gray-100 text-gray-700 flex items-center justify-center text-xs">
                 <i class="fa-solid fa-dollar-sign"></i>
               </span>
             </div>
-            <p id="kpi-fraud-prevented" class="text-2xl font-bold text-[#29332F] font-mono">$184,200.00</p>
-            <span class="text-[11px] text-[#35604B] font-semibold">+14.2% dollar savings</span>
+            <p id="kpi-fraud-prevented" class="text-2xl font-bold text-[#111827] font-mono">$184,200.00</p>
+            <span class="text-[11px] text-gray-600 font-medium">+14.2% savings</span>
           </div>
 
-          <div class="p-5 fintech-card space-y-1">
-            <div class="flex items-center justify-between text-[#69736E] text-xs font-semibold uppercase">
+          <div class="p-5 clean-card space-y-1">
+            <div class="flex items-center justify-between text-gray-500 text-xs font-semibold uppercase">
               <span>Global Fraud Rate</span>
-              <span class="w-6 h-6 rounded-lg bg-[#9DB7C5]/25 text-[#2563EB] flex items-center justify-center text-xs">
+              <span class="w-6 h-6 rounded bg-gray-100 text-gray-700 flex items-center justify-center text-xs">
                 <i class="fa-solid fa-arrow-trend-down"></i>
               </span>
             </div>
-            <p id="kpi-fraud-rate" class="text-2xl font-bold text-[#29332F] font-mono">0.42%</p>
-            <span class="text-[11px] text-[#35604B] font-semibold">-0.18% reduction</span>
+            <p id="kpi-fraud-rate" class="text-2xl font-bold text-[#111827] font-mono">0.42%</p>
+            <span class="text-[11px] text-gray-600 font-medium">-0.18% reduction</span>
           </div>
 
-          <div class="p-5 fintech-card space-y-1">
-            <div class="flex items-center justify-between text-[#69736E] text-xs font-semibold uppercase">
+          <div class="p-5 clean-card space-y-1">
+            <div class="flex items-center justify-between text-gray-500 text-xs font-semibold uppercase">
               <span>Active Alerts</span>
-              <span class="w-6 h-6 rounded-lg bg-[#E8C98A]/30 text-[#795B20] flex items-center justify-center text-xs">
+              <span class="w-6 h-6 rounded bg-[#FFEDD5] text-[#EA580C] flex items-center justify-center text-xs">
                 <i class="fa-solid fa-bell"></i>
               </span>
             </div>
-            <p id="kpi-active-alerts" class="text-2xl font-bold text-[#29332F] font-mono">18</p>
-            <span class="text-[11px] text-[#795B20] font-semibold">4 Critical Priority</span>
+            <p id="kpi-active-alerts" class="text-2xl font-bold text-[#111827] font-mono">18</p>
+            <span class="text-[11px] text-[#EA580C] font-semibold">4 Critical Priority</span>
           </div>
 
-          <div class="p-5 fintech-card space-y-1">
-            <div class="flex items-center justify-between text-[#69736E] text-xs font-semibold uppercase">
+          <div class="p-5 clean-card space-y-1">
+            <div class="flex items-center justify-between text-gray-500 text-xs font-semibold uppercase">
               <span>P99 Inference SLA</span>
-              <span class="w-6 h-6 rounded-lg bg-[#A8C5B5]/25 text-[#35604B] flex items-center justify-center text-xs">
+              <span class="w-6 h-6 rounded bg-gray-100 text-gray-700 flex items-center justify-center text-xs">
                 <i class="fa-solid fa-bolt"></i>
               </span>
             </div>
-            <p id="kpi-latency" class="text-2xl font-bold text-[#35604B] font-mono">14.2ms</p>
-            <span class="text-[11px] text-[#69736E]">Sub-20ms Target</span>
+            <p id="kpi-latency" class="text-2xl font-bold text-gray-900 font-mono">14.2ms</p>
+            <span class="text-[11px] text-gray-500">Sub-20ms Target</span>
           </div>
         </div>
 
         <!-- Charts Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 fintech-card p-5 space-y-4">
+          <div class="lg:col-span-2 clean-card p-5 space-y-4">
             <div class="flex items-center justify-between">
               <div>
-                <h3 class="font-bold text-[#29332F] text-sm">24h Fraud Velocity & Volume</h3>
-                <p class="text-xs text-[#69736E]">Total authorized volume vs intercepted fraudulent volume</p>
+                <h3 class="font-bold text-[#111827] text-sm">24h Fraud Velocity & Volume</h3>
+                <p class="text-xs text-gray-500">Total authorized volume vs intercepted fraudulent volume</p>
               </div>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-[#DCE7E1] text-[#26332F] font-mono font-semibold">Rolling 24h</span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-gray-100 text-gray-700 font-mono font-semibold">Rolling 24h</span>
             </div>
             <div class="h-64">
               <canvas id="chart-hourly-trend"></canvas>
             </div>
           </div>
 
-          <div class="fintech-card p-5 space-y-4">
+          <div class="clean-card p-5 space-y-4">
             <div>
-              <h3 class="font-bold text-[#29332F] text-sm">Ensemble Model ROC-AUC</h3>
-              <p class="text-xs text-[#69736E]">Discrimination index across thresholds</p>
+              <h3 class="font-bold text-[#111827] text-sm">Ensemble Model ROC-AUC</h3>
+              <p class="text-xs text-gray-500">Discrimination index across thresholds</p>
             </div>
             <div class="h-64">
               <canvas id="chart-roc-curve"></canvas>
@@ -228,19 +212,19 @@
         </div>
 
         <!-- Recent Transactions Table Card -->
-        <div class="fintech-card p-5 space-y-4">
+        <div class="clean-card p-5 space-y-4">
           <div class="flex items-center justify-between">
             <div>
-              <h3 class="font-bold text-[#29332F] text-sm">Recent High-Risk Authorizations</h3>
-              <p class="text-xs text-[#69736E]">Evaluated in real-time by dynamic AST rules & gradient boosting</p>
+              <h3 class="font-bold text-[#111827] text-sm">Recent High-Risk Authorizations</h3>
+              <p class="text-xs text-gray-500">Evaluated in real-time by dynamic rules and gradient boosting</p>
             </div>
-            <button onclick="switchTab('transactions')" class="text-xs text-[#5F8F83] hover:underline font-semibold flex items-center gap-1">
+            <button onclick="switchTab('transactions')" class="text-xs text-[#EA580C] hover:underline font-semibold flex items-center gap-1">
               View All <i class="fa-solid fa-arrow-right text-[10px]"></i>
             </button>
           </div>
           <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs text-[#29332F]">
-              <thead class="bg-[#F7F4EF] text-[11px] text-[#69736E] uppercase tracking-wider border-b border-[#E5DED5]">
+            <table class="w-full text-left text-xs text-gray-900">
+              <thead class="bg-[#F9FAFB] text-[11px] text-gray-500 uppercase tracking-wider border-b border-[#E5E7EB]">
                 <tr>
                   <th class="py-3 px-4">Tx ID</th>
                   <th class="py-3 px-4">Masked Card</th>
@@ -251,7 +235,7 @@
                   <th class="py-3 px-4 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody id="dash-recent-txs" class="divide-y divide-[#E5DED5]/60">
+              <tbody id="dash-recent-txs" class="divide-y divide-[#E5E7EB]">
                 <!-- Injected via JS -->
               </tbody>
             </table>
@@ -265,32 +249,32 @@
       <section id="tab-transactions" class="space-y-6 hidden">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 class="text-2xl font-bold text-[#29332F] tracking-tight">Authorization Transactions Ledger</h2>
-            <p class="text-xs text-[#69736E] mt-1">Real-time ledger with PCI-DSS masked card numbers, multi-attribute filtering, and XAI inspection.</p>
+            <h2 class="text-2xl font-bold text-[#111827] tracking-tight">Authorization Transactions Ledger</h2>
+            <p class="text-xs text-gray-500 mt-1">Real-time ledger with PCI-DSS masked card numbers, multi-attribute filtering, and XAI inspection.</p>
           </div>
           <div class="flex items-center gap-2">
-            <button onclick="loadTransactions(1)" class="px-3 py-1.5 bg-[#FFFDFC] hover:bg-[#F7F4EF] border border-[#E5DED5] rounded-lg text-xs font-semibold text-[#29332F]">
+            <button onclick="loadTransactions(1)" class="px-3 py-1.5 bg-white hover:bg-gray-50 border border-[#E5E7EB] rounded-lg text-xs font-semibold text-gray-700">
               <i class="fa-solid fa-arrows-rotate mr-1"></i> Refresh
             </button>
-            <a href="/api/v1/reports/export/csv?type=TRANSACTIONS" download class="px-3.5 py-1.5 bg-[#5F8F83] hover:bg-[#4F7D72] rounded-lg text-xs font-semibold text-white shadow-sm">
+            <a href="/api/v1/reports/export/csv?type=TRANSACTIONS" download class="px-3.5 py-1.5 bg-[#FB923C] hover:bg-[#F97316] rounded-lg text-xs font-semibold text-white shadow-sm">
               <i class="fa-solid fa-download mr-1"></i> Export CSV
             </a>
           </div>
         </div>
 
         <!-- Filter Card -->
-        <div class="fintech-card p-4 flex flex-wrap items-center gap-3">
+        <div class="clean-card p-4 flex flex-wrap items-center gap-3">
           <div class="relative flex-1 min-w-[200px]">
-            <i class="fa-solid fa-magnifying-glass text-[#929A95] absolute left-3 top-1/2 -translate-y-1/2 text-xs"></i>
+            <i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 text-xs"></i>
             <input
               id="tx-filter-search"
               type="text"
               placeholder="Search ID, Card (e.g. 4829), Merchant, Country..."
-              class="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg pl-9 pr-3 py-1.5 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+              class="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg pl-9 pr-3 py-1.5 text-xs text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
             />
           </div>
 
-          <select id="tx-filter-risk" onchange="loadTransactions(1)" class="bg-[#F7F4EF] border border-[#E5DED5] rounded-lg px-3 py-1.5 text-xs text-[#29332F]">
+          <select id="tx-filter-risk" onchange="loadTransactions(1)" class="bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg px-3 py-1.5 text-xs text-gray-800">
             <option value="ALL">All Risk Tiers</option>
             <option value="LOW">Low Risk</option>
             <option value="MEDIUM">Medium Risk</option>
@@ -298,7 +282,7 @@
             <option value="CRITICAL">Critical Risk</option>
           </select>
 
-          <select id="tx-filter-decision" onchange="loadTransactions(1)" class="bg-[#F7F4EF] border border-[#E5DED5] rounded-lg px-3 py-1.5 text-xs text-[#29332F]">
+          <select id="tx-filter-decision" onchange="loadTransactions(1)" class="bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg px-3 py-1.5 text-xs text-gray-800">
             <option value="ALL">All Decisions</option>
             <option value="ALLOW">ALLOW (Approved)</option>
             <option value="REVIEW">REVIEW (Flagged)</option>
@@ -306,16 +290,16 @@
             <option value="DECLINE">DECLINE (Blocked)</option>
           </select>
 
-          <button onclick="loadTransactions(1)" class="px-3.5 py-1.5 bg-[#5F8F83] hover:bg-[#4F7D72] text-xs font-semibold text-white rounded-lg shadow-sm">
+          <button onclick="loadTransactions(1)" class="px-3.5 py-1.5 bg-[#FB923C] hover:bg-[#F97316] text-xs font-semibold text-white rounded-lg shadow-sm">
             Apply Filters
           </button>
         </div>
 
         <!-- Transactions Table -->
-        <div class="fintech-card overflow-hidden">
+        <div class="clean-card overflow-hidden">
           <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs text-[#29332F]">
-              <thead class="bg-[#F7F4EF] text-[11px] text-[#69736E] uppercase tracking-wider border-b border-[#E5DED5]">
+            <table class="w-full text-left text-xs text-gray-900">
+              <thead class="bg-[#F9FAFB] text-[11px] text-gray-500 uppercase tracking-wider border-b border-[#E5E7EB]">
                 <tr>
                   <th class="py-3.5 px-4 font-semibold">Tx ID</th>
                   <th class="py-3.5 px-4 font-semibold">Masked Card</th>
@@ -327,19 +311,19 @@
                   <th class="py-3.5 px-4 font-semibold text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody id="txs-table-body" class="divide-y divide-[#E5DED5]/60">
+              <tbody id="txs-table-body" class="divide-y divide-[#E5E7EB]">
                 <!-- Injected via JS -->
               </tbody>
             </table>
           </div>
 
           <!-- Pagination Bar -->
-          <div class="p-4 border-t border-[#E5DED5] flex items-center justify-between text-xs text-[#69736E]">
+          <div class="p-4 border-t border-[#E5E7EB] flex items-center justify-between text-xs text-gray-500">
             <div id="tx-pagination-info">Showing 1 to 20 transactions</div>
             <div class="flex items-center gap-2">
-              <button id="tx-prev-btn" onclick="paginateTx(-1)" class="px-3 py-1 bg-[#F7F4EF] border border-[#E5DED5] rounded text-[#29332F] hover:bg-[#E5DED5] disabled:opacity-50">Previous</button>
-              <span id="tx-page-num" class="font-semibold text-[#29332F]">Page 1</span>
-              <button id="tx-next-btn" onclick="paginateTx(1)" class="px-3 py-1 bg-[#F7F4EF] border border-[#E5DED5] rounded text-[#29332F] hover:bg-[#E5DED5] disabled:opacity-50">Next</button>
+              <button id="tx-prev-btn" onclick="paginateTx(-1)" class="px-3 py-1 bg-white border border-[#E5E7EB] rounded text-gray-700 hover:bg-gray-50 disabled:opacity-50">Previous</button>
+              <span id="tx-page-num" class="font-semibold text-gray-900">Page 1</span>
+              <button id="tx-next-btn" onclick="paginateTx(1)" class="px-3 py-1 bg-white border border-[#E5E7EB] rounded text-gray-700 hover:bg-gray-50 disabled:opacity-50">Next</button>
             </div>
           </div>
         </div>
@@ -352,20 +336,20 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div class="flex items-center gap-2">
-              <i class="fa-solid fa-tower-broadcast text-[#5F8F83] text-xl"></i>
-              <h2 class="text-2xl font-bold text-[#29332F] tracking-tight">Live Threat Radar</h2>
+              <i class="fa-solid fa-tower-broadcast text-[#EA580C] text-xl"></i>
+              <h2 class="text-2xl font-bold text-[#111827] tracking-tight">Live Threat Radar</h2>
             </div>
-            <p class="text-xs text-[#69736E] mt-1">Real-time streaming authorization feed connected via WebSockets.</p>
+            <p class="text-xs text-gray-500 mt-1">Real-time streaming authorization feed connected via WebSockets.</p>
           </div>
 
           <div class="flex items-center gap-2">
-            <button id="btn-stream-toggle" onclick="toggleStreamSimulation()" class="px-4 py-2 rounded-xl bg-[#5F8F83] hover:bg-[#4F7D72] text-xs font-semibold text-white shadow-sm flex items-center gap-2">
+            <button id="btn-stream-toggle" onclick="toggleStreamSimulation()" class="px-4 py-2 rounded-lg bg-[#FB923C] hover:bg-[#F97316] text-xs font-semibold text-white shadow-sm flex items-center gap-2">
               <i class="fa-solid fa-play"></i> <span id="stream-btn-label">Start Ingestion</span>
             </button>
-            <button onclick="injectAttackScenario('ACCOUNT_TAKEOVER')" class="px-3 py-2 rounded-xl bg-[#E8A98A]/30 hover:bg-[#E8A98A]/50 border border-[#E8A98A] text-xs font-semibold text-[#8A472E]">
+            <button onclick="injectAttackScenario('ACCOUNT_TAKEOVER')" class="px-3 py-2 rounded-lg bg-[#FFEDD5] hover:bg-[#FED7AA] border border-[#FDBA74] text-xs font-semibold text-[#9A3412]">
               <i class="fa-solid fa-bolt mr-1"></i> Attack Wave
             </button>
-            <button onclick="clearStreamBuffer()" class="px-3 py-2 bg-[#FFFDFC] hover:bg-[#F7F4EF] border border-[#E5DED5] rounded-xl text-xs font-semibold text-[#29332F]">
+            <button onclick="clearStreamBuffer()" class="px-3 py-2 bg-white hover:bg-gray-50 border border-[#E5E7EB] rounded-lg text-xs font-semibold text-gray-700">
               Clear Buffer
             </button>
           </div>
@@ -373,33 +357,33 @@
 
         <!-- Stream Stats -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div class="p-4 fintech-card">
-            <span class="text-[11px] text-[#69736E] uppercase font-semibold">Socket State</span>
+          <div class="p-4 clean-card">
+            <span class="text-[11px] text-gray-500 uppercase font-semibold">Socket State</span>
             <div class="flex items-center gap-2 mt-1">
-              <span class="w-2.5 h-2.5 rounded-full bg-[#A8C5B5]"></span>
-              <span class="text-sm font-bold text-[#35604B]">CONNECTED</span>
+              <span class="w-2.5 h-2.5 rounded-full bg-gray-900"></span>
+              <span class="text-sm font-bold text-gray-900">CONNECTED</span>
             </div>
           </div>
-          <div class="p-4 fintech-card">
-            <span class="text-[11px] text-[#69736E] uppercase font-semibold">Buffer Count</span>
-            <p id="stream-count" class="text-sm font-bold text-[#29332F] mt-1">0 Events</p>
+          <div class="p-4 clean-card">
+            <span class="text-[11px] text-gray-500 uppercase font-semibold">Buffer Count</span>
+            <p id="stream-count" class="text-sm font-bold text-gray-900 mt-1">0 Events</p>
           </div>
-          <div class="p-4 fintech-card">
-            <span class="text-[11px] text-[#795B20] uppercase font-semibold">Flagged for Review</span>
-            <p id="stream-review-count" class="text-sm font-bold text-[#795B20] mt-1">0</p>
+          <div class="p-4 clean-card">
+            <span class="text-[11px] text-gray-500 uppercase font-semibold">Flagged for Review</span>
+            <p id="stream-review-count" class="text-sm font-bold text-gray-900 mt-1">0</p>
           </div>
-          <div class="p-4 fintech-card">
-            <span class="text-[11px] text-[#7B3030] uppercase font-semibold">Declined Frauds</span>
-            <p id="stream-decline-count" class="text-sm font-bold text-[#7B3030] mt-1">0</p>
+          <div class="p-4 clean-card">
+            <span class="text-[11px] text-[#EA580C] uppercase font-semibold">Declined Frauds</span>
+            <p id="stream-decline-count" class="text-sm font-bold text-[#EA580C] mt-1">0</p>
           </div>
         </div>
 
         <!-- Live Stream Stream Card -->
-        <div class="fintech-card p-5 space-y-3">
-          <h3 class="font-bold text-[#29332F] text-sm">Streaming Ingestion Feed (Sub-20ms)</h3>
-          <p class="text-xs text-[#69736E]">Click any card to open instant SHAP feature waterfall breakdown.</p>
+        <div class="clean-card p-5 space-y-3">
+          <h3 class="font-bold text-[#111827] text-sm">Streaming Ingestion Feed (Sub-20ms)</h3>
+          <p class="text-xs text-gray-500">Click any card to open instant SHAP feature waterfall breakdown.</p>
           <div id="stream-cards-container" class="space-y-2 max-h-[500px] overflow-y-auto pr-1">
-            <div class="py-16 text-center text-xs text-[#929A95]">Live feed active. Authorizations streaming in real-time...</div>
+            <div class="py-16 text-center text-xs text-gray-400">Live feed active. Authorizations streaming in real-time...</div>
           </div>
         </div>
       </section>
@@ -411,20 +395,20 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div class="flex items-center gap-2">
-              <i class="fa-solid fa-bell text-[#E8A98A] text-xl"></i>
-              <h2 class="text-2xl font-bold text-[#29332F] tracking-tight">Fraud Alert Center</h2>
+              <i class="fa-solid fa-bell text-[#EA580C] text-xl"></i>
+              <h2 class="text-2xl font-bold text-[#111827] tracking-tight">Fraud Alert Center</h2>
             </div>
-            <p class="text-xs text-[#69736E] mt-1">Security triggers, impossible travel anomalies, and credential brute force alerts.</p>
+            <p class="text-xs text-gray-500 mt-1">Security triggers, impossible travel anomalies, and credential brute force alerts.</p>
           </div>
-          <button onclick="loadAlerts()" class="px-3 py-1.5 bg-[#FFFDFC] border border-[#E5DED5] rounded-lg text-xs text-[#29332F]">
+          <button onclick="loadAlerts()" class="px-3 py-1.5 bg-white border border-[#E5E7EB] rounded-lg text-xs text-gray-700">
             <i class="fa-solid fa-arrows-rotate mr-1"></i> Refresh
           </button>
         </div>
 
-        <div class="fintech-card overflow-hidden">
+        <div class="clean-card overflow-hidden">
           <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs text-[#29332F]">
-              <thead class="bg-[#F7F4EF] text-[11px] text-[#69736E] uppercase tracking-wider border-b border-[#E5DED5]">
+            <table class="w-full text-left text-xs text-gray-900">
+              <thead class="bg-[#F9FAFB] text-[11px] text-gray-500 uppercase tracking-wider border-b border-[#E5E7EB]">
                 <tr>
                   <th class="py-3.5 px-4">Alert ID</th>
                   <th class="py-3.5 px-4">Transaction / Card</th>
@@ -436,7 +420,7 @@
                   <th class="py-3.5 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody id="alerts-table-body" class="divide-y divide-[#E5DED5]/60">
+              <tbody id="alerts-table-body" class="divide-y divide-[#E5E7EB]">
                 <!-- Injected via JS -->
               </tbody>
             </table>
@@ -451,17 +435,17 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div class="flex items-center gap-2">
-              <i class="fa-solid fa-shield-halved text-[#5F8F83] text-xl"></i>
-              <h2 class="text-2xl font-bold text-[#29332F] tracking-tight">Case Management & Dispute Defense</h2>
+              <i class="fa-solid fa-shield-halved text-[#FB923C] text-xl"></i>
+              <h2 class="text-2xl font-bold text-[#111827] tracking-tight">Case Management & Dispute Defense</h2>
             </div>
-            <p class="text-xs text-[#69736E] mt-1">Full investigation dossiers, SLA timers, and chargeback arbitration evidence packages.</p>
+            <p class="text-xs text-gray-500 mt-1">Full investigation dossiers, SLA timers, and chargeback arbitration evidence packages.</p>
           </div>
         </div>
 
-        <div class="fintech-card overflow-hidden">
+        <div class="clean-card overflow-hidden">
           <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs text-[#29332F]">
-              <thead class="bg-[#F7F4EF] text-[11px] text-[#69736E] uppercase tracking-wider border-b border-[#E5DED5]">
+            <table class="w-full text-left text-xs text-gray-900">
+              <thead class="bg-[#F9FAFB] text-[11px] text-gray-500 uppercase tracking-wider border-b border-[#E5E7EB]">
                 <tr>
                   <th class="py-3.5 px-4">Case #</th>
                   <th class="py-3.5 px-4">Transaction / Masked Card</th>
@@ -473,7 +457,7 @@
                   <th class="py-3.5 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody id="cases-table-body" class="divide-y divide-[#E5DED5]/60">
+              <tbody id="cases-table-body" class="divide-y divide-[#E5E7EB]">
                 <!-- Injected via JS -->
               </tbody>
             </table>
@@ -486,8 +470,8 @@
       <!-- ======================================================== -->
       <section id="tab-customers" class="space-y-6 hidden">
         <div>
-          <h2 class="text-2xl font-bold text-[#29332F] tracking-tight">Customer & Card 360° Intelligence</h2>
-          <p class="text-xs text-[#69736E] mt-1">Cardholder identity baselines, 30-day spending normalcy, and historical dispute records.</p>
+          <h2 class="text-2xl font-bold text-[#111827] tracking-tight">Customer & Card 360° Intelligence</h2>
+          <p class="text-xs text-gray-500 mt-1">Cardholder identity baselines, 30-day spending normalcy, and historical dispute records.</p>
         </div>
 
         <div id="customers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -500,8 +484,8 @@
       <!-- ======================================================== -->
       <section id="tab-models" class="space-y-6 hidden">
         <div>
-          <h2 class="text-2xl font-bold text-[#29332F] tracking-tight">MLOps Model Governance & Champion/Challenger</h2>
-          <p class="text-xs text-[#69736E] mt-1">Ensemble models (XGBoost, LightGBM, CatBoost, Autoencoders, Graph Syndicates) with live traffic allocation.</p>
+          <h2 class="text-2xl font-bold text-[#111827] tracking-tight">MLOps Model Governance & Champion/Challenger</h2>
+          <p class="text-xs text-gray-500 mt-1">Ensemble models (XGBoost, LightGBM, CatBoost, Autoencoders, Graph Syndicates) with live traffic allocation.</p>
         </div>
 
         <div id="models-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -515,41 +499,41 @@
       <section id="tab-analytics" class="space-y-6 hidden">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 class="text-2xl font-bold text-[#29332F] tracking-tight">Fraud Analytics & Risk Intelligence</h2>
-            <p class="text-xs text-[#69736E] mt-1">Multi-dimensional analysis of MCC exposure, payment channels, and team productivity.</p>
+            <h2 class="text-2xl font-bold text-[#111827] tracking-tight">Fraud Analytics & Risk Intelligence</h2>
+            <p class="text-xs text-gray-500 mt-1">Multi-dimensional analysis of MCC exposure, payment channels, and team productivity.</p>
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="fintech-card p-5 space-y-3">
-            <h3 class="font-bold text-[#29332F] text-sm">Merchant MCC Category Risk</h3>
+          <div class="clean-card p-5 space-y-3">
+            <h3 class="font-bold text-[#111827] text-sm">Merchant MCC Category Risk</h3>
             <div class="overflow-x-auto">
-              <table class="w-full text-left text-xs text-[#29332F]">
-                <thead class="bg-[#F7F4EF] text-[10px] text-[#69736E] uppercase border-b border-[#E5DED5]">
+              <table class="w-full text-left text-xs text-gray-900">
+                <thead class="bg-[#F9FAFB] text-[10px] text-gray-500 uppercase border-b border-[#E5E7EB]">
                   <tr>
                     <th class="py-2.5 px-3">Category</th>
                     <th class="py-2.5 px-3">Fraud Rate</th>
                     <th class="py-2.5 px-3 text-right">Risk Index</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-[#E5DED5]/60">
-                  <tr><td class="py-2.5 px-3 font-semibold">Electronics & High-Tech</td><td class="py-2.5 px-3 text-[#7B3030] font-mono font-bold">4.15%</td><td class="py-2.5 px-3 text-right text-[#795B20] font-mono">58</td></tr>
-                  <tr><td class="py-2.5 px-3 font-semibold">Crypto Asset Exchanges</td><td class="py-2.5 px-3 text-[#7B3030] font-mono font-bold">11.01%</td><td class="py-2.5 px-3 text-right text-[#7B3030] font-mono">72</td></tr>
-                  <tr><td class="py-2.5 px-3 font-semibold">Luxury Goods & Jewelry</td><td class="py-2.5 px-3 text-[#7B3030] font-mono font-bold">9.05%</td><td class="py-2.5 px-3 text-right text-[#795B20] font-mono">64</td></tr>
-                  <tr><td class="py-2.5 px-3 font-semibold">Airlines & Travel</td><td class="py-2.5 px-3 text-[#795B20] font-mono font-bold">2.88%</td><td class="py-2.5 px-3 text-right text-[#35604B] font-mono">35</td></tr>
-                  <tr><td class="py-2.5 px-3 font-semibold">Grocery & Supermarkets</td><td class="py-2.5 px-3 text-[#35604B] font-mono font-bold">0.30%</td><td class="py-2.5 px-3 text-right text-[#35604B] font-mono">08</td></tr>
+                <tbody class="divide-y divide-[#E5E7EB]">
+                  <tr><td class="py-2.5 px-3 font-semibold">Electronics & High-Tech</td><td class="py-2.5 px-3 text-[#EA580C] font-mono font-bold">4.15%</td><td class="py-2.5 px-3 text-right text-gray-700 font-mono">58</td></tr>
+                  <tr><td class="py-2.5 px-3 font-semibold">Crypto Asset Exchanges</td><td class="py-2.5 px-3 text-[#EA580C] font-mono font-bold">11.01%</td><td class="py-2.5 px-3 text-right text-[#EA580C] font-mono">72</td></tr>
+                  <tr><td class="py-2.5 px-3 font-semibold">Luxury Goods & Jewelry</td><td class="py-2.5 px-3 text-[#EA580C] font-mono font-bold">9.05%</td><td class="py-2.5 px-3 text-right text-gray-700 font-mono">64</td></tr>
+                  <tr><td class="py-2.5 px-3 font-semibold">Airlines & Travel</td><td class="py-2.5 px-3 text-gray-700 font-mono font-bold">2.88%</td><td class="py-2.5 px-3 text-right text-gray-700 font-mono">35</td></tr>
+                  <tr><td class="py-2.5 px-3 font-semibold">Grocery & Supermarkets</td><td class="py-2.5 px-3 text-gray-700 font-mono font-bold">0.30%</td><td class="py-2.5 px-3 text-right text-gray-700 font-mono">08</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
 
-          <div class="fintech-card p-5 space-y-3">
-            <h3 class="font-bold text-[#29332F] text-sm">Payment Channel Distribution</h3>
+          <div class="clean-card p-5 space-y-3">
+            <h3 class="font-bold text-[#111827] text-sm">Payment Channel Distribution</h3>
             <div class="space-y-2.5">
-              <div class="p-3 bg-[#F7F4EF] rounded-xl flex justify-between text-xs"><span>Online / CNP Web Checkout</span><strong class="text-[#5F8F83]">45.2% (1.50% Fraud)</strong></div>
-              <div class="p-3 bg-[#F7F4EF] rounded-xl flex justify-between text-xs"><span>Mobile In-App Purchases</span><strong class="text-[#5F8F83]">32.1% (0.81% Fraud)</strong></div>
-              <div class="p-3 bg-[#F7F4EF] rounded-xl flex justify-between text-xs"><span>POS Contactless (NFC)</span><strong class="text-[#35604B]">14.5% (0.30% Fraud)</strong></div>
-              <div class="p-3 bg-[#F7F4EF] rounded-xl flex justify-between text-xs"><span>POS EMV Physical Chip</span><strong class="text-[#35604B]">6.2% (0.15% Fraud)</strong></div>
+              <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB] flex justify-between text-xs"><span>Online / CNP Web Checkout</span><strong class="text-gray-900">45.2% (1.50% Fraud)</strong></div>
+              <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB] flex justify-between text-xs"><span>Mobile In-App Purchases</span><strong class="text-gray-900">32.1% (0.81% Fraud)</strong></div>
+              <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB] flex justify-between text-xs"><span>POS Contactless (NFC)</span><strong class="text-gray-900">14.5% (0.30% Fraud)</strong></div>
+              <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB] flex justify-between text-xs"><span>POS EMV Physical Chip</span><strong class="text-gray-900">6.2% (0.15% Fraud)</strong></div>
             </div>
           </div>
         </div>
@@ -561,23 +545,23 @@
       <section id="tab-reports" class="space-y-6 hidden">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 class="text-2xl font-bold text-[#29332F] tracking-tight">Compliance & Intelligence Reports</h2>
-            <p class="text-xs text-[#69736E] mt-1">Export executive briefs, dispute summaries, and RFC-4180 formatted audit logs.</p>
+            <h2 class="text-2xl font-bold text-[#111827] tracking-tight">Compliance & Intelligence Reports</h2>
+            <p class="text-xs text-gray-500 mt-1">Export executive briefs, dispute summaries, and RFC-4180 formatted audit logs.</p>
           </div>
           <div class="flex items-center gap-2">
-            <button onclick="window.print()" class="px-3 py-1.5 bg-[#FFFDFC] border border-[#E5DED5] rounded-lg text-xs text-[#29332F]">
+            <button onclick="window.print()" class="px-3 py-1.5 bg-white border border-[#E5E7EB] rounded-lg text-xs text-gray-700">
               <i class="fa-solid fa-print mr-1"></i> Print
             </button>
-            <a id="report-download-btn" href="/api/v1/reports/export/csv?type=DAILY_FRAUD" download class="px-3.5 py-1.5 bg-[#5F8F83] hover:bg-[#4F7D72] rounded-lg text-xs font-semibold text-white shadow-sm">
+            <a id="report-download-btn" href="/api/v1/reports/export/csv?type=DAILY_FRAUD" download class="px-3.5 py-1.5 bg-[#FB923C] hover:bg-[#F97316] rounded-lg text-xs font-semibold text-white shadow-sm">
               <i class="fa-solid fa-download mr-1"></i> Download CSV
             </a>
           </div>
         </div>
 
-        <div class="fintech-card p-5 space-y-4">
+        <div class="clean-card p-5 space-y-4">
           <div class="flex items-center justify-between">
-            <h3 class="font-bold text-[#29332F] text-sm">Select Report Dossier</h3>
-            <select id="report-type-select" onchange="generateReportPreview()" class="bg-[#F7F4EF] border border-[#E5DED5] rounded-lg px-3 py-1.5 text-xs text-[#29332F]">
+            <h3 class="font-bold text-[#111827] text-sm">Select Report Dossier</h3>
+            <select id="report-type-select" onchange="generateReportPreview()" class="bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg px-3 py-1.5 text-xs text-gray-900">
               <option value="DAILY_FRAUD">Daily Executive Fraud Digest</option>
               <option value="WEEKLY_FRAUD">Weekly Threat Surveillance</option>
               <option value="MONTHLY_FRAUD">Monthly Risk Management</option>
@@ -599,15 +583,15 @@
       <section id="tab-users" class="space-y-6 hidden">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 class="text-2xl font-bold text-[#29332F] tracking-tight">Platform User Management</h2>
-            <p class="text-xs text-[#69736E] mt-1">Manage risk analyst accounts, roles, access policies, and credentials.</p>
+            <h2 class="text-2xl font-bold text-[#111827] tracking-tight">Platform User Management</h2>
+            <p class="text-xs text-gray-500 mt-1">Manage risk analyst accounts, roles, access policies, and credentials.</p>
           </div>
         </div>
 
-        <div class="fintech-card overflow-hidden">
+        <div class="clean-card overflow-hidden">
           <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs text-[#29332F]">
-              <thead class="bg-[#F7F4EF] text-[11px] text-[#69736E] uppercase tracking-wider border-b border-[#E5DED5]">
+            <table class="w-full text-left text-xs text-gray-900">
+              <thead class="bg-[#F9FAFB] text-[11px] text-gray-500 uppercase tracking-wider border-b border-[#E5E7EB]">
                 <tr>
                   <th class="py-3.5 px-4">User</th>
                   <th class="py-3.5 px-4">Email</th>
@@ -617,7 +601,7 @@
                   <th class="py-3.5 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody id="users-table-body" class="divide-y divide-[#E5DED5]/60">
+              <tbody id="users-table-body" class="divide-y divide-[#E5E7EB]">
                 <!-- Injected via JS -->
               </tbody>
             </table>
@@ -630,43 +614,43 @@
       <!-- ======================================================== -->
       <section id="tab-settings" class="space-y-6 hidden">
         <div>
-          <h2 class="text-2xl font-bold text-[#29332F] tracking-tight">System Settings & Risk Policies</h2>
-          <p class="text-xs text-[#69736E] mt-1">Normalized risk score cutoff boundaries, automated decline triggers, and health probes.</p>
+          <h2 class="text-2xl font-bold text-[#111827] tracking-tight">System Settings & Risk Policies</h2>
+          <p class="text-xs text-gray-500 mt-1">Normalized risk score cutoff boundaries, automated decline triggers, and health probes.</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="fintech-card p-6 space-y-4">
-            <h3 class="font-bold text-[#29332F] text-sm flex items-center gap-2">
-              <i class="fa-solid fa-shield text-[#5F8F83]"></i> Risk Score Cutoffs (0.00 - 1.00)
+          <div class="clean-card p-6 space-y-4">
+            <h3 class="font-bold text-[#111827] text-sm flex items-center gap-2">
+              <i class="fa-solid fa-shield text-[#EA580C]"></i> Risk Score Cutoffs (0.00 - 1.00)
             </h3>
             <div class="space-y-3 text-xs">
               <div>
-                <label class="text-[#35604B] font-semibold flex justify-between">Low Risk Upper Bound (ALLOW): <span id="val-low">0.30</span></label>
-                <input id="input-low" type="range" min="0.1" max="0.5" step="0.05" value="0.30" oninput="document.getElementById('val-low').innerText = this.value" class="w-full accent-[#5F8F83]">
+                <label class="text-gray-700 font-semibold flex justify-between">Low Risk Upper Bound (ALLOW): <span id="val-low">0.30</span></label>
+                <input id="input-low" type="range" min="0.1" max="0.5" step="0.05" value="0.30" oninput="document.getElementById('val-low').innerText = this.value" class="w-full accent-gray-600">
               </div>
               <div>
-                <label class="text-[#795B20] font-semibold flex justify-between">Medium Risk Upper Bound (REVIEW): <span id="val-med">0.60</span></label>
-                <input id="input-med" type="range" min="0.4" max="0.75" step="0.05" value="0.60" oninput="document.getElementById('val-med').innerText = this.value" class="w-full accent-[#E8C98A]">
+                <label class="text-gray-700 font-semibold flex justify-between">Medium Risk Upper Bound (REVIEW): <span id="val-med">0.60</span></label>
+                <input id="input-med" type="range" min="0.4" max="0.75" step="0.05" value="0.60" oninput="document.getElementById('val-med').innerText = this.value" class="w-full accent-gray-600">
               </div>
               <div>
-                <label class="text-[#7B3030] font-semibold flex justify-between">Critical Risk Lower Bound (DECLINE): <span id="val-crit">0.80</span></label>
-                <input id="input-crit" type="range" min="0.7" max="0.95" step="0.05" value="0.80" oninput="document.getElementById('val-crit').innerText = this.value" class="w-full accent-[#D99A9A]">
+                <label class="text-[#EA580C] font-semibold flex justify-between">Critical Risk Lower Bound (DECLINE): <span id="val-crit">0.80</span></label>
+                <input id="input-crit" type="range" min="0.7" max="0.95" step="0.05" value="0.80" oninput="document.getElementById('val-crit').innerText = this.value" class="w-full accent-[#EA580C]">
               </div>
             </div>
-            <button onclick="saveRiskThresholds()" class="px-4 py-2 bg-[#5F8F83] hover:bg-[#4F7D72] text-xs font-bold text-white rounded-xl shadow-sm">
+            <button onclick="saveRiskThresholds()" class="px-4 py-2 bg-[#FB923C] hover:bg-[#F97316] text-xs font-bold text-white rounded-lg shadow-sm">
               Save Risk Policies
             </button>
           </div>
 
-          <div class="fintech-card p-6 space-y-4">
-            <h3 class="font-bold text-[#29332F] text-sm flex items-center gap-2">
-              <i class="fa-solid fa-server text-[#5F8F83]"></i> Subsystem Liveness Status
+          <div class="clean-card p-6 space-y-4">
+            <h3 class="font-bold text-[#111827] text-sm flex items-center gap-2">
+              <i class="fa-solid fa-server text-gray-700"></i> Subsystem Liveness Status
             </h3>
             <div class="grid grid-cols-2 gap-3 text-xs">
-              <div class="p-3 bg-[#F7F4EF] rounded-lg"><span class="text-[#69736E]">FastAPI Gateway</span><p class="font-bold text-[#35604B] mt-1">HEALTHY</p></div>
-              <div class="p-3 bg-[#F7F4EF] rounded-lg"><span class="text-[#69736E]">Database Engine</span><p class="font-bold text-[#35604B] mt-1">HEALTHY</p></div>
-              <div class="p-3 bg-[#F7F4EF] rounded-lg"><span class="text-[#69736E]">ML Ensemble</span><p class="font-bold text-[#35604B] mt-1">HEALTHY</p></div>
-              <div class="p-3 bg-[#F7F4EF] rounded-lg"><span class="text-[#69736E]">WebSocket Pool</span><p class="font-bold text-[#35604B] mt-1">HEALTHY</p></div>
+              <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]"><span class="text-gray-500">FastAPI Gateway</span><p class="font-bold text-gray-900 mt-1">HEALTHY</p></div>
+              <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]"><span class="text-gray-500">Database Engine</span><p class="font-bold text-gray-900 mt-1">HEALTHY</p></div>
+              <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]"><span class="text-gray-500">ML Ensemble</span><p class="font-bold text-gray-900 mt-1">HEALTHY</p></div>
+              <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]"><span class="text-gray-500">WebSocket Pool</span><p class="font-bold text-gray-900 mt-1">HEALTHY</p></div>
             </div>
           </div>
         </div>
@@ -677,14 +661,14 @@
       <!-- ======================================================== -->
       <section id="tab-audit-logs" class="space-y-6 hidden">
         <div>
-          <h2 class="text-2xl font-bold text-[#29332F] tracking-tight">Compliance Audit Trail</h2>
-          <p class="text-xs text-[#69736E] mt-1">Cryptographically verifiable immutable audit ledger of all operator actions.</p>
+          <h2 class="text-2xl font-bold text-[#111827] tracking-tight">Compliance Audit Trail</h2>
+          <p class="text-xs text-gray-500 mt-1">Cryptographically verifiable immutable audit ledger of all operator actions.</p>
         </div>
 
-        <div class="fintech-card overflow-hidden">
+        <div class="clean-card overflow-hidden">
           <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs text-[#29332F]">
-              <thead class="bg-[#F7F4EF] text-[11px] text-[#69736E] uppercase tracking-wider border-b border-[#E5DED5]">
+            <table class="w-full text-left text-xs text-gray-900">
+              <thead class="bg-[#F9FAFB] text-[11px] text-gray-500 uppercase tracking-wider border-b border-[#E5E7EB]">
                 <tr>
                   <th class="py-3.5 px-4">Timestamp</th>
                   <th class="py-3.5 px-4">Actor Email</th>
@@ -693,7 +677,7 @@
                   <th class="py-3.5 px-4">Summary</th>
                 </tr>
               </thead>
-              <tbody id="audit-logs-table-body" class="divide-y divide-[#E5DED5]/60">
+              <tbody id="audit-logs-table-body" class="divide-y divide-[#E5E7EB]">
                 <!-- Injected via JS -->
               </tbody>
             </table>
@@ -707,43 +691,43 @@
   <!-- ======================================================== -->
   <!-- MODAL: TRANSACTION 4-TAB XAI DOSSIER -->
   <!-- ======================================================== -->
-  <div id="modal-investigation" class="fixed inset-0 z-50 bg-[#29332F]/40 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-[#FFFDFC] max-w-3xl w-full rounded-2xl border border-[#E5DED5] shadow-xl p-6 space-y-5 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-[#E5DED5] pb-3">
+  <div id="modal-investigation" class="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white max-w-3xl w-full rounded-xl border border-[#E5E7EB] shadow-lg p-6 space-y-5 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-[#E5E7EB] pb-3">
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-[#5F8F83]/15 text-[#5F8F83] flex items-center justify-center">
+          <div class="w-9 h-9 rounded-lg bg-[#FFEDD5] text-[#EA580C] flex items-center justify-center font-bold">
             <i class="fa-solid fa-credit-card"></i>
           </div>
           <div>
-            <h3 id="modal-tx-id" class="font-bold text-[#29332F] text-sm">Transaction Dossier</h3>
-            <p id="modal-tx-card" class="text-xs font-mono text-[#69736E]">**** **** **** 4829</p>
+            <h3 id="modal-tx-id" class="font-bold text-[#111827] text-sm">Transaction Dossier</h3>
+            <p id="modal-tx-card" class="text-xs font-mono text-gray-500">**** **** **** 4829</p>
           </div>
         </div>
-        <button onclick="closeModal()" class="text-[#69736E] hover:text-[#29332F] text-lg">✕</button>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-900 text-lg">✕</button>
       </div>
 
       <!-- Dossier Tabs -->
-      <div class="flex items-center gap-2 border-b border-[#E5DED5] pb-2">
-        <button onclick="setModalTab('overview')" id="mtab-overview" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#5F8F83] text-white">Overview</button>
-        <button onclick="setModalTab('customer')" id="mtab-customer" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-[#69736E] hover:text-[#29332F]">Customer 360</button>
-        <button onclick="setModalTab('xai')" id="mtab-xai" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-[#69736E] hover:text-[#29332F]">Explainable AI (SHAP)</button>
-        <button onclick="setModalTab('action')" id="mtab-action" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-[#69736E] hover:text-[#29332F]">Analyst Action</button>
+      <div class="flex items-center gap-2 border-b border-[#E5E7EB] pb-2">
+        <button onclick="setModalTab('overview')" id="mtab-overview" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#FB923C] text-white">Overview</button>
+        <button onclick="setModalTab('customer')" id="mtab-customer" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-600 hover:text-gray-900">Customer 360</button>
+        <button onclick="setModalTab('xai')" id="mtab-xai" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-600 hover:text-gray-900">Explainable AI (SHAP)</button>
+        <button onclick="setModalTab('action')" id="mtab-action" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-600 hover:text-gray-900">Analyst Action</button>
       </div>
 
       <!-- Tab Content 1: Overview -->
       <div id="mcontent-overview" class="space-y-4">
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-          <div class="p-3 bg-[#F7F4EF] rounded-xl"><span class="text-[#69736E]">Amount</span><p id="modal-tx-amount" class="text-sm font-bold text-[#29332F] mt-0.5">$3,850.00</p></div>
-          <div class="p-3 bg-[#F7F4EF] rounded-xl"><span class="text-[#69736E]">Merchant</span><p id="modal-tx-merchant" class="text-xs font-semibold text-[#29332F] mt-0.5">Apple 5th Ave</p></div>
-          <div class="p-3 bg-[#F7F4EF] rounded-xl"><span class="text-[#69736E]">Risk Score</span><p id="modal-tx-score" class="text-sm font-bold text-[#7B3030] mt-0.5 font-mono">0.91 (CRITICAL)</p></div>
-          <div class="p-3 bg-[#F7F4EF] rounded-xl"><span class="text-[#69736E]">Decision</span><p id="modal-tx-decision" class="text-xs font-bold text-[#795B20] mt-0.5">REVIEW</p></div>
+          <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]"><span class="text-gray-500">Amount</span><p id="modal-tx-amount" class="text-sm font-bold text-gray-900 mt-0.5">$3,850.00</p></div>
+          <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]"><span class="text-gray-500">Merchant</span><p id="modal-tx-merchant" class="text-xs font-semibold text-gray-900 mt-0.5">Apple 5th Ave</p></div>
+          <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]"><span class="text-gray-500">Risk Score</span><p id="modal-tx-score" class="text-sm font-bold text-[#EA580C] mt-0.5 font-mono">0.91 (CRITICAL)</p></div>
+          <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]"><span class="text-gray-500">Decision</span><p id="modal-tx-decision" class="text-xs font-bold text-gray-900 mt-0.5">REVIEW</p></div>
         </div>
 
-        <div class="p-4 bg-[#F7F4EF] rounded-xl space-y-2">
-          <span class="text-xs font-bold text-[#29332F] uppercase tracking-wider">Triggered Dynamic Business Rules</span>
+        <div class="p-4 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg space-y-2">
+          <span class="text-xs font-bold text-gray-900 uppercase tracking-wider">Triggered Dynamic Business Rules</span>
           <div id="modal-tx-rules" class="flex flex-wrap gap-2 pt-1">
-            <span class="px-2.5 py-1 bg-[#D99A9A]/30 text-[#7B3030] border border-[#D99A9A] rounded-lg text-xs font-mono">RULE_AMT_003: Extreme Outlier</span>
-            <span class="px-2.5 py-1 bg-[#D99A9A]/30 text-[#7B3030] border border-[#D99A9A] rounded-lg text-xs font-mono">RULE_DEV_006: New Device Surge</span>
+            <span class="px-2.5 py-1 bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74] rounded-md text-xs font-mono">RULE_AMT_003: Extreme Outlier</span>
+            <span class="px-2.5 py-1 bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74] rounded-md text-xs font-mono">RULE_DEV_006: New Device Surge</span>
           </div>
         </div>
       </div>
@@ -751,53 +735,53 @@
       <!-- Tab Content 2: Customer 360 Baseline -->
       <div id="mcontent-customer" class="space-y-4 hidden">
         <div class="grid grid-cols-3 gap-3 text-xs">
-          <div class="p-3 bg-[#F7F4EF] rounded-xl"><span class="text-[#69736E]">30d Spending Baseline</span><p class="text-sm font-bold text-[#35604B] mt-0.5">$145.00 / tx</p></div>
-          <div class="p-3 bg-[#F7F4EF] rounded-xl"><span class="text-[#69736E]">Current Tx Ratio</span><p id="modal-tx-ratio" class="text-sm font-bold text-[#795B20] mt-0.5">6.2x Baseline</p></div>
-          <div class="p-3 bg-[#F7F4EF] rounded-xl"><span class="text-[#69736E]">Card Status</span><p class="text-sm font-bold text-[#2563EB] mt-0.5">ACTIVE (3DS)</p></div>
+          <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]"><span class="text-gray-500">30d Spending Baseline</span><p class="text-sm font-bold text-gray-900 mt-0.5">$145.00 / tx</p></div>
+          <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]"><span class="text-gray-500">Current Tx Ratio</span><p id="modal-tx-ratio" class="text-sm font-bold text-[#EA580C] mt-0.5">6.2x Baseline</p></div>
+          <div class="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]"><span class="text-gray-500">Card Status</span><p class="text-sm font-bold text-gray-900 mt-0.5">ACTIVE (3DS)</p></div>
         </div>
-        <div class="p-4 bg-[#F7F4EF] rounded-xl space-y-1">
-          <span class="text-xs font-bold text-[#29332F] uppercase">Typical Locations & Devices</span>
-          <p class="text-xs text-[#69736E]">New York, US • dev_fp_apple_safari_1 (Trusted for 64 previous transactions)</p>
+        <div class="p-4 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB] space-y-1">
+          <span class="text-xs font-bold text-gray-900 uppercase">Typical Locations & Devices</span>
+          <p class="text-xs text-gray-600">New York, US • dev_fp_apple_safari_1 (Trusted for 64 previous transactions)</p>
         </div>
       </div>
 
       <!-- Tab Content 3: Explainable AI -->
       <div id="mcontent-xai" class="space-y-4 hidden">
-        <div class="p-4 bg-[#DCE7E1]/50 border border-[#A8C5B5] rounded-xl space-y-1.5">
-          <h4 class="text-xs font-bold text-[#35604B] uppercase tracking-wider flex items-center gap-1.5">
-            <i class="fa-solid fa-brain text-[#5F8F83]"></i> Natural Language Decision Rationale
+        <div class="p-4 bg-[#FFEDD5]/40 border border-[#FDBA74] rounded-lg space-y-1.5">
+          <h4 class="text-xs font-bold text-[#9A3412] uppercase tracking-wider flex items-center gap-1.5">
+            <i class="fa-solid fa-brain text-[#EA580C]"></i> Natural Language Decision Rationale
           </h4>
-          <p id="modal-xai-nlg" class="text-xs text-[#29332F] leading-relaxed">
+          <p id="modal-xai-nlg" class="text-xs text-gray-900 leading-relaxed">
             This transaction was classified as HIGH RISK (0.91) because the amount ($3,850.00) is 6.2x higher than typical customer baseline, triggered 2 critical velocity rules, and originated from an unrecognized hardware device fingerprint.
           </p>
         </div>
 
         <div class="space-y-2">
-          <span class="text-xs font-bold text-[#29332F] uppercase">Top Contributing Features (SHAP Attribution)</span>
+          <span class="text-xs font-bold text-gray-900 uppercase">Top Contributing Features (SHAP Attribution)</span>
           <div class="space-y-1.5 text-xs">
-            <div class="p-2 bg-[#F7F4EF] rounded-lg flex justify-between font-mono"><span>amount_ratio_to_mean_30d</span><strong class="text-[#7B3030]">+0.38</strong></div>
-            <div class="p-2 bg-[#F7F4EF] rounded-lg flex justify-between font-mono"><span>failed_pin_attempts_24h</span><strong class="text-[#7B3030]">+0.26</strong></div>
-            <div class="p-2 bg-[#F7F4EF] rounded-lg flex justify-between font-mono"><span>is_unrecognized_device</span><strong class="text-[#7B3030]">+0.18</strong></div>
-            <div class="p-2 bg-[#F7F4EF] rounded-lg flex justify-between font-mono"><span>trusted_country_origin</span><strong class="text-[#35604B]">-0.08</strong></div>
+            <div class="p-2 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg flex justify-between font-mono"><span>amount_ratio_to_mean_30d</span><strong class="text-[#EA580C]">+0.38</strong></div>
+            <div class="p-2 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg flex justify-between font-mono"><span>failed_pin_attempts_24h</span><strong class="text-[#EA580C]">+0.26</strong></div>
+            <div class="p-2 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg flex justify-between font-mono"><span>is_unrecognized_device</span><strong class="text-[#EA580C]">+0.18</strong></div>
+            <div class="p-2 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg flex justify-between font-mono"><span>trusted_country_origin</span><strong class="text-gray-600">-0.08</strong></div>
           </div>
         </div>
       </div>
 
       <!-- Tab Content 4: Analyst Decision -->
       <div id="mcontent-action" class="space-y-4 hidden">
-        <p class="text-xs text-[#69736E]">Execute operational fraud decision with automated chargeback ledger logging.</p>
+        <p class="text-xs text-gray-600">Execute operational fraud decision with automated chargeback ledger logging.</p>
         <div class="grid grid-cols-2 gap-3">
-          <button onclick="confirmFraudAction()" class="p-3 bg-[#D99A9A] hover:bg-[#C98A8A] text-[#7B3030] font-bold text-xs rounded-xl shadow-sm flex items-center justify-center gap-2">
+          <button onclick="confirmFraudAction()" class="p-3 bg-[#FFEDD5] hover:bg-[#FED7AA] text-[#9A3412] font-bold text-xs rounded-lg border border-[#FDBA74] flex items-center justify-center gap-2">
             <i class="fa-solid fa-ban"></i> Confirm Fraud & Block Card
           </button>
-          <button onclick="markFalsePositiveAction()" class="p-3 bg-[#A8C5B5] hover:bg-[#97B8A6] text-[#35604B] font-bold text-xs rounded-xl shadow-sm flex items-center justify-center gap-2">
+          <button onclick="markFalsePositiveAction()" class="p-3 bg-gray-100 hover:bg-gray-200 text-gray-900 font-bold text-xs rounded-lg border border-gray-300 flex items-center justify-center gap-2">
             <i class="fa-solid fa-check"></i> Mark False Positive
           </button>
         </div>
       </div>
 
-      <div class="flex justify-end pt-3 border-t border-[#E5DED5]">
-        <button onclick="closeModal()" class="px-4 py-2 bg-[#F7F4EF] hover:bg-[#E5DED5] text-xs font-semibold text-[#29332F] rounded-xl">Close Dossier</button>
+      <div class="flex justify-end pt-3 border-t border-[#E5E7EB]">
+        <button onclick="closeModal()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-xs font-semibold text-gray-800 rounded-lg">Close Dossier</button>
       </div>
     </div>
   </div>
@@ -846,20 +830,20 @@
       document.getElementById("dash-title").innerText = currentRole === "ADMIN" ? "Executive Defense Overview" : "Analyst Triage & Threat Queue";
 
       container.innerHTML = `
-        <div class="px-3 py-1 text-[10px] font-bold text-[#69736E] uppercase tracking-wider">
+        <div class="px-3 py-1 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
           ${currentRole === "ADMIN" ? "System Management" : "Investigation Workflows"}
         </div>
         ${items.map(item => `
           <button
             onclick="switchTab('${item.id}')"
             id="nav-${item.id}"
-            class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all ${currentTab === item.id ? 'nav-btn-active' : 'text-[#26332F] hover:bg-[#C7D9D0]/60'}"
+            class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${currentTab === item.id ? 'nav-btn-active' : 'text-gray-700 hover:bg-gray-100'}"
           >
             <div class="flex items-center gap-3">
               <i class="fa-solid ${item.icon} w-4 text-center"></i>
               <span>${item.name}</span>
             </div>
-            ${item.badge ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${item.badge === 'LIVE' ? 'bg-[#D99A9A] text-[#7B3030]' : 'bg-[#C7D9D0] text-[#17231F] border border-[#B5CCC1]'}">${item.badge}</span>` : ''}
+            ${item.badge ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${item.badge === 'LIVE' ? 'bg-[#FFEDD5] text-[#9A3412]' : 'bg-gray-100 text-gray-700 border border-gray-300'}">${item.badge}</span>` : ''}
           </button>
         `).join("")}
       `;
@@ -905,14 +889,14 @@
         const tbody = document.getElementById("dash-recent-txs");
         if (txJson.data && txJson.data.items) {
           tbody.innerHTML = txJson.data.items.map(tx => `
-            <tr class="hover:bg-[#F7F4EF]">
-              <td class="py-3 px-4 font-mono font-bold text-[#29332F]">${tx.transaction_id}</td>
-              <td class="py-3 px-4 font-mono text-[#69736E]">**** **** **** ${tx.card_id.slice(-4)}</td>
-              <td class="py-3 px-4 font-bold text-[#29332F]">$${tx.amount.toFixed(2)}</td>
-              <td class="py-3 px-4 text-[#29332F]">${tx.merchant_name || tx.merchant_id}</td>
-              <td class="py-3 px-4 font-mono font-bold ${tx.risk_score > 0.6 ? 'text-[#7B3030]' : 'text-[#35604B]'}">${tx.risk_score.toFixed(2)}</td>
-              <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${tx.decision_action === 'DECLINE' ? 'bg-[#D99A9A]/30 text-[#7B3030]' : tx.decision_action === 'REVIEW' ? 'bg-[#E8C98A]/30 text-[#795B20]' : 'bg-[#A8C5B5]/30 text-[#35604B]'}">${tx.decision_action}</span></td>
-              <td class="py-3 px-4 text-right"><button onclick='openInvestigationModal(${JSON.stringify(tx)})' class="px-2.5 py-1 bg-[#FFFDFC] hover:bg-[#F7F4EF] border border-[#E5DED5] rounded text-[11px] font-semibold text-[#5F8F83]">Dossier</button></td>
+            <tr class="hover:bg-gray-50">
+              <td class="py-3 px-4 font-mono font-bold text-gray-900">${tx.transaction_id}</td>
+              <td class="py-3 px-4 font-mono text-gray-500">**** **** **** ${tx.card_id.slice(-4)}</td>
+              <td class="py-3 px-4 font-bold text-gray-900">$${tx.amount.toFixed(2)}</td>
+              <td class="py-3 px-4 text-gray-800">${tx.merchant_name || tx.merchant_id}</td>
+              <td class="py-3 px-4 font-mono font-bold ${tx.risk_score > 0.6 ? 'text-[#EA580C]' : 'text-gray-900'}">${tx.risk_score.toFixed(2)}</td>
+              <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${tx.decision_action === 'DECLINE' ? 'bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74]' : 'bg-gray-100 text-gray-800 border border-gray-300'}">${tx.decision_action}</span></td>
+              <td class="py-3 px-4 text-right"><button onclick='openInvestigationModal(${JSON.stringify(tx)})' class="px-2.5 py-1 bg-white hover:bg-gray-50 border border-[#E5E7EB] rounded text-[11px] font-semibold text-gray-800">Dossier</button></td>
             </tr>
           `).join("");
         }
@@ -938,15 +922,15 @@
         const tbody = document.getElementById("txs-table-body");
         if (json.data && json.data.items) {
           tbody.innerHTML = json.data.items.map(tx => `
-            <tr class="hover:bg-[#F7F4EF]">
-              <td class="py-3.5 px-4 font-mono font-bold text-[#29332F]">${tx.transaction_id}</td>
-              <td class="py-3.5 px-4 font-mono text-[#69736E]">**** **** **** ${tx.card_id.slice(-4)}</td>
-              <td class="py-3.5 px-4 font-bold text-[#29332F]">$${tx.amount.toFixed(2)}</td>
-              <td class="py-3.5 px-4"><div>${tx.merchant_name || tx.merchant_id}</div><span class="text-[10px] text-[#929A95]">${tx.merchant_category} • ${tx.country_code || 'US'}</span></td>
-              <td class="py-3.5 px-4 font-mono text-[11px] text-[#69736E]">${tx.entry_mode || 'CNP'}</td>
-              <td class="py-3.5 px-4 font-mono font-bold ${tx.risk_score > 0.6 ? 'text-[#7B3030]' : 'text-[#35604B]'}">${tx.risk_score.toFixed(2)}</td>
-              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${tx.decision_action === 'DECLINE' ? 'bg-[#D99A9A]/30 text-[#7B3030]' : tx.decision_action === 'REVIEW' ? 'bg-[#E8C98A]/30 text-[#795B20]' : 'bg-[#A8C5B5]/30 text-[#35604B]'}">${tx.decision_action}</span></td>
-              <td class="py-3.5 px-4 text-right"><button onclick='openInvestigationModal(${JSON.stringify(tx)})' class="px-3 py-1 bg-[#FFFDFC] hover:bg-[#F7F4EF] border border-[#E5DED5] rounded-lg text-xs font-semibold text-[#5F8F83]">Investigate</button></td>
+            <tr class="hover:bg-gray-50">
+              <td class="py-3.5 px-4 font-mono font-bold text-gray-900">${tx.transaction_id}</td>
+              <td class="py-3.5 px-4 font-mono text-gray-500">**** **** **** ${tx.card_id.slice(-4)}</td>
+              <td class="py-3.5 px-4 font-bold text-gray-900">$${tx.amount.toFixed(2)}</td>
+              <td class="py-3.5 px-4"><div>${tx.merchant_name || tx.merchant_id}</div><span class="text-[10px] text-gray-400">${tx.merchant_category} • ${tx.country_code || 'US'}</span></td>
+              <td class="py-3.5 px-4 font-mono text-[11px] text-gray-500">${tx.entry_mode || 'CNP'}</td>
+              <td class="py-3.5 px-4 font-mono font-bold ${tx.risk_score > 0.6 ? 'text-[#EA580C]' : 'text-gray-900'}">${tx.risk_score.toFixed(2)}</td>
+              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${tx.decision_action === 'DECLINE' ? 'bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74]' : 'bg-gray-100 text-gray-800 border border-gray-300'}">${tx.decision_action}</span></td>
+              <td class="py-3.5 px-4 text-right"><button onclick='openInvestigationModal(${JSON.stringify(tx)})' class="px-3 py-1 bg-white hover:bg-gray-50 border border-[#E5E7EB] rounded-lg text-xs font-semibold text-gray-800">Investigate</button></td>
             </tr>
           `).join("");
           document.getElementById("tx-page-num").innerText = `Page ${json.data.page} of ${json.data.total_pages || 1}`;
@@ -968,16 +952,16 @@
         const tbody = document.getElementById("alerts-table-body");
         if (json.data && json.data.items) {
           tbody.innerHTML = json.data.items.map(alt => `
-            <tr class="hover:bg-[#F7F4EF]">
-              <td class="py-3.5 px-4 font-mono font-bold text-[#29332F]">${alt.alert_id}</td>
-              <td class="py-3.5 px-4 font-mono text-[#69736E]">${alt.transaction_id}<br><span class="text-[10px] text-[#929A95]">**** **** **** ${alt.card_id.slice(-4)}</span></td>
-              <td class="py-3.5 px-4 font-mono font-bold text-[#7B3030]">${alt.risk_score.toFixed(2)}</td>
-              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${alt.severity === 'CRITICAL' ? 'bg-[#D99A9A]/30 text-[#7B3030]' : 'bg-[#E8C98A]/30 text-[#795B20]'}">${alt.severity}</span></td>
-              <td class="py-3.5 px-4 max-w-xs truncate text-[#29332F] font-medium">${alt.reason}</td>
-              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-[#DCE7E1] text-[#26332F] font-semibold text-[10px]">${alt.status}</span></td>
-              <td class="py-3.5 px-4 text-[#29332F]">${alt.assigned_analyst_name || 'Sarah Chen'}</td>
+            <tr class="hover:bg-gray-50">
+              <td class="py-3.5 px-4 font-mono font-bold text-gray-900">${alt.alert_id}</td>
+              <td class="py-3.5 px-4 font-mono text-gray-500">${alt.transaction_id}<br><span class="text-[10px] text-gray-400">**** **** **** ${alt.card_id.slice(-4)}</span></td>
+              <td class="py-3.5 px-4 font-mono font-bold text-[#EA580C]">${alt.risk_score.toFixed(2)}</td>
+              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${alt.severity === 'CRITICAL' ? 'bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74]' : 'bg-gray-100 text-gray-700 border border-gray-300'}">${alt.severity}</span></td>
+              <td class="py-3.5 px-4 max-w-xs truncate text-gray-900 font-medium">${alt.reason}</td>
+              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-gray-100 text-gray-700 font-semibold text-[10px]">${alt.status}</span></td>
+              <td class="py-3.5 px-4 text-gray-600">${alt.assigned_analyst_name || 'Sarah Chen'}</td>
               <td class="py-3.5 px-4 text-right space-x-1">
-                <button onclick="resolveAlert('${alt.alert_id}')" class="px-2.5 py-1 bg-[#A8C5B5]/30 text-[#35604B] border border-[#A8C5B5] rounded text-[11px] font-semibold">Resolve</button>
+                <button onclick="resolveAlert('${alt.alert_id}')" class="px-2.5 py-1 bg-white text-gray-800 border border-[#E5E7EB] hover:bg-gray-50 rounded text-[11px] font-semibold">Resolve</button>
               </td>
             </tr>
           `).join("");
@@ -1003,17 +987,17 @@
         const tbody = document.getElementById("cases-table-body");
         if (json.data && json.data.items) {
           tbody.innerHTML = json.data.items.map(c => `
-            <tr class="hover:bg-[#F7F4EF]">
-              <td class="py-3.5 px-4 font-mono font-bold text-[#5F8F83]">${c.case_number}</td>
-              <td class="py-3.5 px-4 font-mono text-[#69736E]">${c.transaction_id}<br><span class="text-[10px] text-[#929A95]">**** **** **** ${c.card_id.slice(-4)}</span></td>
-              <td class="py-3.5 px-4 font-bold text-[#29332F]">$${c.amount.toFixed(2)}</td>
-              <td class="py-3.5 px-4 font-mono font-bold text-[#7B3030]">${(c.risk_score * 100).toFixed(1)}%</td>
-              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${c.severity === 'CRITICAL' ? 'bg-[#D99A9A]/30 text-[#7B3030]' : 'bg-[#E8C98A]/30 text-[#795B20]'}">${c.severity}</span></td>
-              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-[#DCE7E1] text-[#26332F] font-semibold text-[10px]">${c.status}</span></td>
-              <td class="py-3.5 px-4 text-[#29332F]">${c.assigned_analyst_name || 'Sarah Chen'}</td>
+            <tr class="hover:bg-gray-50">
+              <td class="py-3.5 px-4 font-mono font-bold text-gray-900">${c.case_number}</td>
+              <td class="py-3.5 px-4 font-mono text-gray-500">${c.transaction_id}<br><span class="text-[10px] text-gray-400">**** **** **** ${c.card_id.slice(-4)}</span></td>
+              <td class="py-3.5 px-4 font-bold text-gray-900">$${c.amount.toFixed(2)}</td>
+              <td class="py-3.5 px-4 font-mono font-bold text-[#EA580C]">${(c.risk_score * 100).toFixed(1)}%</td>
+              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${c.severity === 'CRITICAL' ? 'bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74]' : 'bg-gray-100 text-gray-700 border border-gray-300'}">${c.severity}</span></td>
+              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-gray-100 text-gray-700 font-semibold text-[10px]">${c.status}</span></td>
+              <td class="py-3.5 px-4 text-gray-600">${c.assigned_analyst_name || 'Sarah Chen'}</td>
               <td class="py-3.5 px-4 text-right space-x-1">
-                <button onclick="updateCase('${c.id}', 'CONFIRMED_FRAUD')" class="px-2.5 py-1 bg-[#D99A9A]/30 text-[#7B3030] border border-[#D99A9A] rounded text-[11px] font-semibold">Confirm</button>
-                <button onclick="updateCase('${c.id}', 'RESOLVED')" class="px-2.5 py-1 bg-[#A8C5B5]/30 text-[#35604B] border border-[#A8C5B5] rounded text-[11px] font-semibold">Resolve</button>
+                <button onclick="updateCase('${c.id}', 'CONFIRMED_FRAUD')" class="px-2.5 py-1 bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74] rounded text-[11px] font-semibold">Confirm</button>
+                <button onclick="updateCase('${c.id}', 'RESOLVED')" class="px-2.5 py-1 bg-white text-gray-800 border border-[#E5E7EB] hover:bg-gray-50 rounded text-[11px] font-semibold">Resolve</button>
               </td>
             </tr>
           `).join("");
@@ -1039,18 +1023,18 @@
         const grid = document.getElementById("customers-grid");
         if (json.data && json.data.items) {
           grid.innerHTML = json.data.items.map(cust => `
-            <div class="fintech-card p-5 space-y-4">
+            <div class="clean-card p-5 space-y-4">
               <div class="flex items-start justify-between">
                 <div>
-                  <h4 class="font-bold text-[#29332F] text-sm">${cust.full_name}</h4>
-                  <p class="text-xs text-[#69736E] font-mono">${cust.email || 'N/A'}</p>
+                  <h4 class="font-bold text-gray-900 text-sm">${cust.full_name}</h4>
+                  <p class="text-xs text-gray-400 font-mono">${cust.email || 'N/A'}</p>
                 </div>
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${cust.risk_tier === 'CRITICAL' ? 'bg-[#D99A9A]/30 text-[#7B3030]' : cust.risk_tier === 'HIGH' ? 'bg-[#E8A98A]/30 text-[#8A472E]' : 'bg-[#A8C5B5]/30 text-[#35604B]'}">${cust.risk_tier}</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${cust.risk_tier === 'CRITICAL' ? 'bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74]' : 'bg-gray-100 text-gray-700 border border-gray-300'}">${cust.risk_tier}</span>
               </div>
-              <div class="p-3 bg-[#F7F4EF] rounded-xl space-y-1 text-xs">
-                <div class="flex justify-between font-mono"><span class="text-[#69736E]">Masked Card:</span><strong class="text-[#29332F]">${cust.masked_card}</strong></div>
-                <div class="flex justify-between"><span class="text-[#69736E]">30d Avg Spend:</span><strong class="text-[#35604B]">$${cust.avg_amount_30d.toFixed(2)}</strong></div>
-                <div class="flex justify-between"><span class="text-[#69736E]">Card Status:</span><strong class="text-[#5F8F83]">${cust.card_status}</strong></div>
+              <div class="p-3 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg space-y-1 text-xs">
+                <div class="flex justify-between font-mono"><span class="text-gray-500">Masked Card:</span><strong class="text-gray-900">${cust.masked_card}</strong></div>
+                <div class="flex justify-between"><span class="text-gray-500">30d Avg Spend:</span><strong class="text-gray-900">$${cust.avg_amount_30d.toFixed(2)}</strong></div>
+                <div class="flex justify-between"><span class="text-gray-500">Card Status:</span><strong class="text-gray-900">${cust.card_status}</strong></div>
               </div>
             </div>
           `).join("");
@@ -1067,14 +1051,14 @@
         const grid = document.getElementById("models-grid");
         if (json.data) {
           grid.innerHTML = json.data.map(m => `
-            <div class="fintech-card p-5 space-y-3 relative ${m.status === 'CHAMPION' ? 'border-[#5F8F83]' : ''}">
-              ${m.status === 'CHAMPION' ? '<span class="absolute top-4 right-4 px-2 py-0.5 rounded-full bg-[#5F8F83] text-white text-[9px] font-bold">CHAMPION</span>' : ''}
-              <h4 class="font-bold text-[#29332F] text-sm">${m.name}</h4>
-              <p class="text-[11px] text-[#69736E]">${m.algorithm_type} • v${m.version}</p>
-              <div class="grid grid-cols-3 gap-2 p-2.5 bg-[#F7F4EF] rounded-xl text-center text-xs">
-                <div><span class="text-[10px] text-[#929A95] block">ROC-AUC</span><strong class="text-[#5F8F83] font-mono">${m.roc_auc.toFixed(3)}</strong></div>
-                <div><span class="text-[10px] text-[#929A95] block">PR-AUC</span><strong class="text-[#35604B] font-mono">${m.pr_auc.toFixed(3)}</strong></div>
-                <div><span class="text-[10px] text-[#929A95] block">Latency</span><strong class="text-[#29332F] font-mono">${m.p99_latency_ms.toFixed(1)}ms</strong></div>
+            <div class="clean-card p-5 space-y-3 relative ${m.status === 'CHAMPION' ? 'border-[#FB923C]' : ''}">
+              ${m.status === 'CHAMPION' ? '<span class="absolute top-4 right-4 px-2 py-0.5 rounded bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74] text-[9px] font-bold">CHAMPION</span>' : ''}
+              <h4 class="font-bold text-gray-900 text-sm">${m.name}</h4>
+              <p class="text-[11px] text-gray-500">${m.algorithm_type} • v${m.version}</p>
+              <div class="grid grid-cols-3 gap-2 p-2.5 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg text-center text-xs">
+                <div><span class="text-[10px] text-gray-400 block">ROC-AUC</span><strong class="text-gray-900 font-mono">${m.roc_auc.toFixed(3)}</strong></div>
+                <div><span class="text-[10px] text-gray-400 block">PR-AUC</span><strong class="text-gray-900 font-mono">${m.pr_auc.toFixed(3)}</strong></div>
+                <div><span class="text-[10px] text-gray-400 block">Latency</span><strong class="text-gray-900 font-mono">${m.p99_latency_ms.toFixed(1)}ms</strong></div>
               </div>
             </div>
           `).join("");
@@ -1091,13 +1075,13 @@
         const tbody = document.getElementById("users-table-body");
         if (json.data) {
           tbody.innerHTML = json.data.map(u => `
-            <tr class="hover:bg-[#F7F4EF]">
-              <td class="py-3.5 px-4 font-bold text-[#29332F]">${u.full_name}</td>
-              <td class="py-3.5 px-4 font-mono text-[#69736E]">${u.email}</td>
-              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${u.role === 'ADMIN' ? 'bg-[#A99BBE]/30 text-[#4C3B66]' : 'bg-[#5F8F83]/20 text-[#35604B]'}">${u.role}</span></td>
-              <td class="py-3.5 px-4 text-[#69736E]">${u.department || 'Operations'}</td>
-              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${u.is_active ? 'bg-[#A8C5B5]/30 text-[#35604B]' : 'bg-[#D99A9A]/30 text-[#7B3030]'}">${u.is_active ? 'ACTIVE' : 'INACTIVE'}</span></td>
-              <td class="py-3.5 px-4 text-right"><span class="text-[#929A95] text-[11px]">Configured</span></td>
+            <tr class="hover:bg-gray-50">
+              <td class="py-3.5 px-4 font-bold text-gray-900">${u.full_name}</td>
+              <td class="py-3.5 px-4 font-mono text-gray-500">${u.email}</td>
+              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-gray-100 text-gray-800 border border-gray-300">${u.role}</span></td>
+              <td class="py-3.5 px-4 text-gray-500">${u.department || 'Operations'}</td>
+              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${u.is_active ? 'bg-gray-100 text-gray-900 border border-gray-300' : 'bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74]'}">${u.is_active ? 'ACTIVE' : 'INACTIVE'}</span></td>
+              <td class="py-3.5 px-4 text-right"><span class="text-gray-400 text-[11px]">Configured</span></td>
             </tr>
           `).join("");
         }
@@ -1113,12 +1097,12 @@
         const tbody = document.getElementById("audit-logs-table-body");
         if (json.data && json.data.items) {
           tbody.innerHTML = json.data.items.map(log => `
-            <tr class="hover:bg-[#F7F4EF]">
-              <td class="py-3 px-4 font-mono text-[11px] text-[#69736E]">${new Date(log.created_at).toLocaleString()}</td>
-              <td class="py-3 px-4 font-mono text-[#29332F]">${log.user_email}</td>
-              <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-[#DCE7E1] text-[#17231F] font-mono text-[10px] font-bold">${log.action_type}</span></td>
-              <td class="py-3 px-4 font-mono text-[#69736E]">${log.resource_type}: ${log.resource_id}</td>
-              <td class="py-3 px-4 text-[#29332F] max-w-sm truncate">${log.change_summary}</td>
+            <tr class="hover:bg-gray-50">
+              <td class="py-3 px-4 font-mono text-[11px] text-gray-400">${new Date(log.created_at).toLocaleString()}</td>
+              <td class="py-3 px-4 font-mono text-gray-900">${log.user_email}</td>
+              <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-gray-100 text-gray-800 border border-gray-300 font-mono text-[10px] font-bold">${log.action_type}</span></td>
+              <td class="py-3 px-4 font-mono text-gray-500">${log.resource_type}: ${log.resource_id}</td>
+              <td class="py-3 px-4 text-gray-700 max-w-sm truncate">${log.change_summary}</td>
             </tr>
           `).join("");
         }
@@ -1141,13 +1125,13 @@
         if (json.data && json.data.preview_data && json.data.preview_data.length > 0) {
           const headers = Object.keys(json.data.preview_data[0]);
           container.innerHTML = `
-            <table class="w-full text-left text-xs text-[#29332F]">
-              <thead class="bg-[#F7F4EF] text-[10px] text-[#69736E] uppercase border-b border-[#E5DED5]">
+            <table class="w-full text-left text-xs text-gray-900">
+              <thead class="bg-[#F9FAFB] text-[10px] text-gray-500 uppercase border-b border-[#E5E7EB]">
                 <tr>${headers.map(h => `<th class="py-2.5 px-3 font-semibold">${h}</th>`).join("")}</tr>
               </thead>
-              <tbody class="divide-y divide-[#E5DED5]/60">
+              <tbody class="divide-y divide-[#E5E7EB]">
                 ${json.data.preview_data.map(row => `
-                  <tr class="hover:bg-[#F7F4EF]">
+                  <tr class="hover:bg-gray-50">
                     ${Object.values(row).map(v => `<td class="py-2.5 px-3 font-medium">${v}</td>`).join("")}
                   </tr>
                 `).join("")}
@@ -1184,10 +1168,10 @@
       if (streamInterval) {
         clearInterval(streamInterval);
         streamInterval = null;
-        document.getElementById("btn-stream-toggle").className = "px-4 py-2 rounded-xl bg-[#5F8F83] hover:bg-[#4F7D72] text-xs font-semibold text-white shadow-sm flex items-center gap-2";
+        document.getElementById("btn-stream-toggle").className = "px-4 py-2 rounded-lg bg-[#FB923C] hover:bg-[#F97316] text-xs font-semibold text-white shadow-sm flex items-center gap-2";
         document.getElementById("stream-btn-label").innerText = "Start Ingestion";
       } else {
-        document.getElementById("btn-stream-toggle").className = "px-4 py-2 rounded-xl bg-[#E8C98A] hover:bg-[#D9B875] text-xs font-semibold text-[#795B20] shadow-sm flex items-center gap-2";
+        document.getElementById("btn-stream-toggle").className = "px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-xs font-semibold text-gray-900 shadow-sm flex items-center gap-2";
         document.getElementById("stream-btn-label").innerText = "Pause Ingestion";
         streamInterval = setInterval(generateSimulatedEvent, 1200);
       }
@@ -1211,7 +1195,7 @@
       const txId = `TX-${Math.floor(100000 + Math.random() * 900000)}`;
 
       const streamCard = document.createElement("div");
-      streamCard.className = `p-3.5 bg-[#FFFDFC] border ${score > 0.6 ? 'border-[#E8A98A] bg-[#FFF8F5]' : 'border-[#E5DED5]'} rounded-xl flex items-center justify-between text-xs cursor-pointer hover:border-[#5F8F83] transition-all`;
+      streamCard.className = `p-3.5 bg-white border ${score > 0.6 ? 'border-[#FDBA74] bg-[#FFF7ED]' : 'border-[#E5E7EB]'} rounded-lg flex items-center justify-between text-xs cursor-pointer hover:border-gray-400 transition-all`;
       streamCard.onclick = () => openInvestigationModal({
         transaction_id: txId,
         card_id: cardId,
@@ -1227,17 +1211,17 @@
 
       streamCard.innerHTML = `
         <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg ${score > 0.6 ? 'bg-[#D99A9A]/30 text-[#7B3030]' : 'bg-[#A8C5B5]/30 text-[#35604B]'} flex items-center justify-center font-mono font-bold text-xs">
+          <div class="w-8 h-8 rounded-lg ${score > 0.6 ? 'bg-[#FFEDD5] text-[#9A3412]' : 'bg-gray-100 text-gray-700'} flex items-center justify-center font-mono font-bold text-xs">
             <i class="fa-solid ${score > 0.6 ? 'fa-triangle-exclamation' : 'fa-check'}"></i>
           </div>
           <div>
-            <span class="font-mono font-bold text-[#29332F]">${txId}</span> • <span class="font-mono text-[#69736E]">${maskedCard}</span>
-            <p class="text-[10px] text-[#929A95]">Streaming Authorization • ${decision}</p>
+            <span class="font-mono font-bold text-gray-900">${txId}</span> • <span class="font-mono text-gray-500">${maskedCard}</span>
+            <p class="text-[10px] text-gray-400">Streaming Authorization • ${decision}</p>
           </div>
         </div>
         <div class="text-right">
-          <span class="font-bold text-[#29332F]">$${amt.toFixed(2)}</span>
-          <span class="block font-mono text-[10px] font-bold ${score > 0.6 ? 'text-[#7B3030]' : 'text-[#35604B]'}">Risk: ${score.toFixed(2)}</span>
+          <span class="font-bold text-gray-900">$${amt.toFixed(2)}</span>
+          <span class="block font-mono text-[10px] font-bold ${score > 0.6 ? 'text-[#EA580C]' : 'text-gray-700'}">Risk: ${score.toFixed(2)}</span>
         </div>
       `;
 
@@ -1256,7 +1240,7 @@
     }
 
     function clearStreamBuffer() {
-      document.getElementById("stream-cards-container").innerHTML = '<div class="py-16 text-center text-xs text-[#929A95]">Buffer cleared. Ready for streaming events...</div>';
+      document.getElementById("stream-cards-container").innerHTML = '<div class="py-16 text-center text-xs text-gray-400">Buffer cleared. Ready for streaming events...</div>';
       streamCount = 0; streamReviews = 0; streamDeclines = 0;
       document.getElementById("stream-count").innerText = "0 Events";
       document.getElementById("stream-review-count").innerText = "0";
@@ -1283,7 +1267,7 @@
 
     function setModalTab(tab) {
       ['overview', 'customer', 'xai', 'action'].forEach(t => {
-        document.getElementById(`mtab-${t}`).className = t === tab ? "px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#5F8F83] text-white" : "px-3 py-1.5 rounded-lg text-xs font-semibold text-[#69736E] hover:text-[#29332F]";
+        document.getElementById(`mtab-${t}`).className = t === tab ? "px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#FB923C] text-white" : "px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-600 hover:text-gray-900";
         document.getElementById(`mcontent-${t}`).className = t === tab ? "space-y-4" : "space-y-4 hidden";
       });
     }
@@ -1324,11 +1308,11 @@
           data: {
             labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00', '23:59'],
             datasets: [
-              { label: 'Total Volume ($k)', data: [45, 32, 28, 85, 140, 165, 190, 130, 75], borderColor: '#5F8F83', backgroundColor: 'rgba(95, 143, 131, 0.08)', fill: true, tension: 0.3 },
-              { label: 'Blocked Fraud ($k)', data: [2.1, 1.4, 0.8, 4.5, 8.2, 12.4, 14.8, 9.1, 4.2], borderColor: '#D99A9A', tension: 0.3 }
+              { label: 'Total Volume ($k)', data: [45, 32, 28, 85, 140, 165, 190, 130, 75], borderColor: '#1F2937', backgroundColor: 'rgba(31, 41, 55, 0.05)', fill: true, tension: 0.3 },
+              { label: 'Blocked Fraud ($k)', data: [2.1, 1.4, 0.8, 4.5, 8.2, 12.4, 14.8, 9.1, 4.2], borderColor: '#FB923C', backgroundColor: 'rgba(251, 146, 60, 0.1)', fill: true, tension: 0.3 }
             ]
           },
-          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#69736E' } } } }
+          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#4B5563' } } } }
         });
       }
 
@@ -1341,12 +1325,12 @@
             datasets: [{
               label: 'Ensemble Meta (AUC 0.988)',
               data: [0.0, 0.78, 0.89, 0.94, 0.98, 0.99, 1.0],
-              borderColor: '#5F8F83',
-              backgroundColor: 'rgba(95, 143, 131, 0.12)',
+              borderColor: '#FB923C',
+              backgroundColor: 'rgba(251, 146, 60, 0.12)',
               fill: true
             }]
           },
-          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#69736E' } } } }
+          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#4B5563' } } } }
         });
       }
     });

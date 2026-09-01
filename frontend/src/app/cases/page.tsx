@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useCases } from "@/hooks/useCases";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { TransactionInvestigationModal } from "@/components/transactions/TransactionInvestigationModal";
@@ -89,10 +89,10 @@ export default function CasesPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <ShieldAlert className="w-6 h-6 text-[#5F8F83]" />
-            <h1 className="text-2xl font-bold text-[#29332F] tracking-tight">Case Management & Dispute Triage</h1>
+            <ShieldAlert className="w-6 h-6 text-[#EA580C]" />
+            <h1 className="text-2xl font-bold text-[#111827] tracking-tight">Case Management & Dispute Triage</h1>
           </div>
-          <p className="text-xs text-[#69736E] mt-1">
+          <p className="text-xs text-[#4B5563] mt-1">
             Automated dispute defense queue with SLA tracking, evidence dossiers, and chargeback arbitration workflows.
           </p>
         </div>
@@ -105,8 +105,8 @@ export default function CasesPage() {
               onClick={() => setStatusFilter(st === "ALL" ? undefined : st)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 (statusFilter === st || (st === "ALL" && !statusFilter))
-                  ? "bg-[#5F8F83] text-white shadow-sm"
-                  : "bg-[#FFFDFC] text-[#69736E] hover:text-[#29332F] border border-[#E5DED5]"
+                  ? "bg-[#FB923C] text-white shadow-sm"
+                  : "bg-white text-[#4B5563] hover:text-[#111827] border border-[#E5E7EB]"
               }`}
             >
               {st.replace("_", " ")}
@@ -118,8 +118,8 @@ export default function CasesPage() {
       {/* Case Table Card */}
       <Card>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-[#29332F]">
-            <thead className="bg-[#F7F4EF] text-[11px] text-[#69736E] uppercase tracking-wider border-b border-[#E5DED5]">
+          <table className="w-full text-left text-xs text-[#111827]">
+            <thead className="bg-[#F9FAFB] text-[11px] text-[#4B5563] uppercase tracking-wider border-b border-[#E5E7EB]">
               <tr>
                 <th className="py-3.5 px-4 font-semibold">Case #</th>
                 <th className="py-3.5 px-4 font-semibold">Transaction / Masked Card</th>
@@ -131,10 +131,10 @@ export default function CasesPage() {
                 <th className="py-3.5 px-4 font-semibold text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5DED5]/60">
+            <tbody className="divide-y divide-[#E5E7EB]">
               {cases.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center text-[#929A95]">
+                  <td colSpan={8} className="py-12 text-center text-[#9CA3AF]">
                     No investigation cases found for selected filter.
                   </td>
                 </tr>
@@ -144,18 +144,18 @@ export default function CasesPage() {
                   const maskedCard = `**** **** **** ${c.card_id.slice(-4)}`;
 
                   return (
-                    <tr key={c.id} className="hover:bg-[#F7F4EF] transition-colors">
-                      <td className="py-3.5 px-4 font-mono font-bold text-[#5F8F83]">
+                    <tr key={c.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="py-3.5 px-4 font-mono font-bold text-gray-900">
                         {c.case_number}
                       </td>
                       <td className="py-3.5 px-4">
-                        <div className="font-mono text-[#29332F] font-bold">{c.transaction_id}</div>
-                        <div className="text-[10px] text-[#69736E] font-mono">{maskedCard}</div>
+                        <div className="font-mono text-[#111827] font-bold">{c.transaction_id}</div>
+                        <div className="text-[10px] text-[#4B5563] font-mono">{maskedCard}</div>
                       </td>
-                      <td className="py-3.5 px-4 font-bold text-[#29332F]">
+                      <td className="py-3.5 px-4 font-bold text-[#111827]">
                         {formatCurrency(c.amount)}
                       </td>
-                      <td className="py-3.5 px-4 font-mono font-bold text-[#7B3030]">
+                      <td className="py-3.5 px-4 font-mono font-bold text-[#EA580C]">
                         {(c.risk_score * 100).toFixed(1)}%
                       </td>
                       <td className="py-3.5 px-4">
@@ -166,17 +166,17 @@ export default function CasesPage() {
                       <td className="py-3.5 px-4">
                         <span className={`px-2.5 py-1 rounded text-[10px] font-bold ${
                           c.status === "CONFIRMED_FRAUD"
-                            ? "bg-[#D99A9A]/30 text-[#7B3030] border border-[#D99A9A]"
+                            ? "bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74]"
                             : c.status === "RESOLVED"
-                            ? "bg-[#A8C5B5]/30 text-[#35604B] border border-[#A8C5B5]"
-                            : "bg-[#DCE7E1] text-[#26332F] border border-[#CCD9D2]"
+                            ? "bg-gray-100 text-gray-900 border border-gray-300"
+                            : "bg-gray-100 text-gray-800 border border-gray-200"
                         }`}>
                           {c.status.replace("_", " ")}
                         </span>
                       </td>
-                      <td className="py-3.5 px-4 font-medium text-[#69736E]">
+                      <td className="py-3.5 px-4 font-medium text-[#4B5563]">
                         {c.assigned_analyst_name || (
-                          <span className="text-[#929A95] italic">Unassigned</span>
+                          <span className="text-[#9CA3AF] italic">Unassigned</span>
                         )}
                       </td>
                       <td className="py-3.5 px-4 text-right space-x-1.5">
@@ -186,7 +186,7 @@ export default function CasesPage() {
                           onClick={() => handleOpenTxModal(c)}
                           className="text-[11px]"
                         >
-                          <Eye className="w-3 h-3 mr-1 text-[#5F8F83]" />
+                          <Eye className="w-3 h-3 mr-1 text-gray-700" />
                           Dossier
                         </Button>
                         <Button
@@ -221,11 +221,11 @@ export default function CasesPage() {
         </div>
 
         {/* Pagination Bar */}
-        <div className="p-4 border-t border-[#E5DED5] flex items-center justify-between text-xs text-[#69736E]">
+        <div className="p-4 border-t border-[#E5E7EB] flex items-center justify-between text-xs text-[#4B5563]">
           <div>
-            Showing <strong className="text-[#29332F]">{(page - 1) * 20 + 1}</strong> to{" "}
-            <strong className="text-[#29332F]">{Math.min(page * 20, total)}</strong> of{" "}
-            <strong className="text-[#29332F]">{total}</strong> cases
+            Showing <strong className="text-[#111827]">{(page - 1) * 20 + 1}</strong> to{" "}
+            <strong className="text-[#111827]">{Math.min(page * 20, total)}</strong> of{" "}
+            <strong className="text-[#111827]">{total}</strong> cases
           </div>
 
           <div className="flex items-center gap-2">
@@ -238,7 +238,7 @@ export default function CasesPage() {
               <ChevronLeft className="w-4 h-4" />
               Previous
             </Button>
-            <span className="text-xs text-[#29332F] font-medium px-2">
+            <span className="text-xs text-[#111827] font-medium px-2">
               Page {page} of {totalPages}
             </span>
             <Button
@@ -262,16 +262,16 @@ export default function CasesPage() {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-xs text-[#69736E]">
-            Assign case <strong className="text-[#29332F]">{selectedCase?.case_number}</strong> to a specialist.
+          <p className="text-xs text-[#4B5563]">
+            Assign case <strong className="text-[#111827]">{selectedCase?.case_number}</strong> to a specialist.
           </p>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-[#29332F]">Fraud Specialist</label>
+            <label className="text-xs font-semibold text-[#111827]">Fraud Specialist</label>
             <select
               value={selectedAnalyst}
               onChange={(e) => setSelectedAnalyst(e.target.value)}
-              className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg p-2 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+              className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
             >
               <option value="Sarah Chen">Sarah Chen (Lead Fraud Analyst)</option>
               <option value="Marcus Vance">Marcus Vance (Senior Specialist)</option>
@@ -279,7 +279,7 @@ export default function CasesPage() {
             </select>
           </div>
 
-          <div className="flex justify-end gap-2 pt-3 border-t border-[#E5DED5]">
+          <div className="flex justify-end gap-2 pt-3 border-t border-[#E5E7EB]">
             <Button variant="secondary" size="sm" onClick={() => setAssignModalOpen(false)}>
               Cancel
             </Button>
@@ -299,11 +299,11 @@ export default function CasesPage() {
       >
         <div className="space-y-4 text-xs">
           <div className="space-y-1.5">
-            <label className="font-semibold text-[#29332F]">New Investigation Status</label>
+            <label className="font-semibold text-[#111827]">New Investigation Status</label>
             <select
               value={newStatus}
               onChange={(e) => setNewStatus(e.target.value)}
-              className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg p-2 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+              className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
             >
               <option value="CONFIRMED_FRAUD">CONFIRMED_FRAUD (Card Permanently Compromised)</option>
               <option value="RESOLVED">RESOLVED (False Positive / Genuine Customer)</option>
@@ -313,28 +313,28 @@ export default function CasesPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="font-semibold text-[#29332F]">Resolution Reason</label>
+            <label className="font-semibold text-[#111827]">Resolution Reason</label>
             <input
               type="text"
               value={resolutionReason}
               onChange={(e) => setResolutionReason(e.target.value)}
               placeholder="e.g. Cardholder confirmed unauthorized ATM withdrawal"
-              className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg p-2 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+              className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="font-semibold text-[#29332F]">Investigation Note</label>
+            <label className="font-semibold text-[#111827]">Investigation Note</label>
             <textarea
               value={caseNote}
               onChange={(e) => setCaseNote(e.target.value)}
               placeholder="Document evidence gathered, merchant contact, or telemetry findings..."
-              className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg p-2 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+              className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
               rows={3}
             />
           </div>
 
-          <div className="flex justify-end gap-2 pt-3 border-t border-[#E5DED5]">
+          <div className="flex justify-end gap-2 pt-3 border-t border-[#E5E7EB]">
             <Button variant="secondary" size="sm" onClick={() => setStatusUpdateModal(false)}>
               Cancel
             </Button>

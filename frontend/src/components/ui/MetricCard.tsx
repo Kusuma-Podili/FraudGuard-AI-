@@ -7,50 +7,46 @@ interface MetricCardProps {
   value: string | number;
   change?: string;
   isPositive?: boolean;
-  icon?: React.ReactNode;
   subtitle?: string;
-  badge?: string;
-  badgeVariant?: "default" | "success" | "warning" | "danger";
+  icon?: React.ReactNode;
+  className?: string;
 }
 
 export const MetricCard: React.FC<MetricCardProps> = ({
   title,
   value,
   change,
-  isPositive = true,
-  icon,
+  isPositive,
   subtitle,
-  badge,
-  badgeVariant = "default",
+  icon,
+  className,
 }) => {
   return (
-    <Card className="relative overflow-hidden">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-[11px] font-semibold text-[#69736E] uppercase tracking-wider">{title}</p>
-          <p className="text-2xl font-bold text-[#29332F] mt-1.5 tracking-tight font-mono">{value}</p>
-          {(change || subtitle) && (
-            <div className="flex items-center gap-2 mt-2">
-              {change && (
-                <span
-                  className={cn(
-                    "text-[11px] font-semibold px-2 py-0.5 rounded",
-                    isPositive ? "bg-[#A8C5B5]/30 text-[#35604B]" : "bg-[#D99A9A]/30 text-[#7B3030]"
-                  )}
-                >
-                  {change}
-                </span>
-              )}
-              {subtitle && <span className="text-[11px] text-[#929A95]">{subtitle}</span>}
-            </div>
-          )}
-        </div>
+    <Card className={cn("p-5 bg-white border border-[#E5E7EB] space-y-1.5", className)}>
+      <div className="flex items-center justify-between">
+        <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">
+          {title}
+        </span>
         {icon && (
-          <div className="p-2.5 bg-[#F7F4EF] rounded-xl border border-[#E5DED5] text-[#5F8F83]">
+          <div className="w-7 h-7 rounded-lg bg-gray-100 flex items-center justify-center text-gray-700">
             {icon}
           </div>
         )}
       </div>
+
+      <div className="flex items-baseline gap-2">
+        <span className="text-2xl font-bold text-gray-900 tracking-tight font-mono">{value}</span>
+      </div>
+
+      {change && (
+        <p className="text-[11px] font-medium text-gray-600">
+          {change}
+        </p>
+      )}
+
+      {subtitle && !change && (
+        <p className="text-[11px] text-gray-400">{subtitle}</p>
+      )}
     </Card>
   );
 };

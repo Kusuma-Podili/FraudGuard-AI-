@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { TransactionInvestigationModal } from "@/components/transactions/TransactionInvestigationModal";
 import { api } from "@/lib/api";
@@ -79,10 +79,10 @@ export default function TransactionsPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <CreditCard className="w-6 h-6 text-[#5F8F83]" />
-            <h1 className="text-2xl font-bold text-[#29332F] tracking-tight">Authorization Transactions</h1>
+            <CreditCard className="w-6 h-6 text-gray-800" />
+            <h1 className="text-2xl font-bold text-[#111827] tracking-tight">Authorization Transactions</h1>
           </div>
-          <p className="text-xs text-[#69736E] mt-1">
+          <p className="text-xs text-[#4B5563] mt-1">
             Real-time ledger of all incoming payment authorizations with machine learning risk evaluation.
           </p>
         </div>
@@ -93,7 +93,7 @@ export default function TransactionsPage() {
             Refresh
           </Button>
           <a href={api.getReportCsvDownloadUrl("TRANSACTIONS")} download>
-            <Button size="sm" className="bg-[#5F8F83] hover:bg-[#4F7D72] text-white shadow-sm">
+            <Button size="sm" className="bg-[#FB923C] hover:bg-[#F97316] text-white shadow-sm">
               <Download className="w-3.5 h-3.5 mr-1" />
               Download CSV
             </Button>
@@ -102,16 +102,16 @@ export default function TransactionsPage() {
       </div>
 
       {/* Filter Control Bar */}
-      <Card className="p-4 bg-[#FFFDFC] border-[#E5DED5]">
+      <Card className="p-4 bg-white border-[#E5E7EB]">
         <form onSubmit={handleSearchSubmit} className="flex flex-wrap items-center gap-3">
           <div className="relative flex-1 min-w-[220px]">
-            <Search className="w-4 h-4 text-[#929A95] absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by card number (e.g. 4829), Tx ID, merchant, country..."
-              className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg pl-9 pr-3 py-1.5 text-xs text-[#29332F] placeholder-[#929A95] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+              className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg pl-9 pr-3 py-1.5 text-xs text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
             />
           </div>
 
@@ -121,7 +121,7 @@ export default function TransactionsPage() {
               setRiskLevel(e.target.value);
               setPage(1);
             }}
-            className="bg-[#F7F4EF] border border-[#E5DED5] rounded-lg px-3 py-1.5 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+            className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg px-3 py-1.5 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
           >
             <option value="ALL">All Risk Tiers</option>
             <option value="LOW">Low Risk (&lt;0.30)</option>
@@ -136,7 +136,7 @@ export default function TransactionsPage() {
               setDecision(e.target.value);
               setPage(1);
             }}
-            className="bg-[#F7F4EF] border border-[#E5DED5] rounded-lg px-3 py-1.5 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+            className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg px-3 py-1.5 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
           >
             <option value="ALL">All Decisions</option>
             <option value="ALLOW">ALLOW (Approved)</option>
@@ -154,8 +154,8 @@ export default function TransactionsPage() {
       {/* Main Transactions Table */}
       <Card>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-[#29332F]">
-            <thead className="bg-[#F7F4EF] text-[11px] text-[#69736E] uppercase tracking-wider border-b border-[#E5DED5]">
+          <table className="w-full text-left text-xs text-[#111827]">
+            <thead className="bg-[#F9FAFB] text-[11px] text-[#4B5563] uppercase tracking-wider border-b border-[#E5E7EB]">
               <tr>
                 <th className="py-3.5 px-4 font-semibold">Tx ID</th>
                 <th className="py-3.5 px-4 font-semibold">Masked Card</th>
@@ -168,10 +168,10 @@ export default function TransactionsPage() {
                 <th className="py-3.5 px-4 font-semibold text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5DED5]/60">
+            <tbody className="divide-y divide-[#E5E7EB]">
               {transactions.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className="py-12 text-center text-[#929A95]">
+                  <td colSpan={9} className="py-12 text-center text-[#9CA3AF]">
                     No transactions found matching the specified filters.
                   </td>
                 </tr>
@@ -182,26 +182,26 @@ export default function TransactionsPage() {
                   const maskedCard = `**** **** **** ${tx.card_id.slice(-4)}`;
 
                   return (
-                    <tr key={tx.transaction_id} className="hover:bg-[#F7F4EF] transition-colors">
-                      <td className="py-3.5 px-4 font-mono font-bold text-[#29332F]">
+                    <tr key={tx.transaction_id} className="hover:bg-gray-50 transition-colors">
+                      <td className="py-3.5 px-4 font-mono font-bold text-[#111827]">
                         {tx.transaction_id}
                       </td>
-                      <td className="py-3.5 px-4 font-mono text-[#69736E]">
+                      <td className="py-3.5 px-4 font-mono text-[#4B5563]">
                         {maskedCard}
                       </td>
-                      <td className="py-3.5 px-4 text-[#929A95] font-mono text-[11px]">
+                      <td className="py-3.5 px-4 text-[#9CA3AF] font-mono text-[11px]">
                         {new Date(tx.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                       </td>
-                      <td className="py-3.5 px-4 font-bold text-[#29332F]">
+                      <td className="py-3.5 px-4 font-bold text-[#111827]">
                         {formatCurrency(tx.amount)}
                       </td>
                       <td className="py-3.5 px-4">
-                        <div className="font-semibold text-[#29332F]">{tx.merchant_name || tx.merchant_id}</div>
-                        <div className="text-[10px] text-[#929A95]">
+                        <div className="font-semibold text-[#111827]">{tx.merchant_name || tx.merchant_id}</div>
+                        <div className="text-[10px] text-[#9CA3AF]">
                           {tx.merchant_category} • {tx.country_code || "US"}
                         </div>
                       </td>
-                      <td className="py-3.5 px-4 font-mono text-[11px] text-[#69736E]">
+                      <td className="py-3.5 px-4 font-mono text-[11px] text-[#4B5563]">
                         {tx.entry_mode || "CNP"}
                       </td>
                       <td className="py-3.5 px-4">
@@ -221,7 +221,7 @@ export default function TransactionsPage() {
                           onClick={() => handleInvestigate(tx)}
                           className="text-[11px]"
                         >
-                          <FileSearch className="w-3 h-3 mr-1 text-[#5F8F83]" />
+                          <FileSearch className="w-3 h-3 mr-1 text-gray-700" />
                           Investigate
                         </Button>
                       </td>
@@ -234,11 +234,11 @@ export default function TransactionsPage() {
         </div>
 
         {/* Pagination Bar */}
-        <div className="p-4 border-t border-[#E5DED5] flex items-center justify-between text-xs text-[#69736E]">
+        <div className="p-4 border-t border-[#E5E7EB] flex items-center justify-between text-xs text-[#4B5563]">
           <div>
-            Showing <strong className="text-[#29332F]">{(page - 1) * pageSize + 1}</strong> to{" "}
-            <strong className="text-[#29332F]">{Math.min(page * pageSize, total)}</strong> of{" "}
-            <strong className="text-[#29332F]">{total}</strong> records
+            Showing <strong className="text-[#111827]">{(page - 1) * pageSize + 1}</strong> to{" "}
+            <strong className="text-[#111827]">{Math.min(page * pageSize, total)}</strong> of{" "}
+            <strong className="text-[#111827]">{total}</strong> records
           </div>
 
           <div className="flex items-center gap-2">
@@ -251,7 +251,7 @@ export default function TransactionsPage() {
               <ChevronLeft className="w-4 h-4" />
               Previous
             </Button>
-            <span className="text-xs text-[#29332F] font-medium px-2">
+            <span className="text-xs text-[#111827] font-medium px-2">
               Page {page} of {totalPages}
             </span>
             <Button

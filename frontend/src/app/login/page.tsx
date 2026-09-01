@@ -45,55 +45,55 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#F7F4EF] flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen w-full bg-[#FAFAFA] flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md space-y-6">
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#5F8F83] text-white shadow-sm mb-1">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#FFEDD5] text-[#EA580C] border border-[#FDBA74] shadow-sm mb-1">
             <ShieldCheck className="w-6 h-6" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-[#29332F]">FraudGuard AI</h1>
-          <p className="text-xs text-[#69736E] max-w-xs mx-auto">
+          <h1 className="text-2xl font-bold tracking-tight text-[#111827]">FraudGuard AI</h1>
+          <p className="text-xs text-[#4B5563] max-w-xs mx-auto">
             Intelligent Credit Card Fraud Detection & Risk Management
           </p>
         </div>
 
         {/* Login Card */}
-        <Card className="p-6 bg-[#FFFDFC] border-[#E5DED5] shadow-sm space-y-5">
+        <Card className="p-6 bg-white border-[#E5E7EB] shadow-sm space-y-5">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="p-3 rounded-lg bg-[#D99A9A]/20 border border-[#D99A9A] text-[#7B3030] text-xs flex items-center gap-2">
+              <div className="p-3 rounded-lg bg-[#FFEDD5] border border-[#FDBA74] text-[#9A3412] text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{error}</span>
               </div>
             )}
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-[#29332F]">Work Email</label>
+              <label className="text-xs font-semibold text-[#111827]">Work Email</label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-[#929A95] absolute left-3 top-1/2 -translate-y-1/2" />
+                <Mail className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="name@fraudguard.ai"
-                  className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg pl-9 pr-3 py-2 text-xs text-[#29332F] placeholder-[#929A95] focus:outline-none focus:ring-1 focus:ring-[#5F8F83] focus:border-[#5F8F83]"
+                  className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg pl-9 pr-3 py-2 text-xs text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#FB923C] focus:border-[#FB923C]"
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-[#29332F]">Password</label>
+              <label className="text-xs font-semibold text-[#111827]">Password</label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-[#929A95] absolute left-3 top-1/2 -translate-y-1/2" />
+                <Lock className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="••••••••"
-                  className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg pl-9 pr-3 py-2 text-xs text-[#29332F] placeholder-[#929A95] focus:outline-none focus:ring-1 focus:ring-[#5F8F83] focus:border-[#5F8F83]"
+                  className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg pl-9 pr-3 py-2 text-xs text-[#111827] placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#FB923C] focus:border-[#FB923C]"
                 />
               </div>
             </div>
@@ -105,33 +105,33 @@ export default function LoginPage() {
           </form>
 
           {/* 1-Click Demo Accounts */}
-          <div className="pt-4 border-t border-[#E5DED5] space-y-3">
-            <p className="text-[11px] font-semibold text-[#69736E] uppercase tracking-wider text-center">
+          <div className="pt-4 border-t border-[#E5E7EB] space-y-3">
+            <p className="text-[11px] font-semibold text-[#4B5563] uppercase tracking-wider text-center">
               1-Click Demo Access
             </p>
             <div className="grid grid-cols-2 gap-2.5">
               <button
                 type="button"
                 onClick={() => handleQuickLogin("admin@fraudguard.ai", "Admin@2026")}
-                className="p-2.5 rounded-lg bg-[#DCE7E1] hover:bg-[#C7D9D0] border border-[#CCD9D2] text-left transition-all group"
+                className="p-2.5 rounded-lg bg-[#F9FAFB] hover:bg-[#FFF7ED] border border-[#E5E7EB] text-left transition-all group"
               >
-                <div className="flex items-center gap-1.5 text-xs font-bold text-[#26332F]">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#5F8F83]" />
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#111827]">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#EA580C]" />
                   <span>Admin</span>
                 </div>
-                <p className="text-[10px] text-[#69736E] mt-0.5">Full CRO controls</p>
+                <p className="text-[10px] text-[#4B5563] mt-0.5">Full CRO controls</p>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleQuickLogin("analyst@fraudguard.ai", "Analyst@2026")}
-                className="p-2.5 rounded-lg bg-[#DCE7E1] hover:bg-[#C7D9D0] border border-[#CCD9D2] text-left transition-all group"
+                className="p-2.5 rounded-lg bg-[#F9FAFB] hover:bg-[#FFF7ED] border border-[#E5E7EB] text-left transition-all group"
               >
-                <div className="flex items-center gap-1.5 text-xs font-bold text-[#26332F]">
-                  <UserCheck className="w-3.5 h-3.5 text-[#5F8F83]" />
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#111827]">
+                  <UserCheck className="w-3.5 h-3.5 text-[#EA580C]" />
                   <span>Fraud Analyst</span>
                 </div>
-                <p className="text-[10px] text-[#69736E] mt-0.5">Triage & live queue</p>
+                <p className="text-[10px] text-[#4B5563] mt-0.5">Triage & live queue</p>
               </button>
             </div>
           </div>

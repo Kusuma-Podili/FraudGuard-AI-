@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { api } from "@/lib/api";
@@ -53,10 +53,10 @@ export default function AuditLogsPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <History className="w-6 h-6 text-[#5F8F83]" />
-            <h1 className="text-2xl font-bold text-[#29332F] tracking-tight">Compliance Audit Trail</h1>
+            <History className="w-6 h-6 text-gray-800" />
+            <h1 className="text-2xl font-bold text-[#111827] tracking-tight">Compliance Audit Trail</h1>
           </div>
-          <p className="text-xs text-[#69736E] mt-1">
+          <p className="text-xs text-[#4B5563] mt-1">
             Cryptographically sealed, immutable ledger of all administrative and analyst security operations.
           </p>
         </div>
@@ -70,16 +70,16 @@ export default function AuditLogsPage() {
       </div>
 
       {/* Filter Control */}
-      <Card className="p-4 bg-[#FFFDFC] border-[#E5DED5]">
+      <Card className="p-4 bg-white border-[#E5E7EB]">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="text-xs font-semibold text-[#69736E]">Action Type:</span>
+          <span className="text-xs font-semibold text-[#4B5563]">Action Type:</span>
           <select
             value={actionType}
             onChange={(e) => {
               setActionType(e.target.value);
               setPage(1);
             }}
-            className="bg-[#F7F4EF] border border-[#E5DED5] rounded-lg px-3 py-1.5 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+            className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg px-3 py-1.5 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
           >
             <option value="ALL">All Recorded Actions</option>
             <option value="USER_LOGIN">USER_LOGIN</option>
@@ -99,8 +99,8 @@ export default function AuditLogsPage() {
       {/* Logs Table */}
       <Card>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-[#29332F]">
-            <thead className="bg-[#F7F4EF] text-[11px] text-[#69736E] uppercase tracking-wider border-b border-[#E5DED5]">
+          <table className="w-full text-left text-xs text-[#111827]">
+            <thead className="bg-[#F9FAFB] text-[11px] text-[#4B5563] uppercase tracking-wider border-b border-[#E5E7EB]">
               <tr>
                 <th className="py-3.5 px-4 font-semibold">Timestamp</th>
                 <th className="py-3.5 px-4 font-semibold">Actor Email</th>
@@ -110,29 +110,29 @@ export default function AuditLogsPage() {
                 <th className="py-3.5 px-4 font-semibold text-right">Details</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5DED5]/60">
+            <tbody className="divide-y divide-[#E5E7EB]">
               {logs.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-12 text-center text-[#929A95]">
+                  <td colSpan={6} className="py-12 text-center text-[#9CA3AF]">
                     No compliance audit logs match the query.
                   </td>
                 </tr>
               ) : (
                 logs.map((log) => (
-                  <tr key={log.id} className="hover:bg-[#F7F4EF] transition-colors">
-                    <td className="py-3 px-4 font-mono text-[11px] text-[#69736E]">
+                  <tr key={log.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-4 font-mono text-[11px] text-[#4B5563]">
                       {log.created_at ? new Date(log.created_at).toLocaleString() : "N/A"}
                     </td>
-                    <td className="py-3 px-4 font-mono font-medium text-[#29332F]">{log.user_email}</td>
+                    <td className="py-3 px-4 font-mono font-medium text-[#111827]">{log.user_email}</td>
                     <td className="py-3 px-4">
-                      <span className="px-2 py-0.5 rounded bg-[#DCE7E1] text-[#17231F] border border-[#CCD9D2] font-mono text-[10px] font-bold">
+                      <span className="px-2 py-0.5 rounded bg-gray-100 text-gray-800 border border-gray-300 font-mono text-[10px] font-bold">
                         {log.action_type}
                       </span>
                     </td>
-                    <td className="py-3 px-4 font-mono text-[11px] text-[#69736E]">
+                    <td className="py-3 px-4 font-mono text-[11px] text-[#4B5563]">
                       {log.resource_type}: {log.resource_id}
                     </td>
-                    <td className="py-3 px-4 text-[#29332F] max-w-sm truncate">{log.change_summary}</td>
+                    <td className="py-3 px-4 text-[#111827] max-w-sm truncate">{log.change_summary}</td>
                     <td className="py-3 px-4 text-right">
                       <Button
                         variant="secondary"
@@ -143,7 +143,7 @@ export default function AuditLogsPage() {
                         }}
                         className="text-[11px]"
                       >
-                        <Eye className="w-3 h-3 mr-1 text-[#5F8F83]" />
+                        <Eye className="w-3 h-3 mr-1 text-gray-700" />
                         Inspect
                       </Button>
                     </td>
@@ -155,11 +155,11 @@ export default function AuditLogsPage() {
         </div>
 
         {/* Pagination Bar */}
-        <div className="p-4 border-t border-[#E5DED5] flex items-center justify-between text-xs text-[#69736E]">
+        <div className="p-4 border-t border-[#E5E7EB] flex items-center justify-between text-xs text-[#4B5563]">
           <div>
-            Showing <strong className="text-[#29332F]">{(page - 1) * pageSize + 1}</strong> to{" "}
-            <strong className="text-[#29332F]">{Math.min(page * pageSize, total)}</strong> of{" "}
-            <strong className="text-[#29332F]">{total}</strong> audit entries
+            Showing <strong className="text-[#111827]">{(page - 1) * pageSize + 1}</strong> to{" "}
+            <strong className="text-[#111827]">{Math.min(page * pageSize, total)}</strong> of{" "}
+            <strong className="text-[#111827]">{total}</strong> audit entries
           </div>
 
           <div className="flex items-center gap-2">
@@ -172,7 +172,7 @@ export default function AuditLogsPage() {
               <ChevronLeft className="w-4 h-4" />
               Previous
             </Button>
-            <span className="text-xs text-[#29332F] font-medium px-2">
+            <span className="text-xs text-[#111827] font-medium px-2">
               Page {page} of {totalPages}
             </span>
             <Button
@@ -192,28 +192,28 @@ export default function AuditLogsPage() {
       <Modal isOpen={isDetailOpen} onClose={() => setIsDetailOpen(false)} title="Audit Record Inspector" size="md">
         {selectedLog && (
           <div className="space-y-4 text-xs">
-            <div className="p-3 bg-[#F7F4EF] rounded-lg border border-[#E5DED5] space-y-1">
+            <div className="p-3 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB] space-y-1">
               <div className="flex justify-between">
-                <span className="text-[#69736E]">Action:</span>
-                <span className="font-bold text-[#5F8F83]">{selectedLog.action_type}</span>
+                <span className="text-[#4B5563]">Action:</span>
+                <span className="font-bold text-gray-900">{selectedLog.action_type}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#69736E]">Actor:</span>
-                <span className="font-mono text-[#29332F]">{selectedLog.user_email}</span>
+                <span className="text-[#4B5563]">Actor:</span>
+                <span className="font-mono text-[#111827]">{selectedLog.user_email}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#69736E]">Resource:</span>
-                <span className="font-mono text-[#29332F]">{selectedLog.resource_type}: {selectedLog.resource_id}</span>
+                <span className="text-[#4B5563]">Resource:</span>
+                <span className="font-mono text-[#111827]">{selectedLog.resource_type}: {selectedLog.resource_id}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#69736E]">IP Address:</span>
-                <span className="font-mono text-[#29332F]">{selectedLog.ip_address || "127.0.0.1"}</span>
+                <span className="text-[#4B5563]">IP Address:</span>
+                <span className="font-mono text-[#111827]">{selectedLog.ip_address || "127.0.0.1"}</span>
               </div>
             </div>
 
             <div className="space-y-2">
-              <span className="font-bold text-[#29332F] uppercase tracking-wider">Payload Changes</span>
-              <pre className="p-3 bg-[#F7F4EF] border border-[#E5DED5] rounded-lg text-[#29332F] font-mono text-[11px] overflow-x-auto">
+              <span className="font-bold text-[#111827] uppercase tracking-wider">Payload Changes</span>
+              <pre className="p-3 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg text-[#111827] font-mono text-[11px] overflow-x-auto">
                 {JSON.stringify(
                   {
                     before_state: selectedLog.before_state,
@@ -225,7 +225,7 @@ export default function AuditLogsPage() {
               </pre>
             </div>
 
-            <div className="flex justify-end pt-2 border-t border-[#E5DED5]">
+            <div className="flex justify-end pt-2 border-t border-[#E5E7EB]">
               <Button variant="secondary" size="sm" onClick={() => setIsDetailOpen(false)}>
                 Close
               </Button>

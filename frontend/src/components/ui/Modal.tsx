@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -9,8 +7,8 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
-  maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "4xl";
-  size?: "sm" | "md" | "lg" | "xl" | "2xl" | "4xl";
+  size?: "sm" | "md" | "lg" | "xl";
+  className?: string;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -18,11 +16,9 @@ export const Modal: React.FC<ModalProps> = ({
   onClose,
   title,
   children,
-  maxWidth,
-  size = "lg",
+  size = "md",
+  className,
 }) => {
-  const effectiveSize = maxWidth || size;
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -39,36 +35,41 @@ export const Modal: React.FC<ModalProps> = ({
 
   if (!isOpen) return null;
 
-  const maxWidths = {
-    sm: "max-w-sm",
-    md: "max-w-md",
-    lg: "max-w-lg",
-    xl: "max-w-xl",
-    "2xl": "max-w-2xl",
-    "4xl": "max-w-4xl",
+  const sizeClasses = {
+    sm: "max-w-md",
+    md: "max-w-lg",
+    lg: "max-w-2xl",
+    xl: "max-w-4xl",
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-[#29332F]/40 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
+
+      {/* Modal Box */}
       <div
         className={cn(
-          "relative w-full bg-[#FFFDFC] border border-[#E5DED5] rounded-xl shadow-xl overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-200",
-          maxWidths[effectiveSize]
+          "relative w-full bg-white border border-[#E5E7EB] rounded-xl shadow-xl overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-150",
+          sizeClasses[size],
+          className
         )}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#E5DED5]">
-          <h2 className="text-base font-bold text-[#29332F]">{title}</h2>
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#E5E7EB]">
+          <h3 className="text-sm font-bold text-[#111827]">{title}</h3>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-[#69736E] hover:text-[#29332F] hover:bg-[#F7F4EF] transition-colors"
+            className="p-1 rounded-lg text-[#9CA3AF] hover:text-[#111827] hover:bg-gray-100 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
+
+        {/* Body */}
         <div className="p-6 max-h-[80vh] overflow-y-auto">{children}</div>
       </div>
     </div>

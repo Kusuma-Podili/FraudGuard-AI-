@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { api } from "@/lib/api";
 import { User } from "@/types";
-import { useAuth } from "@/hooks/useAuth";
 import {
   Users,
   UserPlus,
@@ -17,7 +16,6 @@ import {
 } from "lucide-react";
 
 export default function UsersPage() {
-  const { isAdmin } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -137,10 +135,10 @@ export default function UsersPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Users className="w-6 h-6 text-[#5F8F83]" />
-            <h1 className="text-2xl font-bold text-[#29332F] tracking-tight">Platform User Management</h1>
+            <Users className="w-6 h-6 text-gray-800" />
+            <h1 className="text-2xl font-bold text-[#111827] tracking-tight">Platform User Management</h1>
           </div>
-          <p className="text-xs text-[#69736E] mt-1">
+          <p className="text-xs text-[#4B5563] mt-1">
             Provision, manage roles, configure permissions, and reset credentials for risk analysts and administrators.
           </p>
         </div>
@@ -158,20 +156,20 @@ export default function UsersPage() {
       </div>
 
       {notification && (
-        <div className="p-3 bg-[#A8C5B5]/20 border border-[#A8C5B5] rounded-xl text-xs text-[#35604B] flex items-center justify-between">
+        <div className="p-3 bg-gray-100 border border-gray-300 rounded-xl text-xs text-gray-900 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-[#35604B] shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-gray-900 shrink-0" />
             <span>{notification}</span>
           </div>
-          <button onClick={() => setNotification(null)} className="text-[#69736E] hover:text-[#29332F]">✕</button>
+          <button onClick={() => setNotification(null)} className="text-[#4B5563] hover:text-[#111827]">✕</button>
         </div>
       )}
 
       {/* Users Table */}
       <Card>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-[#29332F]">
-            <thead className="bg-[#F7F4EF] text-[11px] text-[#69736E] uppercase tracking-wider border-b border-[#E5DED5]">
+          <table className="w-full text-left text-xs text-[#111827]">
+            <thead className="bg-[#F9FAFB] text-[11px] text-[#4B5563] uppercase tracking-wider border-b border-[#E5E7EB]">
               <tr>
                 <th className="py-3.5 px-4 font-semibold">User</th>
                 <th className="py-3.5 px-4 font-semibold">Email</th>
@@ -181,36 +179,30 @@ export default function UsersPage() {
                 <th className="py-3.5 px-4 font-semibold text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5DED5]/60">
+            <tbody className="divide-y divide-[#E5E7EB]">
               {users.map((u) => (
-                <tr key={u.id} className="hover:bg-[#F7F4EF] transition-colors">
+                <tr key={u.id} className="hover:bg-gray-50 transition-colors">
                   <td className="py-3.5 px-4">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-7 h-7 rounded-lg bg-[#5F8F83]/15 flex items-center justify-center text-[#5F8F83] font-bold text-xs">
+                      <div className="w-7 h-7 rounded-lg bg-gray-100 flex items-center justify-center text-gray-800 font-bold text-xs">
                         {u.full_name?.charAt(0) || "U"}
                       </div>
-                      <span className="font-bold text-[#29332F]">{u.full_name}</span>
+                      <span className="font-bold text-[#111827]">{u.full_name}</span>
                     </div>
                   </td>
-                  <td className="py-3.5 px-4 font-mono text-[#69736E]">{u.email}</td>
+                  <td className="py-3.5 px-4 font-mono text-[#4B5563]">{u.email}</td>
                   <td className="py-3.5 px-4">
-                    <span
-                      className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                        u.role === "ADMIN"
-                          ? "bg-[#A99BBE]/30 text-[#4C3B66] border border-[#A99BBE]"
-                          : "bg-[#5F8F83]/20 text-[#35604B] border border-[#5F8F83]/40"
-                      }`}
-                    >
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-gray-100 text-gray-800 border border-gray-300">
                       {u.role}
                     </span>
                   </td>
-                  <td className="py-3.5 px-4 text-[#69736E]">{u.department || "Operations"}</td>
+                  <td className="py-3.5 px-4 text-[#4B5563]">{u.department || "Operations"}</td>
                   <td className="py-3.5 px-4">
                     <span
                       className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                         u.is_active
-                          ? "bg-[#A8C5B5]/30 text-[#35604B] border border-[#A8C5B5]"
-                          : "bg-[#D99A9A]/30 text-[#7B3030] border border-[#D99A9A]"
+                          ? "bg-gray-100 text-gray-900 border border-gray-300"
+                          : "bg-[#FFEDD5] text-[#9A3412] border border-[#FDBA74]"
                       }`}
                     >
                       {u.is_active ? "ACTIVE" : "INACTIVE"}
@@ -248,7 +240,7 @@ export default function UsersPage() {
                       variant="ghost"
                       size="sm"
                       onClick={() => handleToggleActive(u)}
-                      className={`text-[11px] ${u.is_active ? "text-[#795B20] hover:text-[#5F4310]" : "text-[#35604B] hover:text-[#254836]"}`}
+                      className="text-[11px] text-gray-600 hover:text-gray-900"
                     >
                       {u.is_active ? "Deactivate" : "Activate"}
                     </Button>
@@ -264,36 +256,36 @@ export default function UsersPage() {
       <Modal isOpen={isAddOpen} onClose={() => setIsAddOpen(false)} title="Add Platform User" size="md">
         <form onSubmit={handleCreateUser} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-[#29332F]">Full Name</label>
+            <label className="text-xs font-semibold text-[#111827]">Full Name</label>
             <input
               type="text"
               required
               value={newFullName}
               onChange={(e) => setNewFullName(e.target.value)}
               placeholder="Elena Rostova"
-              className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg p-2 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+              className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-[#29332F]">Work Email</label>
+            <label className="text-xs font-semibold text-[#111827]">Work Email</label>
             <input
               type="email"
               required
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
               placeholder="elena@fraudguard.ai"
-              className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg p-2 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+              className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-[#29332F]">Role</label>
+              <label className="text-xs font-semibold text-[#111827]">Role</label>
               <select
                 value={newRole}
                 onChange={(e) => setNewRole(e.target.value)}
-                className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg p-2 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+                className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
               >
                 <option value="FRAUD_ANALYST">FRAUD_ANALYST</option>
                 <option value="ADMIN">ADMIN</option>
@@ -302,29 +294,29 @@ export default function UsersPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-[#29332F]">Department</label>
+              <label className="text-xs font-semibold text-[#111827]">Department</label>
               <input
                 type="text"
                 value={newDept}
                 onChange={(e) => setNewDept(e.target.value)}
                 placeholder="Fraud Triage"
-                className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg p-2 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+                className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
               />
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-[#29332F]">Initial Password</label>
+            <label className="text-xs font-semibold text-[#111827]">Initial Password</label>
             <input
               type="password"
               required
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg p-2 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+              className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
             />
           </div>
 
-          <div className="flex justify-end gap-2 pt-3 border-t border-[#E5DED5]">
+          <div className="flex justify-end gap-2 pt-3 border-t border-[#E5E7EB]">
             <Button variant="secondary" size="sm" type="button" onClick={() => setIsAddOpen(false)}>
               Cancel
             </Button>
@@ -339,23 +331,23 @@ export default function UsersPage() {
       <Modal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} title="Edit User Profile" size="md">
         <form onSubmit={handleUpdateUser} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-[#29332F]">Full Name</label>
+            <label className="text-xs font-semibold text-[#111827]">Full Name</label>
             <input
               type="text"
               required
               value={editFullName}
               onChange={(e) => setEditFullName(e.target.value)}
-              className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg p-2 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+              className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-[#29332F]">Role</label>
+              <label className="text-xs font-semibold text-[#111827]">Role</label>
               <select
                 value={editRole}
                 onChange={(e) => setEditRole(e.target.value)}
-                className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg p-2 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+                className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
               >
                 <option value="FRAUD_ANALYST">FRAUD_ANALYST</option>
                 <option value="ADMIN">ADMIN</option>
@@ -364,17 +356,17 @@ export default function UsersPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-[#29332F]">Department</label>
+              <label className="text-xs font-semibold text-[#111827]">Department</label>
               <input
                 type="text"
                 value={editDept}
                 onChange={(e) => setEditDept(e.target.value)}
-                className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg p-2 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+                className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
               />
             </div>
           </div>
 
-          <div className="flex justify-end gap-2 pt-3 border-t border-[#E5DED5]">
+          <div className="flex justify-end gap-2 pt-3 border-t border-[#E5E7EB]">
             <Button variant="secondary" size="sm" type="button" onClick={() => setIsEditOpen(false)}>
               Cancel
             </Button>
@@ -388,23 +380,23 @@ export default function UsersPage() {
       {/* Reset Password Modal */}
       <Modal isOpen={isResetOpen} onClose={() => setIsResetOpen(false)} title="Reset User Password" size="sm">
         <form onSubmit={handleResetPassword} className="space-y-4">
-          <p className="text-xs text-[#69736E]">
-            Set a new password for <strong className="text-[#29332F]">{resetTargetUser?.email}</strong>.
+          <p className="text-xs text-[#4B5563]">
+            Set a new password for <strong className="text-[#111827]">{resetTargetUser?.email}</strong>.
           </p>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-[#29332F]">New Password</label>
+            <label className="text-xs font-semibold text-[#111827]">New Password</label>
             <input
               type="password"
               required
               value={newResetPassword}
               onChange={(e) => setNewResetPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg p-2 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+              className="w-full bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-2 text-xs text-[#111827] focus:outline-none focus:ring-1 focus:ring-[#FB923C]"
             />
           </div>
 
-          <div className="flex justify-end gap-2 pt-3 border-t border-[#E5DED5]">
+          <div className="flex justify-end gap-2 pt-3 border-t border-[#E5E7EB]">
             <Button variant="secondary" size="sm" type="button" onClick={() => setIsResetOpen(false)}>
               Cancel
             </Button>

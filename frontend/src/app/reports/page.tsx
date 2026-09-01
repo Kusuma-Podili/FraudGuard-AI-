@@ -53,10 +53,10 @@ export default function ReportsPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <FileText className="w-6 h-6 text-[#5F8F83]" />
-            <h1 className="text-2xl font-bold text-[#29332F] tracking-tight">Compliance & Intelligence Reports</h1>
+            <FileText className="w-6 h-6 text-gray-800" />
+            <h1 className="text-2xl font-bold text-[#111827] tracking-tight">Compliance & Intelligence Reports</h1>
           </div>
-          <p className="text-xs text-[#69736E] mt-1">
+          <p className="text-xs text-[#4B5563] mt-1">
             Generate executive briefings, FinCEN SAR compliance logs, and exportable RFC-4180 CSV audit trails.
           </p>
         </div>
@@ -67,7 +67,7 @@ export default function ReportsPage() {
             Print Report
           </Button>
           <a href={api.getReportCsvDownloadUrl(reportType)} download>
-            <Button size="sm" className="bg-[#5F8F83] hover:bg-[#4F7D72] text-white shadow-sm">
+            <Button size="sm" className="bg-[#FB923C] hover:bg-[#F97316] text-white shadow-sm">
               <Download className="w-3.5 h-3.5 mr-1" />
               Download CSV
             </Button>
@@ -83,12 +83,12 @@ export default function ReportsPage() {
             onClick={() => setReportType(rpt.id)}
             className={`p-3 rounded-xl text-left transition-all border ${
               reportType === rpt.id
-                ? "bg-[#C7D9D0] text-[#17231F] border-[#5F8F83] font-semibold shadow-sm"
-                : "bg-[#FFFDFC] text-[#69736E] hover:text-[#29332F] border-[#E5DED5]"
+                ? "bg-[#FFF7ED] text-[#9A3412] border-[#FDBA74] font-semibold shadow-sm"
+                : "bg-white text-[#4B5563] hover:text-[#111827] border-[#E5E7EB]"
             }`}
           >
             <span className="text-xs font-bold block truncate">{rpt.label.split(" ")[0]} {rpt.label.split(" ")[1]}</span>
-            <span className="text-[10px] text-[#929A95] block truncate">{rpt.id.replace("_", " ")}</span>
+            <span className="text-[10px] text-[#9CA3AF] block truncate">{rpt.id.replace("_", " ")}</span>
           </button>
         ))}
       </div>
@@ -96,17 +96,17 @@ export default function ReportsPage() {
       {/* Report Summary Cards */}
       {reportData && reportData.metrics_summary && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-4 bg-[#FFFDFC] border border-[#E5DED5] rounded-xl space-y-1">
-            <span className="text-[11px] text-[#69736E] font-semibold uppercase">Date Range</span>
-            <p className="text-sm font-bold text-[#5F8F83]">{reportData.date_range}</p>
+          <div className="p-4 bg-white border border-[#E5E7EB] rounded-xl space-y-1">
+            <span className="text-[11px] text-[#4B5563] font-semibold uppercase">Date Range</span>
+            <p className="text-sm font-bold text-gray-900">{reportData.date_range}</p>
           </div>
-          <div className="p-4 bg-[#FFFDFC] border border-[#E5DED5] rounded-xl space-y-1">
-            <span className="text-[11px] text-[#69736E] font-semibold uppercase">Total Records Sampled</span>
-            <p className="text-sm font-bold text-[#29332F]">{reportData.total_records}</p>
+          <div className="p-4 bg-white border border-[#E5E7EB] rounded-xl space-y-1">
+            <span className="text-[11px] text-[#4B5563] font-semibold uppercase">Total Records Sampled</span>
+            <p className="text-sm font-bold text-[#111827]">{reportData.total_records}</p>
           </div>
-          <div className="p-4 bg-[#FFFDFC] border border-[#E5DED5] rounded-xl space-y-1">
-            <span className="text-[11px] text-[#69736E] font-semibold uppercase">Primary Metric</span>
-            <p className="text-sm font-bold text-[#35604B]">
+          <div className="p-4 bg-white border border-[#E5E7EB] rounded-xl space-y-1">
+            <span className="text-[11px] text-[#4B5563] font-semibold uppercase">Primary Metric</span>
+            <p className="text-sm font-bold text-gray-900">
               {reportData.metrics_summary.fraud_rate_pct !== undefined
                 ? `${reportData.metrics_summary.fraud_rate_pct}% Fraud Rate`
                 : reportData.metrics_summary.confirmed_fraud_count !== undefined
@@ -114,10 +114,10 @@ export default function ReportsPage() {
                 : `${reportData.metrics_summary.best_roc_auc || 0.988} ROC-AUC`}
             </p>
           </div>
-          <div className="p-4 bg-[#FFFDFC] border border-[#E5DED5] rounded-xl space-y-1">
-            <span className="text-[11px] text-[#69736E] font-semibold uppercase">Audit Status</span>
-            <div className="flex items-center gap-1.5 text-xs text-[#35604B] font-semibold">
-              <CheckCircle2 className="w-3.5 h-3.5" />
+          <div className="p-4 bg-white border border-[#E5E7EB] rounded-xl space-y-1">
+            <span className="text-[11px] text-[#4B5563] font-semibold uppercase">Audit Status</span>
+            <div className="flex items-center gap-1.5 text-xs text-gray-900 font-semibold">
+              <CheckCircle2 className="w-3.5 h-3.5 text-gray-800" />
               <span>Validated & Signed</span>
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function ReportsPage() {
                 Live tabular preview of generated dataset for {reportType.replace("_", " ")}.
               </CardDescription>
             </div>
-            <span className="text-xs text-[#929A95] font-mono">
+            <span className="text-xs text-[#9CA3AF] font-mono">
               Generated at: {reportData ? new Date(reportData.generated_at).toLocaleTimeString() : "N/A"}
             </span>
           </div>
@@ -142,12 +142,12 @@ export default function ReportsPage() {
 
         <div className="p-4 pt-0 overflow-x-auto">
           {isLoading ? (
-            <div className="py-16 text-center text-xs text-[#69736E]">Generating compliance report...</div>
+            <div className="py-16 text-center text-xs text-[#4B5563]">Generating compliance report...</div>
           ) : !reportData || !reportData.preview_data || reportData.preview_data.length === 0 ? (
-            <div className="py-16 text-center text-xs text-[#929A95]">No data records available for this report type.</div>
+            <div className="py-16 text-center text-xs text-[#9CA3AF]">No data records available for this report type.</div>
           ) : (
-            <table className="w-full text-left text-xs text-[#29332F]">
-              <thead className="bg-[#F7F4EF] text-[11px] text-[#69736E] uppercase tracking-wider border-b border-[#E5DED5]">
+            <table className="w-full text-left text-xs text-[#111827]">
+              <thead className="bg-[#F9FAFB] text-[11px] text-[#4B5563] uppercase tracking-wider border-b border-[#E5E7EB]">
                 <tr>
                   {Object.keys(reportData.preview_data[0]).map((key) => (
                     <th key={key} className="py-3 px-4 font-semibold">
@@ -156,11 +156,11 @@ export default function ReportsPage() {
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E5DED5]/60">
+              <tbody className="divide-y divide-[#E5E7EB]">
                 {reportData.preview_data.map((row, idx) => (
-                  <tr key={idx} className="hover:bg-[#F7F4EF] transition-colors">
+                  <tr key={idx} className="hover:bg-gray-50 transition-colors">
                     {Object.values(row).map((val: any, valIdx) => (
-                      <td key={valIdx} className="py-3 px-4 text-[#29332F] font-medium">
+                      <td key={valIdx} className="py-3 px-4 text-[#111827] font-medium">
                         {typeof val === "object" ? JSON.stringify(val) : String(val)}
                       </td>
                     ))}
