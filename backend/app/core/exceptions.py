@@ -23,12 +23,23 @@ class FraudGuardException(Exception):
 class EntityNotFoundException(FraudGuardException):
     """Raised when requested entity is missing."""
 
-    def __init__(self, entity_type: str, entity_id: str):
+    def __init__(self, message: str = "Entity not found", entity_type: str = "Entity", entity_id: str = ""):
         super().__init__(
-            message=f"{entity_type} with ID '{entity_id}' was not found.",
+            message=message if message != "Entity not found" else f"{entity_type} with ID '{entity_id}' was not found.",
             status_code=404,
             error_code="ENTITY_NOT_FOUND",
             details={"entity_type": entity_type, "entity_id": entity_id}
+        )
+
+
+class DuplicateEntityException(FraudGuardException):
+    """Raised when creating an entity with a duplicate unique constraint."""
+
+    def __init__(self, message: str = "Entity already exists"):
+        super().__init__(
+            message=message,
+            status_code=409,
+            error_code="DUPLICATE_ENTITY"
         )
 
 

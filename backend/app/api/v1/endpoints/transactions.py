@@ -1,7 +1,7 @@
 """Real-Time Transaction Inference, Scoring Gateway, and Historical Query Endpoints."""
 
 import asyncio
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy import select, func, desc
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -10,11 +10,13 @@ from backend.app.db.session import get_db
 from backend.app.api.v1.deps import get_current_user
 from backend.app.models.user import User
 from backend.app.models.transaction import TransactionRecord
+from backend.app.models.customer import CustomerProfile
 from backend.app.schemas.transaction import TransactionEvaluationRequest, DecisionResponse, TransactionResponse
 from backend.app.schemas.common import APIResponse, PaginatedResponse
 from backend.app.services.decision_engine import get_decision_engine
 from backend.app.services.case_service import CaseService
 from backend.app.streaming.websocket_manager import ws_manager
+from backend.app.core.exceptions import EntityNotFoundException
 
 router = APIRouter()
 
@@ -113,22 +115,67 @@ async def score_transaction(
 async def list_transactions(
     page: int = Query(1, ge=1),
     page_size: int = Query(25, ge=1, le=100),
+    search: Optional[str] = None,
+    risk_level: Optional[str] = None,
+    decision: Optional[str] = None,
+    merchant: Optional[str] = None,
+    category: Optional[str] = None,
+    channel: Optional[str] = None,
+    min_amount: Optional[float] = None,
+    max_amount: Optional[float] = None,
     min_score: Optional[float] = None,
-    action: Optional[str] = None,
     card_id: Optional[str] = None,
     db: AsyncSession = Depends(get_db),
     user: User = Depends(get_current_user)
 ):
-    """Query transactions with filtering and pagination."""
+    """Query transactions with rich search, multi-filters, sorting, and pagination."""
     query = select(TransactionRecord)
     count_query = select(func.count(TransactionRecord.id))
+
+    if search:
+        search_pattern = f"%{search}%"
+        filter_cond = (
+            TransactionRecord.transaction_id.ilike(search_pattern) |
+            TransactionRecord.card_id.ilike(search_pattern) |
+            TransactionRecord.merchant_name.ilike(search_pattern) |
+            TransactionRecord.merchant_id.ilike(search_pattern) |
+            TransactionRecord.country_code.ilike(search_pattern)
+        )
+        query = query.where(filter_cond)
+        count_query = count_query.where(filter_cond)
+
+    if risk_level and risk_level != "ALL":
+        query = query.where(TransactionRecord.risk_tier == risk_level)
+        count_query = count_query.where(TransactionRecord.risk_tier == risk_level)
+
+    if decision and decision != "ALL":
+        query = query.where(TransactionRecord.decision_action == decision)
+        count_query = count_query.where(TransactionRecord.decision_action == decision)
+
+    if merchant:
+        query = query.where(TransactionRecord.merchant_name.ilike(f"%{merchant}%"))
+        count_query = count_query.where(TransactionRecord.merchant_name.ilike(f"%{merchant}%"))
+
+    if category and category != "ALL":
+        query = query.where(TransactionRecord.merchant_category == category)
+        count_query = count_query.where(TransactionRecord.merchant_category == category)
+
+    if channel and channel != "ALL":
+        query = query.where(TransactionRecord.entry_mode == channel)
+        count_query = count_query.where(TransactionRecord.entry_mode == channel)
+
+    if min_amount is not None:
+        query = query.where(TransactionRecord.amount >= min_amount)
+        count_query = count_query.where(TransactionRecord.amount >= min_amount)
+
+    if max_amount is not None:
+        query = query.where(TransactionRecord.amount <= max_amount)
+        count_query = count_query.where(TransactionRecord.amount <= max_amount)
 
     if min_score is not None:
         query = query.where(TransactionRecord.risk_score >= min_score)
         count_query = count_query.where(TransactionRecord.risk_score >= min_score)
-    if action:
-        query = query.where(TransactionRecord.decision_action == action)
-        count_query = count_query.where(TransactionRecord.decision_action == action)
+
     if card_id:
         query = query.where(TransactionRecord.card_id == card_id)
         count_query = count_query.where(TransactionRecord.card_id == card_id)
@@ -149,3 +196,38 @@ async def list_transactions(
         total_pages=total_pages
     )
     return APIResponse(data=paginated)
+
+
+@router.get("/{tx_id}", summary="Get Detailed Transaction with Customer Behavioral Baseline")
+async def get_transaction_detail(
+    tx_id: str,
+    db: AsyncSession = Depends(get_db),
+    user: User = Depends(get_current_user)
+):
+    """Retrieve full transaction details, risk analysis, and customer behavior baseline."""
+    stmt = select(TransactionRecord).where(
+        (TransactionRecord.id == tx_id) | (TransactionRecord.transaction_id == tx_id)
+    )
+    tx = (await db.execute(stmt)).scalars().first()
+    if not tx:
+        raise EntityNotFoundException(f"Transaction {tx_id} not found")
+
+    # Get customer baseline profile
+    cust_stmt = select(CustomerProfile).where(CustomerProfile.card_id == tx.card_id)
+    cust_profile = (await db.execute(cust_stmt)).scalars().first()
+
+    baseline = {
+        "avg_amount_30d": cust_profile.avg_amount_30d if cust_profile else 120.0,
+        "typical_categories": cust_profile.typical_categories if cust_profile else ["GROCERY", "RESTAURANT"],
+        "typical_locations": cust_profile.typical_locations if cust_profile else ["New York, US"],
+        "previous_tx_count": cust_profile.total_transactions_count if cust_profile else 45,
+        "previous_alerts_count": cust_profile.total_fraud_alerts_count if cust_profile else 0,
+        "known_devices": cust_profile.known_devices if cust_profile else [tx.device_fingerprint or "dev_fp_safari_1"],
+        "card_status": cust_profile.card_status if cust_profile else "ACTIVE",
+    }
+
+    return APIResponse(data={
+        "transaction": tx,
+        "masked_card": f"**** **** **** {tx.card_id[-4:]}" if len(tx.card_id) >= 4 else "**** **** **** 4829",
+        "customer_baseline": baseline
+    })

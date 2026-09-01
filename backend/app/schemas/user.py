@@ -35,6 +35,17 @@ class UserCreateRequest(BaseModel):
     department: Optional[str] = "Risk Operations"
 
 
+class UserUpdateRequest(BaseModel):
+    full_name: Optional[str] = None
+    role: Optional[str] = None
+    department: Optional[str] = None
+    is_active: Optional[bool] = None
+
+
+class UserPasswordResetRequest(BaseModel):
+    new_password: str
+
+
 class UserResponse(BaseModel):
     id: str
     email: str
