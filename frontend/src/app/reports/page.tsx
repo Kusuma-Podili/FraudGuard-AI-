@@ -3,21 +3,13 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { MetricCard } from "@/components/ui/MetricCard";
 import { api } from "@/lib/api";
 import { ReportSummaryDTO } from "@/types";
-import { formatCurrency } from "@/lib/utils";
 import {
   FileText,
   Download,
-  Calendar,
-  RefreshCw,
   Printer,
-  ShieldAlert,
-  DollarSign,
-  TrendingDown,
   CheckCircle2,
-  FileSpreadsheet,
 } from "lucide-react";
 
 export default function ReportsPage() {
@@ -61,10 +53,10 @@ export default function ReportsPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <FileText className="w-6 h-6 text-blue-400" />
-            <h1 className="text-2xl font-bold text-gray-100 tracking-tight">Compliance & Intelligence Reports</h1>
+            <FileText className="w-6 h-6 text-[#5F8F83]" />
+            <h1 className="text-2xl font-bold text-[#29332F] tracking-tight">Compliance & Intelligence Reports</h1>
           </div>
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-xs text-[#69736E] mt-1">
             Generate executive briefings, FinCEN SAR compliance logs, and exportable RFC-4180 CSV audit trails.
           </p>
         </div>
@@ -75,7 +67,7 @@ export default function ReportsPage() {
             Print Report
           </Button>
           <a href={api.getReportCsvDownloadUrl(reportType)} download>
-            <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/20">
+            <Button size="sm" className="bg-[#5F8F83] hover:bg-[#4F7D72] text-white shadow-sm">
               <Download className="w-3.5 h-3.5 mr-1" />
               Download CSV
             </Button>
@@ -91,12 +83,12 @@ export default function ReportsPage() {
             onClick={() => setReportType(rpt.id)}
             className={`p-3 rounded-xl text-left transition-all border ${
               reportType === rpt.id
-                ? "bg-blue-600/20 text-blue-300 border-blue-500/50 shadow-md font-semibold"
-                : "bg-gray-900/60 text-gray-400 hover:text-gray-200 border-gray-800"
+                ? "bg-[#C7D9D0] text-[#17231F] border-[#5F8F83] font-semibold shadow-sm"
+                : "bg-[#FFFDFC] text-[#69736E] hover:text-[#29332F] border-[#E5DED5]"
             }`}
           >
             <span className="text-xs font-bold block truncate">{rpt.label.split(" ")[0]} {rpt.label.split(" ")[1]}</span>
-            <span className="text-[10px] text-gray-500 block truncate">{rpt.id.replace("_", " ")}</span>
+            <span className="text-[10px] text-[#929A95] block truncate">{rpt.id.replace("_", " ")}</span>
           </button>
         ))}
       </div>
@@ -104,17 +96,17 @@ export default function ReportsPage() {
       {/* Report Summary Cards */}
       {reportData && reportData.metrics_summary && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-4 bg-gray-900/60 border border-gray-800 rounded-xl space-y-1">
-            <span className="text-[11px] text-gray-400 font-semibold uppercase">Date Range</span>
-            <p className="text-sm font-bold text-blue-400">{reportData.date_range}</p>
+          <div className="p-4 bg-[#FFFDFC] border border-[#E5DED5] rounded-xl space-y-1">
+            <span className="text-[11px] text-[#69736E] font-semibold uppercase">Date Range</span>
+            <p className="text-sm font-bold text-[#5F8F83]">{reportData.date_range}</p>
           </div>
-          <div className="p-4 bg-gray-900/60 border border-gray-800 rounded-xl space-y-1">
-            <span className="text-[11px] text-gray-400 font-semibold uppercase">Total Records Sampled</span>
-            <p className="text-sm font-bold text-gray-100">{reportData.total_records}</p>
+          <div className="p-4 bg-[#FFFDFC] border border-[#E5DED5] rounded-xl space-y-1">
+            <span className="text-[11px] text-[#69736E] font-semibold uppercase">Total Records Sampled</span>
+            <p className="text-sm font-bold text-[#29332F]">{reportData.total_records}</p>
           </div>
-          <div className="p-4 bg-gray-900/60 border border-gray-800 rounded-xl space-y-1">
-            <span className="text-[11px] text-gray-400 font-semibold uppercase">Primary Metric</span>
-            <p className="text-sm font-bold text-emerald-400">
+          <div className="p-4 bg-[#FFFDFC] border border-[#E5DED5] rounded-xl space-y-1">
+            <span className="text-[11px] text-[#69736E] font-semibold uppercase">Primary Metric</span>
+            <p className="text-sm font-bold text-[#35604B]">
               {reportData.metrics_summary.fraud_rate_pct !== undefined
                 ? `${reportData.metrics_summary.fraud_rate_pct}% Fraud Rate`
                 : reportData.metrics_summary.confirmed_fraud_count !== undefined
@@ -122,9 +114,9 @@ export default function ReportsPage() {
                 : `${reportData.metrics_summary.best_roc_auc || 0.988} ROC-AUC`}
             </p>
           </div>
-          <div className="p-4 bg-gray-900/60 border border-gray-800 rounded-xl space-y-1">
-            <span className="text-[11px] text-gray-400 font-semibold uppercase">Audit Status</span>
-            <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-semibold">
+          <div className="p-4 bg-[#FFFDFC] border border-[#E5DED5] rounded-xl space-y-1">
+            <span className="text-[11px] text-[#69736E] font-semibold uppercase">Audit Status</span>
+            <div className="flex items-center gap-1.5 text-xs text-[#35604B] font-semibold">
               <CheckCircle2 className="w-3.5 h-3.5" />
               <span>Validated & Signed</span>
             </div>
@@ -142,7 +134,7 @@ export default function ReportsPage() {
                 Live tabular preview of generated dataset for {reportType.replace("_", " ")}.
               </CardDescription>
             </div>
-            <span className="text-xs text-gray-500 font-mono">
+            <span className="text-xs text-[#929A95] font-mono">
               Generated at: {reportData ? new Date(reportData.generated_at).toLocaleTimeString() : "N/A"}
             </span>
           </div>
@@ -150,12 +142,12 @@ export default function ReportsPage() {
 
         <div className="p-4 pt-0 overflow-x-auto">
           {isLoading ? (
-            <div className="py-16 text-center text-xs text-gray-400">Generating compliance report...</div>
+            <div className="py-16 text-center text-xs text-[#69736E]">Generating compliance report...</div>
           ) : !reportData || !reportData.preview_data || reportData.preview_data.length === 0 ? (
-            <div className="py-16 text-center text-xs text-gray-500">No data records available for this report type.</div>
+            <div className="py-16 text-center text-xs text-[#929A95]">No data records available for this report type.</div>
           ) : (
-            <table className="w-full text-left text-xs text-gray-300">
-              <thead className="bg-gray-950/80 text-[11px] text-gray-400 uppercase tracking-wider border-b border-gray-800">
+            <table className="w-full text-left text-xs text-[#29332F]">
+              <thead className="bg-[#F7F4EF] text-[11px] text-[#69736E] uppercase tracking-wider border-b border-[#E5DED5]">
                 <tr>
                   {Object.keys(reportData.preview_data[0]).map((key) => (
                     <th key={key} className="py-3 px-4 font-semibold">
@@ -164,11 +156,11 @@ export default function ReportsPage() {
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-800/60">
+              <tbody className="divide-y divide-[#E5DED5]/60">
                 {reportData.preview_data.map((row, idx) => (
-                  <tr key={idx} className="hover:bg-gray-900/40 transition-colors">
+                  <tr key={idx} className="hover:bg-[#F7F4EF] transition-colors">
                     {Object.values(row).map((val: any, valIdx) => (
-                      <td key={valIdx} className="py-3 px-4 text-gray-200 font-medium">
+                      <td key={valIdx} className="py-3 px-4 text-[#29332F] font-medium">
                         {typeof val === "object" ? JSON.stringify(val) : String(val)}
                       </td>
                     ))}

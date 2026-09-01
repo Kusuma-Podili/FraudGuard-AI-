@@ -55,24 +55,24 @@ export const Sidebar: React.FC = () => {
   const navItems = isAdmin ? adminNav : analystNav;
 
   return (
-    <aside className="w-64 bg-[#0B1220] border-r border-gray-800/80 flex flex-col justify-between shrink-0 h-screen sticky top-0 z-40 select-none shadow-2xl">
+    <aside className="w-64 bg-[#DCE7E1] border-r border-[#CCD9D2] flex flex-col justify-between shrink-0 h-screen sticky top-0 z-40 select-none shadow-sm">
       <div>
         {/* Brand Header */}
-        <div className="h-16 flex items-center gap-3 px-6 border-b border-gray-800/80 bg-[#0B1220]">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/25 ring-1 ring-white/10">
+        <div className="h-16 flex items-center gap-3 px-5 border-b border-[#CCD9D2] bg-[#DCE7E1]">
+          <div className="w-9 h-9 rounded-xl bg-[#5F8F83] flex items-center justify-center shadow-sm">
             <ShieldCheck className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="text-sm font-bold text-gray-100 tracking-wide">FRAUDGUARD AI</h1>
-            <p className="text-[10px] text-blue-400 font-semibold tracking-wider uppercase">
+            <h1 className="text-sm font-bold text-[#26332F] tracking-tight">FraudGuard AI</h1>
+            <p className="text-[10px] text-[#4F7D72] font-semibold tracking-wider uppercase">
               {isAdmin ? "Admin Console" : "Analyst Operations"}
             </p>
           </div>
         </div>
 
         {/* Navigation links */}
-        <nav className="p-3.5 space-y-1 overflow-y-auto max-h-[calc(100vh-140px)]">
-          <div className="px-3 py-1 text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+        <nav className="p-3 space-y-1 overflow-y-auto max-h-[calc(100vh-140px)]">
+          <div className="px-3 py-1 text-[10px] font-bold text-[#69736E] uppercase tracking-wider">
             {isAdmin ? "System Management" : "Investigation Workflows"}
           </div>
           {navItems.map((item) => {
@@ -86,12 +86,12 @@ export const Sidebar: React.FC = () => {
                 className={cn(
                   "flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all group",
                   isActive
-                    ? "bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold shadow-sm"
-                    : "text-gray-400 hover:text-gray-200 hover:bg-gray-900/60"
+                    ? "bg-[#C7D9D0] text-[#17231F] font-semibold border-l-2 border-[#5F8F83]"
+                    : "text-[#26332F] hover:bg-[#C7D9D0]/60"
                 )}
               >
                 <div className="flex items-center gap-3">
-                  <Icon className={cn("w-4 h-4 transition-colors shrink-0", isActive ? "text-blue-400" : "text-gray-500 group-hover:text-gray-300")} />
+                  <Icon className={cn("w-4 h-4 transition-colors shrink-0", isActive ? "text-[#5F8F83]" : "text-[#69736E] group-hover:text-[#26332F]")} />
                   <span className="truncate">{item.name}</span>
                 </div>
                 {item.badge && (
@@ -99,8 +99,8 @@ export const Sidebar: React.FC = () => {
                     className={cn(
                       "px-1.5 py-0.5 rounded text-[9px] font-bold uppercase",
                       item.badge === "LIVE"
-                        ? "bg-red-500 text-white animate-pulse"
-                        : "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                        ? "bg-[#D99A9A] text-[#7B3030]"
+                        : "bg-[#C7D9D0] text-[#17231F] border border-[#B5CCC1]"
                     )}
                   >
                     {item.badge}
@@ -113,23 +113,25 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* User Session Footer */}
-      <div className="p-3 border-t border-gray-800/80 m-3 rounded-xl bg-gray-950/60 border border-gray-800">
+      <div className="p-3 border-t border-[#CCD9D2] m-3 rounded-xl bg-[#E6EFEA] border border-[#CCD9D2]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-7 h-7 rounded-lg bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 shrink-0">
+            <div className="w-7 h-7 rounded-lg bg-[#5F8F83]/20 flex items-center justify-center text-[#5F8F83] shrink-0 font-bold text-xs">
               <User className="w-3.5 h-3.5" />
             </div>
             <div className="min-w-0">
-              <p className="text-[11px] font-bold text-gray-200 truncate">{user?.full_name || "Demo User"}</p>
-              <span className="text-[9px] px-1.5 py-0.2 rounded bg-blue-950 text-blue-400 font-semibold border border-blue-800/40">
-                {user?.role || "ADMIN"}
+              <p className="text-[11px] font-bold text-[#26332F] truncate">
+                {user?.full_name || (isAdmin ? "Alexander Wright" : "Sarah Chen")}
+              </p>
+              <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#C7D9D0] text-[#17231F] font-semibold">
+                {user?.role || (isAdmin ? "ADMIN" : "ANALYST")}
               </span>
             </div>
           </div>
           <button
             onClick={logout}
-            className="text-[10px] text-gray-400 hover:text-red-400 transition-colors p-1"
-            title="Sign out"
+            className="text-[10px] text-[#4F7D72] hover:text-[#26332F] font-semibold px-2 py-1 bg-[#DCE7E1] hover:bg-[#C7D9D0] rounded border border-[#CCD9D2] transition-colors"
+            title="Sign Out"
           >
             Logout
           </button>

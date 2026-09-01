@@ -19,30 +19,62 @@ export function formatRiskScore(score: number): string {
 }
 
 export function getRiskColor(tier: string): { bg: string; text: string; border: string; badge: string } {
-  switch (tier) {
+  switch (tier?.toUpperCase()) {
     case "CRITICAL":
-      return { bg: "bg-red-950/40", text: "text-red-400", border: "border-red-500/30", badge: "bg-red-500 text-white" };
+      return {
+        bg: "bg-[#D99A9A]/20",
+        text: "text-[#7B3030]",
+        border: "border-[#D99A9A]/60",
+        badge: "bg-[#D99A9A] text-[#7B3030] border border-[#C98A8A]",
+      };
     case "HIGH":
-      return { bg: "bg-orange-950/40", text: "text-orange-400", border: "border-orange-500/30", badge: "bg-orange-500 text-white" };
+      return {
+        bg: "bg-[#E8A98A]/20",
+        text: "text-[#8A472E]",
+        border: "border-[#E8A98A]/60",
+        badge: "bg-[#E8A98A] text-[#8A472E] border border-[#D8997A]",
+      };
     case "MEDIUM":
-      return { bg: "bg-amber-950/40", text: "text-amber-400", border: "border-amber-500/30", badge: "bg-amber-500 text-white" };
+      return {
+        bg: "bg-[#E8C98A]/20",
+        text: "text-[#795B20]",
+        border: "border-[#E8C98A]/60",
+        badge: "bg-[#E8C98A] text-[#795B20] border border-[#D8B97A]",
+      };
     case "LOW":
     default:
-      return { bg: "bg-emerald-950/40", text: "text-emerald-400", border: "border-emerald-500/30", badge: "bg-emerald-500 text-white" };
+      return {
+        bg: "bg-[#A8C5B5]/20",
+        text: "text-[#35604B]",
+        border: "border-[#A8C5B5]/60",
+        badge: "bg-[#A8C5B5] text-[#35604B] border border-[#98B5A5]",
+      };
   }
 }
 
 export function getActionBadge(action: string): { label: string; className: string } {
-  switch (action) {
+  switch (action?.toUpperCase()) {
     case "DECLINE":
-      return { label: "DECLINED", className: "bg-red-500/20 text-red-400 border border-red-500/40" };
+      return {
+        label: "DECLINED",
+        className: "bg-[#D99A9A]/30 text-[#7B3030] border border-[#D99A9A]",
+      };
     case "CHALLENGE_3DS":
-      return { label: "3DS CHALLENGE", className: "bg-purple-500/20 text-purple-400 border border-purple-500/40" };
+      return {
+        label: "3DS CHALLENGE",
+        className: "bg-[#A99BBE]/30 text-[#4C3B66] border border-[#A99BBE]",
+      };
     case "REVIEW":
-      return { label: "MANUAL REVIEW", className: "bg-amber-500/20 text-amber-400 border border-amber-500/40" };
+      return {
+        label: "MANUAL REVIEW",
+        className: "bg-[#E8C98A]/30 text-[#795B20] border border-[#E8C98A]",
+      };
     case "ALLOW":
     default:
-      return { label: "APPROVED", className: "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40" };
+      return {
+        label: "APPROVED",
+        className: "bg-[#A8C5B5]/30 text-[#35604B] border border-[#A8C5B5]",
+      };
   }
 }
 

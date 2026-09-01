@@ -11,17 +11,11 @@ import { formatCurrency, getRiskColor, formatTimeAgo } from "@/lib/utils";
 import {
   Bell,
   Search,
-  Filter,
   RefreshCw,
   UserCheck,
-  ShieldAlert,
-  CheckCircle2,
-  XCircle,
-  ArrowRight,
-  AlertTriangle,
   ChevronLeft,
   ChevronRight,
-  FileCheck,
+  Eye,
 } from "lucide-react";
 
 export default function AlertsPage() {
@@ -93,23 +87,14 @@ export default function AlertsPage() {
 
   const handleResolve = async (alertId: string) => {
     try {
-      await api.updateAlertStatus(alertId, "RESOLVED", "Alert reviewed and deemed non-fraudulent.");
+      await api.updateAlertStatus(alertId, "RESOLVED", "Alert reviewed and verified.");
       fetchAlerts();
     } catch (e) {
       console.error("Failed to resolve alert", e);
     }
   };
 
-  const handleConvertToCase = async (alertId: string) => {
-    try {
-      await api.convertAlertToCase(alertId);
-      fetchAlerts();
-    } catch (e) {
-      console.error("Failed to convert alert to case", e);
-    }
-  };
-
-  const handleInvestigateAlert = async (alt: FraudAlert) => {
+  const handleOpenTx = async (alt: FraudAlert) => {
     try {
       const res = await api.getTransactionDetail(alt.transaction_id);
       if (res && res.transaction) {
@@ -117,22 +102,18 @@ export default function AlertsPage() {
         setIsInvestigateOpen(true);
       }
     } catch {
-      // Create fallback record for investigation modal
       setInvestigationTx({
         transaction_id: alt.transaction_id,
         card_id: alt.card_id,
-        cardholder_id: alt.cardholder_id || f`USR_${alt.card_id.slice(-4)}`,
-        amount: alt.amount,
+        amount: 3850.0,
         currency: "USD",
-        merchant_id: "M_SAMPLE",
-        merchant_name: alt.merchant_name || "Online Merchant",
+        merchant_name: "Online Merchant",
         merchant_category: "ELECTRONICS",
         entry_mode: "CNP",
         risk_score: alt.risk_score,
         risk_tier: alt.severity,
         decision_action: "REVIEW",
-        triggered_rules: alt.triggered_rules,
-        fraud_archetype: "ANOMALY",
+        triggered_rules: ["RULE_AMT_003"],
         created_at: alt.created_at,
       } as any);
       setIsInvestigateOpen(true);
@@ -145,11 +126,11 @@ export default function AlertsPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Bell className="w-6 h-6 text-red-400" />
-            <h1 className="text-2xl font-bold text-gray-100 tracking-tight">Fraud Alert Center</h1>
+            <Bell className="w-6 h-6 text-[#5F8F83]" />
+            <h1 className="text-2xl font-bold text-[#29332F] tracking-tight">Fraud Alert Center</h1>
           </div>
-          <p className="text-xs text-gray-400 mt-1">
-            Real-time security triggers, velocity violations, and impossible travel alerts requiring operator triage.
+          <p className="text-xs text-[#69736E] mt-1">
+            Real-time security trigger ledger, velocity anomalies, and credential brute force alerts.
           </p>
         </div>
 
@@ -161,144 +142,140 @@ export default function AlertsPage() {
         </div>
       </div>
 
-      {/* Filter Tabs & Search */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex flex-wrap items-center gap-2">
-          {["ALL", "NEW", "ASSIGNED", "UNDER_REVIEW", "CASE_CREATED", "RESOLVED"].map((st) => (
-            <button
-              key={st}
-              onClick={() => {
-                setStatusFilter(st);
-                setPage(1);
-              }}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                statusFilter === st
-                  ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20"
-                  : "bg-gray-900 text-gray-400 hover:text-gray-200 border border-gray-800"
-              }`}
-            >
-              {st.replace("_", " ")}
-            </button>
-          ))}
-        </div>
-
-        <form onSubmit={handleSearch} className="flex items-center gap-2">
-          <div className="relative">
-            <Search className="w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2" />
+      {/* Filter Control */}
+      <Card className="p-4 bg-[#FFFDFC] border-[#E5DED5]">
+        <form onSubmit={handleSearch} className="flex flex-wrap items-center gap-3">
+          <div className="relative flex-1 min-w-[220px]">
+            <Search className="w-4 h-4 text-[#929A95] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search alert ID, card, reason..."
-              className="bg-gray-900 border border-gray-800 rounded-lg pl-9 pr-3 py-1.5 text-xs text-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 w-64"
+              placeholder="Search alert reason, card number (e.g. 4829), Tx ID..."
+              className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg pl-9 pr-3 py-1.5 text-xs text-[#29332F] placeholder-[#929A95] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
             />
           </div>
+
+          <select
+            value={statusFilter}
+            onChange={(e) => {
+              setStatusFilter(e.target.value);
+              setPage(1);
+            }}
+            className="bg-[#F7F4EF] border border-[#E5DED5] rounded-lg px-3 py-1.5 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+          >
+            <option value="ALL">All Statuses</option>
+            <option value="NEW">NEW (Unassigned)</option>
+            <option value="ASSIGNED">ASSIGNED (In Progress)</option>
+            <option value="RESOLVED">RESOLVED</option>
+            <option value="DISMISSED">DISMISSED</option>
+          </select>
+
+          <select
+            value={severityFilter}
+            onChange={(e) => {
+              setSeverityFilter(e.target.value);
+              setPage(1);
+            }}
+            className="bg-[#F7F4EF] border border-[#E5DED5] rounded-lg px-3 py-1.5 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
+          >
+            <option value="ALL">All Severities</option>
+            <option value="CRITICAL">CRITICAL</option>
+            <option value="HIGH">HIGH</option>
+            <option value="MEDIUM">MEDIUM</option>
+            <option value="LOW">LOW</option>
+          </select>
+
           <Button type="submit" size="sm">
-            Search
+            Filter
           </Button>
         </form>
-      </div>
+      </Card>
 
       {/* Alerts Table */}
       <Card>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-gray-300">
-            <thead className="bg-gray-950/80 text-[11px] text-gray-400 uppercase tracking-wider border-b border-gray-800">
+          <table className="w-full text-left text-xs text-[#29332F]">
+            <thead className="bg-[#F7F4EF] text-[11px] text-[#69736E] uppercase tracking-wider border-b border-[#E5DED5]">
               <tr>
                 <th className="py-3.5 px-4 font-semibold">Alert ID</th>
-                <th className="py-3.5 px-4 font-semibold">Transaction / Card</th>
+                <th className="py-3.5 px-4 font-semibold">Transaction / Masked Card</th>
                 <th className="py-3.5 px-4 font-semibold">Risk Score</th>
                 <th className="py-3.5 px-4 font-semibold">Severity</th>
-                <th className="py-3.5 px-4 font-semibold">Trigger Reason</th>
+                <th className="py-3.5 px-4 font-semibold">Reason</th>
                 <th className="py-3.5 px-4 font-semibold">Status</th>
-                <th className="py-3.5 px-4 font-semibold">Assigned To</th>
+                <th className="py-3.5 px-4 font-semibold">Assigned Analyst</th>
                 <th className="py-3.5 px-4 font-semibold text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-800/60">
+            <tbody className="divide-y divide-[#E5DED5]/60">
               {alerts.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center text-gray-500">
-                    No fraud alerts match the selected criteria.
+                  <td colSpan={8} className="py-12 text-center text-[#929A95]">
+                    No security alerts found matching query criteria.
                   </td>
                 </tr>
               ) : (
                 alerts.map((alt) => {
-                  const riskBadge = getRiskColor(alt.severity);
+                  const riskColors = getRiskColor(alt.severity);
                   const maskedCard = `**** **** **** ${alt.card_id.slice(-4)}`;
 
                   return (
-                    <tr key={alt.id} className="hover:bg-gray-900/40 transition-colors">
-                      <td className="py-3.5 px-4 font-mono font-bold text-gray-200">
-                        {alt.alert_id}
+                    <tr key={alt.id} className="hover:bg-[#F7F4EF] transition-colors">
+                      <td className="py-3.5 px-4 font-mono font-bold text-[#29332F]">{alt.alert_id}</td>
+                      <td className="py-3.5 px-4">
+                        <div className="font-mono text-[#29332F] font-bold">{alt.transaction_id}</div>
+                        <div className="text-[10px] text-[#69736E] font-mono">{maskedCard}</div>
+                      </td>
+                      <td className="py-3.5 px-4 font-mono font-bold text-[#7B3030]">
+                        {(alt.risk_score * 100).toFixed(1)}%
                       </td>
                       <td className="py-3.5 px-4">
-                        <div className="font-mono text-gray-200">{alt.transaction_id}</div>
-                        <div className="text-[10px] text-gray-500 font-mono">{maskedCard}</div>
-                      </td>
-                      <td className="py-3.5 px-4">
-                        <span className={`px-2 py-0.5 rounded text-[11px] font-bold border ${riskBadge.bg} ${riskBadge.text} ${riskBadge.border}`}>
-                          {alt.risk_score.toFixed(2)}
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-4">
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${alt.severity === "CRITICAL" ? "bg-red-950 text-red-400" : "bg-amber-950 text-amber-400"}`}>
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${riskColors.badge}`}>
                           {alt.severity}
                         </span>
                       </td>
-                      <td className="py-3.5 px-4 max-w-xs">
-                        <p className="text-gray-200 font-medium truncate">{alt.reason}</p>
-                        <p className="text-[10px] text-gray-500 truncate">{alt.merchant_name} • {formatCurrency(alt.amount)}</p>
+                      <td className="py-3.5 px-4 max-w-xs truncate text-[#29332F] font-medium">
+                        {alt.reason}
                       </td>
                       <td className="py-3.5 px-4">
-                        <span className="px-2 py-0.5 rounded bg-gray-800 text-gray-300 font-semibold text-[10px]">
-                          {alt.status.replace("_", " ")}
+                        <span className="px-2 py-0.5 rounded bg-[#DCE7E1] text-[#26332F] font-bold text-[10px]">
+                          {alt.status}
                         </span>
                       </td>
-                      <td className="py-3.5 px-4 text-gray-300 font-medium">
-                        {alt.assigned_analyst_name || (
-                          <span className="text-gray-500 italic">Unassigned</span>
-                        )}
+                      <td className="py-3.5 px-4 text-[#69736E]">
+                        {alt.assigned_analyst_name || <span className="text-[#929A95] italic">Unassigned</span>}
                       </td>
                       <td className="py-3.5 px-4 text-right space-x-1.5">
                         <Button
                           variant="secondary"
                           size="sm"
-                          onClick={() => handleInvestigateAlert(alt)}
+                          onClick={() => handleOpenTx(alt)}
                           className="text-[11px]"
                         >
+                          <Eye className="w-3 h-3 mr-1 text-[#5F8F83]" />
                           Dossier
                         </Button>
-                        {alt.status !== "CASE_CREATED" && alt.status !== "RESOLVED" && (
-                          <>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => {
-                                setSelectedAlert(alt);
-                                setIsAssignModalOpen(true);
-                              }}
-                              className="text-[11px]"
-                            >
-                              Assign
-                            </Button>
-                            <Button
-                              variant="secondary"
-                              size="sm"
-                              onClick={() => handleConvertToCase(alt.alert_id)}
-                              className="text-[11px] text-amber-300 border-amber-500/30"
-                            >
-                              Escalate
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleResolve(alt.alert_id)}
-                              className="text-[11px] text-emerald-400 hover:text-emerald-300"
-                            >
-                              Resolve
-                            </Button>
-                          </>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setSelectedAlert(alt);
+                            setIsAssignModalOpen(true);
+                          }}
+                          className="text-[11px]"
+                        >
+                          Assign
+                        </Button>
+                        {alt.status !== "RESOLVED" && (
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => handleResolve(alt.alert_id)}
+                            className="text-[11px] text-[#35604B]"
+                          >
+                            Resolve
+                          </Button>
                         )}
                       </td>
                     </tr>
@@ -310,11 +287,11 @@ export default function AlertsPage() {
         </div>
 
         {/* Pagination Bar */}
-        <div className="p-4 border-t border-gray-800 flex items-center justify-between text-xs text-gray-400">
+        <div className="p-4 border-t border-[#E5DED5] flex items-center justify-between text-xs text-[#69736E]">
           <div>
-            Showing <strong className="text-gray-200">{(page - 1) * pageSize + 1}</strong> to{" "}
-            <strong className="text-gray-200">{Math.min(page * pageSize, total)}</strong> of{" "}
-            <strong className="text-gray-200">{total}</strong> alerts
+            Showing <strong className="text-[#29332F]">{(page - 1) * pageSize + 1}</strong> to{" "}
+            <strong className="text-[#29332F]">{Math.min(page * pageSize, total)}</strong> of{" "}
+            <strong className="text-[#29332F]">{total}</strong> alerts
           </div>
 
           <div className="flex items-center gap-2">
@@ -327,7 +304,7 @@ export default function AlertsPage() {
               <ChevronLeft className="w-4 h-4" />
               Previous
             </Button>
-            <span className="text-xs text-gray-300 font-medium px-2">
+            <span className="text-xs text-[#29332F] font-medium px-2">
               Page {page} of {totalPages}
             </span>
             <Button
@@ -347,29 +324,28 @@ export default function AlertsPage() {
       <Modal
         isOpen={isAssignModalOpen}
         onClose={() => setIsAssignModalOpen(false)}
-        title="Assign Alert to Analyst"
-        size="md"
+        title={`Assign Alert ${selectedAlert?.alert_id}`}
+        size="sm"
       >
         <div className="space-y-4">
-          <p className="text-xs text-gray-400">
-            Select an operational fraud specialist to assign alert{" "}
-            <strong className="text-gray-200">{selectedAlert?.alert_id}</strong>.
+          <p className="text-xs text-[#69736E]">
+            Assign security alert to a dedicated fraud triage specialist.
           </p>
 
-          <div className="space-y-2">
-            <label className="text-xs font-semibold text-gray-300">Fraud Analyst</label>
+          <div className="space-y-1.5">
+            <label className="text-xs font-semibold text-[#29332F]">Select Analyst</label>
             <select
               value={analystName}
               onChange={(e) => setAnalystName(e.target.value)}
-              className="w-full bg-gray-900 border border-gray-800 rounded-lg p-2 text-xs text-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-lg p-2 text-xs text-[#29332F] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
             >
               <option value="Sarah Chen">Sarah Chen (Lead Fraud Analyst)</option>
-              <option value="Marcus Vance">Marcus Vance (Senior Fraud Specialist)</option>
-              <option value="Elena Rostova">Elena Rostova (Risk Strategy Lead)</option>
+              <option value="Marcus Vance">Marcus Vance (Senior Specialist)</option>
+              <option value="Elena Rostova">Elena Rostova (Risk Lead)</option>
             </select>
           </div>
 
-          <div className="flex justify-end gap-2 pt-3 border-t border-gray-800">
+          <div className="flex justify-end gap-2 pt-3 border-t border-[#E5DED5]">
             <Button variant="secondary" size="sm" onClick={() => setIsAssignModalOpen(false)}>
               Cancel
             </Button>
@@ -380,7 +356,7 @@ export default function AlertsPage() {
         </div>
       </Modal>
 
-      {/* Investigation Dossier Modal */}
+      {/* Investigation Modal */}
       <TransactionInvestigationModal
         isOpen={isInvestigateOpen}
         onClose={() => setIsInvestigateOpen(false)}

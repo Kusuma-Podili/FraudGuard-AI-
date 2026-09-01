@@ -10,6 +10,7 @@ interface ModalProps {
   title: string;
   children: React.ReactNode;
   maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "4xl";
+  size?: "sm" | "md" | "lg" | "xl" | "2xl" | "4xl";
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -17,8 +18,11 @@ export const Modal: React.FC<ModalProps> = ({
   onClose,
   title,
   children,
-  maxWidth = "lg",
+  maxWidth,
+  size = "lg",
 }) => {
+  const effectiveSize = maxWidth || size;
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -47,20 +51,20 @@ export const Modal: React.FC<ModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-[#29332F]/40 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
       <div
         className={cn(
-          "relative w-full bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-200",
-          maxWidths[maxWidth]
+          "relative w-full bg-[#FFFDFC] border border-[#E5DED5] rounded-xl shadow-xl overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-200",
+          maxWidths[effectiveSize]
         )}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
-          <h2 className="text-lg font-semibold text-gray-100">{title}</h2>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#E5DED5]">
+          <h2 className="text-base font-bold text-[#29332F]">{title}</h2>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-gray-400 hover:text-gray-200 hover:bg-gray-800 transition-colors"
+            className="p-1 rounded-lg text-[#69736E] hover:text-[#29332F] hover:bg-[#F7F4EF] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>

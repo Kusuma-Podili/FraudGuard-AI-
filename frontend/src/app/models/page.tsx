@@ -24,8 +24,8 @@ export default function ModelsPage() {
       {/* Top Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-100 tracking-tight">MLOps & Model Governance Registry</h1>
-          <p className="text-xs text-gray-400 mt-1">
+          <h1 className="text-2xl font-bold text-[#29332F] tracking-tight">MLOps & Model Governance Registry</h1>
+          <p className="text-xs text-[#69736E] mt-1">
             Champion/Challenger deployment framework, tree ensembles, deep autoencoders, and graph syndicates.
           </p>
         </div>
@@ -39,40 +39,40 @@ export default function ModelsPage() {
             <Card
               key={m.id || m.model_id}
               className={`relative ${
-                isChampion ? "border-blue-500 bg-gradient-to-b from-blue-950/20 to-gray-900" : ""
+                isChampion ? "border-[#5F8F83] bg-[#FFFDFC]" : ""
               }`}
             >
               {isChampion && (
-                <div className="absolute top-4 right-4 flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-500 text-white text-[10px] font-bold">
+                <div className="absolute top-4 right-4 flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#5F8F83] text-white text-[10px] font-bold">
                   <Trophy className="w-3 h-3" />
                   CHAMPION
                 </div>
               )}
 
               <div>
-                <p className="text-xs font-mono text-gray-400">{m.model_id}</p>
-                <h3 className="text-base font-bold text-gray-100 mt-1">{m.name}</h3>
-                <p className="text-xs text-gray-400 mt-0.5">{m.algorithm_type}</p>
+                <p className="text-xs font-mono text-[#69736E]">{m.model_id}</p>
+                <h3 className="text-base font-bold text-[#29332F] mt-1">{m.name}</h3>
+                <p className="text-xs text-[#69736E] mt-0.5">{m.algorithm_type} • v{m.version}</p>
               </div>
 
               {/* Metrics Grid */}
-              <div className="grid grid-cols-3 gap-2 my-4 p-3 bg-gray-950/60 rounded-xl border border-gray-800 text-center">
+              <div className="grid grid-cols-3 gap-2 my-4 p-3 bg-[#F7F4EF] rounded-xl border border-[#E5DED5] text-center">
                 <div>
-                  <span className="text-[10px] text-gray-500 uppercase">ROC-AUC</span>
-                  <p className="text-sm font-bold text-blue-400 mt-0.5 font-mono">{m.roc_auc.toFixed(3)}</p>
+                  <span className="text-[10px] text-[#929A95] uppercase font-medium">ROC-AUC</span>
+                  <p className="text-sm font-bold text-[#5F8F83] mt-0.5 font-mono">{m.roc_auc.toFixed(3)}</p>
                 </div>
                 <div>
-                  <span className="text-[10px] text-gray-500 uppercase">PR-AUC</span>
-                  <p className="text-sm font-bold text-emerald-400 mt-0.5 font-mono">{m.pr_auc.toFixed(3)}</p>
+                  <span className="text-[10px] text-[#929A95] uppercase font-medium">PR-AUC</span>
+                  <p className="text-sm font-bold text-[#35604B] mt-0.5 font-mono">{m.pr_auc.toFixed(3)}</p>
                 </div>
                 <div>
-                  <span className="text-[10px] text-gray-500 uppercase">P99 Latency</span>
-                  <p className="text-sm font-bold text-gray-200 mt-0.5 font-mono">{m.p99_latency_ms.toFixed(1)}ms</p>
+                  <span className="text-[10px] text-[#929A95] uppercase font-medium">P99 Latency</span>
+                  <p className="text-sm font-bold text-[#29332F] mt-0.5 font-mono">{m.p99_latency_ms.toFixed(1)}ms</p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-gray-800">
-                <span className="text-xs text-gray-400">Traffic: <strong className="text-gray-200 font-mono">{m.traffic_percentage}%</strong></span>
+              <div className="flex items-center justify-between pt-2 border-t border-[#E5DED5]">
+                <span className="text-xs text-[#69736E]">Traffic: <strong className="text-[#29332F] font-mono">{m.traffic_percentage}%</strong></span>
                 {!isChampion && (
                   <Button
                     variant="outline"
@@ -101,28 +101,21 @@ export default function ModelsPage() {
             <RocCurveChart data={liveMetrics.roc_curve || []} />
           </Card>
 
-          <Card>
-            <CardHeader>
-              <div>
-                <CardTitle>Global Feature Importance</CardTitle>
-                <CardDescription>TreeSHAP gain distribution across model input features.</CardDescription>
+          <Card className="space-y-4 p-5">
+            <div>
+              <CardTitle>Inference Health Telemetry</CardTitle>
+              <CardDescription>Real-time gateway SLA monitoring and prediction speed.</CardDescription>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div className="p-3.5 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
+                <span className="text-[#69736E] block">Active Model In Production</span>
+                <p className="text-sm font-bold text-[#5F8F83] mt-1">Meta-Ensemble Hybrid</p>
               </div>
-            </CardHeader>
-            <div className="space-y-3">
-              {(liveMetrics.feature_importances || []).map((f: any, idx: number) => (
-                <div key={idx} className="space-y-1">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-gray-300 font-semibold">{f.feature}</span>
-                    <span className="text-blue-400 font-mono font-bold">{(f.importance * 100).toFixed(1)}%</span>
-                  </div>
-                  <div className="w-full bg-gray-950 rounded-full h-2 overflow-hidden border border-gray-800">
-                    <div
-                      className="bg-blue-500 h-full rounded-full"
-                      style={{ width: `${f.importance * 100}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
+              <div className="p-3.5 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
+                <span className="text-[#69736E] block">P99 Inference Guarantee</span>
+                <p className="text-sm font-bold text-[#35604B] mt-1">&lt; 20.0 ms SLA</p>
+              </div>
             </div>
           </Card>
         </div>

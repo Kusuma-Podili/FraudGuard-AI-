@@ -24,29 +24,29 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   badgeVariant = "default",
 }) => {
   return (
-    <Card className="relative overflow-hidden group">
+    <Card className="relative overflow-hidden">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">{title}</p>
-          <p className="text-2xl font-bold text-gray-100 mt-2 tracking-tight">{value}</p>
+          <p className="text-[11px] font-semibold text-[#69736E] uppercase tracking-wider">{title}</p>
+          <p className="text-2xl font-bold text-[#29332F] mt-1.5 tracking-tight font-mono">{value}</p>
           {(change || subtitle) && (
             <div className="flex items-center gap-2 mt-2">
               {change && (
                 <span
                   className={cn(
-                    "text-xs font-semibold px-1.5 py-0.5 rounded",
-                    isPositive ? "bg-emerald-950/60 text-emerald-400" : "bg-red-950/60 text-red-400"
+                    "text-[11px] font-semibold px-2 py-0.5 rounded",
+                    isPositive ? "bg-[#A8C5B5]/30 text-[#35604B]" : "bg-[#D99A9A]/30 text-[#7B3030]"
                   )}
                 >
                   {change}
                 </span>
               )}
-              {subtitle && <span className="text-xs text-gray-500">{subtitle}</span>}
+              {subtitle && <span className="text-[11px] text-[#929A95]">{subtitle}</span>}
             </div>
           )}
         </div>
         {icon && (
-          <div className="p-3 bg-gray-800/80 rounded-xl border border-gray-700/60 text-blue-400 group-hover:text-blue-300 transition-colors">
+          <div className="p-2.5 bg-[#F7F4EF] rounded-xl border border-[#E5DED5] text-[#5F8F83]">
             {icon}
           </div>
         )}

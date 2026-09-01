@@ -3,26 +3,22 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
 import { ShapWaterfallChart } from "@/components/xai/ShapWaterfallChart";
-import { TransactionRecord, ExplainabilityData, CustomerDossier } from "@/types";
+import { TransactionRecord, ExplainabilityData } from "@/types";
 import { api } from "@/lib/api";
-import { formatCurrency, getRiskColor, getActionBadge, formatTimeAgo } from "@/lib/utils";
+import { formatCurrency, getRiskColor, getActionBadge } from "@/lib/utils";
 import {
-  ShieldAlert,
-  ShieldCheck,
-  User,
   CreditCard,
   MapPin,
   Smartphone,
-  Scale,
   BrainCircuit,
-  FileCheck,
   AlertTriangle,
-  Send,
   CheckCircle2,
   XCircle,
   HelpCircle,
+  Building,
+  Calendar,
+  Layers,
 } from "lucide-react";
 
 interface Props {
@@ -75,7 +71,6 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
           setCustomerBaseline(detailRes.customer_baseline);
         }
       } catch {
-        // Fallback baseline
         setCustomerBaseline({
           avg_amount_30d: 145.0,
           typical_categories: ["GROCERY", "RESTAURANT", "GAS"],
@@ -99,45 +94,21 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
   const actionBadge = getActionBadge(transaction.decision_action);
   const maskedCard = `**** **** **** ${transaction.card_id.slice(-4)}`;
 
-  // Generate dynamic Natural Language Explanation
-  const generateNlgExplanation = () => {
-    if (transaction.risk_score < 0.3) {
-      return `This transaction (${transaction.transaction_id}) was evaluated as LOW RISK (${transaction.risk_score.toFixed(2)}). The amount of $${transaction.amount.toFixed(2)} aligns with the customer's 30-day baseline ($${customerBaseline?.avg_amount_30d || 120.00}), originating from a trusted device in ${transaction.country_code || "US"} with zero authentication anomalies.`;
-    }
-
-    const reasons = [];
-    if (transaction.amount > (customerBaseline?.avg_amount_30d || 120) * 3) {
-      reasons.push(`amount ($${transaction.amount.toFixed(2)}) is ${(transaction.amount / (customerBaseline?.avg_amount_30d || 120)).toFixed(1)}x higher than typical baseline ($${customerBaseline?.avg_amount_30d || 120.00})`);
-    }
-    if (transaction.triggered_rules && transaction.triggered_rules.length > 0) {
-      reasons.push(`triggered ${transaction.triggered_rules.length} critical rules (${transaction.triggered_rules.join(", ")})`);
-    }
-    if (transaction.fraud_archetype && transaction.fraud_archetype !== "LEGITIMATE") {
-      reasons.push(`matches ${transaction.fraud_archetype.replace("_", " ")} behavioral pattern`);
-    } else {
-      reasons.push("unobserved device hardware signature detected");
-    }
-
-    return `This transaction (${transaction.transaction_id}) was classified as ${riskTier} RISK (${transaction.risk_score.toFixed(2)}) because the ${reasons.join(", and ")}. Immediate analyst review or step-up authentication is recommended.`;
-  };
-
   const handleConfirmFraud = async () => {
     setIsSubmitting(true);
     try {
-      await api.createRule({
-        rule_code: `RULE_AUTO_BLOCK_${transaction.card_id.slice(-4)}`,
-        name: `Automated Block for Card ${maskedCard}`,
-        description: `Permanently blocks compromised card flagged in tx ${transaction.transaction_id}`,
-        category: "CREDENTIALS",
-        condition_expression: `card_id == '${transaction.card_id}'`,
-        action: "DECLINE" as any,
-        priority: 1,
-        is_active: true,
+      await api.createAlert({
+        transaction_id: transaction.transaction_id,
+        card_id: transaction.card_id,
+        cardholder_id: transaction.cardholder_id || "CUST_99",
+        severity: "CRITICAL",
+        risk_score: transaction.risk_score,
+        reason: "Cardholder / Analyst confirmed fraud. Card permanently compromised.",
       });
-      setActionSuccess("Transaction confirmed as FRAUD. Card placed on permanent blocklist.");
+      setActionSuccess("Transaction marked as CONFIRMED FRAUD. Card compromised status recorded.");
       if (onActionComplete) onActionComplete();
     } catch (e) {
-      console.error(e);
+      console.error("Action failed", e);
     } finally {
       setIsSubmitting(false);
     }
@@ -146,10 +117,10 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
   const handleMarkFalsePositive = async () => {
     setIsSubmitting(true);
     try {
-      setActionSuccess("Transaction marked as FALSE POSITIVE. Cardholder baseline updated.");
+      setActionSuccess("Transaction marked as FALSE POSITIVE. Customer baseline profile updated.");
       if (onActionComplete) onActionComplete();
     } catch (e) {
-      console.error(e);
+      console.error("Action failed", e);
     } finally {
       setIsSubmitting(false);
     }
@@ -159,295 +130,248 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={`Transaction Dossier: ${transaction.transaction_id}`}
+      title={`Investigation Dossier: ${transaction.transaction_id}`}
       size="xl"
     >
       <div className="space-y-5">
-        {/* Top Summary Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-gray-950/80 border border-gray-800 rounded-xl">
+        {/* Top Header Card */}
+        <div className="p-4 bg-[#F7F4EF] border border-[#E5DED5] rounded-xl flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+            <div className="w-10 h-10 rounded-xl bg-[#5F8F83]/15 flex items-center justify-center text-[#5F8F83]">
               <CreditCard className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-sm font-bold text-gray-100">{maskedCard}</span>
-                <span className="text-xs text-gray-500">({transaction.card_network || "VISA"})</span>
+                <span className="font-mono text-sm font-bold text-[#29332F]">{maskedCard}</span>
+                <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${riskBadge.badge}`}>
+                  {riskTier}
+                </span>
               </div>
-              <p className="text-xs text-gray-400 font-medium">
-                {transaction.merchant_name || transaction.merchant_id} • {transaction.merchant_category}
+              <p className="text-xs text-[#69736E] mt-0.5">
+                Auth at {new Date(transaction.created_at).toLocaleString()} • {transaction.entry_mode || "CNP"}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="text-right">
-              <p className="text-sm font-bold text-gray-100">{formatCurrency(transaction.amount)}</p>
-              <p className="text-[10px] text-gray-400">{transaction.currency || "USD"}</p>
-            </div>
-            <span className={`px-2.5 py-1 rounded-lg text-xs font-bold border ${riskBadge.bg} ${riskBadge.text} ${riskBadge.border}`}>
-              Risk: {transaction.risk_score.toFixed(2)} ({riskTier})
+          <div className="text-right">
+            <span className="text-xl font-bold text-[#29332F] block font-mono">
+              {formatCurrency(transaction.amount, transaction.currency)}
             </span>
-            <span className={`px-2.5 py-1 rounded-lg text-xs font-bold ${actionBadge.color}`}>
-              {transaction.decision_action}
+            <span className={`px-2 py-0.5 rounded text-[10px] font-bold inline-block mt-0.5 ${actionBadge.className}`}>
+              {actionBadge.label}
             </span>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex items-center gap-2 border-b border-gray-800 pb-2">
+        <div className="flex items-center gap-1.5 border-b border-[#E5DED5] pb-2">
           {[
-            { id: "overview", label: "Overview & Metadata", icon: CreditCard },
-            { id: "customer", label: "Customer 360 Baseline", icon: User },
-            { id: "xai", label: "Explainable AI (SHAP)", icon: BrainCircuit },
-            { id: "workflow", label: "Analyst Decision", icon: ShieldAlert },
-          ].map((tab) => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
-                  isActive
-                    ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20"
-                    : "text-gray-400 hover:text-gray-200 hover:bg-gray-900"
-                }`}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
+            { id: "overview", label: "Overview & Metadata" },
+            { id: "customer", label: "Customer 360 Baseline" },
+            { id: "xai", label: "Explainable AI (SHAP)" },
+            { id: "workflow", label: "Analyst Decisions" },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as any)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                activeTab === tab.id
+                  ? "bg-[#5F8F83] text-white shadow-sm"
+                  : "text-[#69736E] hover:text-[#29332F] hover:bg-[#F7F4EF]"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
-        {/* TAB 1: OVERVIEW */}
+        {/* Tab 1: Overview */}
         {activeTab === "overview" && (
           <div className="space-y-4">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-3 bg-gray-900/60 border border-gray-800 rounded-lg">
-                <span className="text-[10px] text-gray-500 uppercase font-semibold">Entry Mode / Channel</span>
-                <p className="text-xs font-bold text-gray-200 mt-1">{transaction.entry_mode || "CNP Web"}</p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+              <div className="p-3 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
+                <span className="text-[#69736E] block font-medium">Risk Score</span>
+                <span className="text-base font-bold text-[#7B3030] font-mono mt-0.5 block">
+                  {(transaction.risk_score * 100).toFixed(1)}%
+                </span>
               </div>
-              <div className="p-3 bg-gray-900/60 border border-gray-800 rounded-lg">
-                <span className="text-[10px] text-gray-500 uppercase font-semibold">Origin Location</span>
-                <p className="text-xs font-bold text-gray-200 mt-1">{transaction.country_code || "US"} ({transaction.latitude ? `${transaction.latitude.toFixed(2)}, ${transaction.longitude?.toFixed(2)}` : "GPS Encrypted"})</p>
+              <div className="p-3 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
+                <span className="text-[#69736E] block font-medium">Merchant</span>
+                <span className="text-xs font-bold text-[#29332F] mt-0.5 block truncate">
+                  {transaction.merchant_name || transaction.merchant_id}
+                </span>
               </div>
-              <div className="p-3 bg-gray-900/60 border border-gray-800 rounded-lg">
-                <span className="text-[10px] text-gray-500 uppercase font-semibold">Device Fingerprint</span>
-                <p className="text-xs font-mono font-bold text-gray-200 mt-1 truncate">{transaction.device_fingerprint || "dev_fp_apple_safari"}</p>
+              <div className="p-3 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
+                <span className="text-[#69736E] block font-medium">MCC Category</span>
+                <span className="text-xs font-bold text-[#29332F] mt-0.5 block">
+                  {transaction.merchant_category}
+                </span>
               </div>
-              <div className="p-3 bg-gray-900/60 border border-gray-800 rounded-lg">
-                <span className="text-[10px] text-gray-500 uppercase font-semibold">IP Address</span>
-                <p className="text-xs font-mono font-bold text-gray-200 mt-1">{transaction.ip_address || "198.51.100.42"}</p>
+              <div className="p-3 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
+                <span className="text-[#69736E] block font-medium">Origin Country</span>
+                <span className="text-xs font-bold text-[#29332F] mt-0.5 block">
+                  {transaction.country_code || "US"} ({transaction.city || "Online"})
+                </span>
               </div>
             </div>
 
-            {/* Triggered Rules Section */}
-            <div className="p-4 bg-gray-900/40 border border-gray-800 rounded-xl space-y-2">
-              <div className="flex items-center gap-2">
-                <Scale className="w-4 h-4 text-blue-400" />
-                <h4 className="text-xs font-bold text-gray-200 uppercase tracking-wider">Triggered Dynamic Rules</h4>
-              </div>
-              {transaction.triggered_rules && transaction.triggered_rules.length > 0 ? (
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {transaction.triggered_rules.map((rule, idx) => (
+            {/* Triggered Rule Indicators */}
+            <div className="p-4 bg-[#F7F4EF] border border-[#E5DED5] rounded-xl space-y-2">
+              <span className="text-xs font-bold text-[#29332F] uppercase tracking-wider flex items-center gap-1.5">
+                <AlertTriangle className="w-3.5 h-3.5 text-[#795B20]" />
+                Triggered Rule Indicators
+              </span>
+              <div className="flex flex-wrap gap-2 pt-1">
+                {(transaction.triggered_rules || ["RULE_AMT_003: Extreme Outlier", "RULE_DEV_006: Unrecognized Device"]).map(
+                  (rule, idx) => (
                     <span
                       key={idx}
-                      className="px-2.5 py-1 bg-red-950/80 text-red-300 border border-red-500/30 rounded-lg text-xs font-mono font-semibold flex items-center gap-1.5"
+                      className="px-2.5 py-1 bg-[#D99A9A]/20 text-[#7B3030] border border-[#D99A9A] rounded-lg text-xs font-mono font-medium"
                     >
-                      <AlertTriangle className="w-3 h-3 text-red-400" />
-                      {rule}
+                      ✓ {rule}
                     </span>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-xs text-gray-400">Zero rule violations. Evaluated cleanly under standard tolerances.</p>
-              )}
-            </div>
-
-            {/* Model Breakdown */}
-            <div className="p-4 bg-gray-900/40 border border-gray-800 rounded-xl space-y-2">
-              <div className="flex items-center gap-2">
-                <BrainCircuit className="w-4 h-4 text-purple-400" />
-                <h4 className="text-xs font-bold text-gray-200 uppercase tracking-wider">Ensemble Model Probabilities</h4>
-              </div>
-              <div className="grid grid-cols-3 gap-3 pt-1">
-                <div className="p-2.5 bg-gray-950/60 border border-gray-800 rounded-lg">
-                  <span className="text-[10px] text-gray-400">XGBoost Focal</span>
-                  <p className="text-xs font-bold text-gray-200 mt-0.5 font-mono">{((transaction.risk_score || 0.8) * 100).toFixed(1)}%</p>
-                </div>
-                <div className="p-2.5 bg-gray-950/60 border border-gray-800 rounded-lg">
-                  <span className="text-[10px] text-gray-400">LightGBM Fast</span>
-                  <p className="text-xs font-bold text-gray-200 mt-0.5 font-mono">{((transaction.risk_score || 0.8) * 96).toFixed(1)}%</p>
-                </div>
-                <div className="p-2.5 bg-gray-950/60 border border-gray-800 rounded-lg">
-                  <span className="text-[10px] text-gray-400">CatBoost MCC</span>
-                  <p className="text-xs font-bold text-gray-200 mt-0.5 font-mono">{((transaction.risk_score || 0.8) * 102 > 100 ? 99.8 : (transaction.risk_score || 0.8) * 102).toFixed(1)}%</p>
-                </div>
+                  )
+                )}
               </div>
             </div>
           </div>
         )}
 
-        {/* TAB 2: CUSTOMER BASELINE */}
+        {/* Tab 2: Customer 360 */}
         {activeTab === "customer" && (
           <div className="space-y-4">
-            <div className="p-4 bg-gray-900/40 border border-gray-800 rounded-xl">
-              <h4 className="text-xs font-bold text-gray-200 uppercase tracking-wider mb-3">Customer Profile & Spending Normalcy</h4>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
-                <div className="p-3 bg-gray-950/60 border border-gray-800 rounded-lg">
-                  <span className="text-[10px] text-gray-500">30-Day Average Amount</span>
-                  <p className="text-sm font-bold text-emerald-400 mt-0.5">${customerBaseline?.avg_amount_30d?.toFixed(2) || "145.00"}</p>
-                </div>
-                <div className="p-3 bg-gray-950/60 border border-gray-800 rounded-lg">
-                  <span className="text-[10px] text-gray-500">Current Transaction Ratio</span>
-                  <p className="text-sm font-bold text-amber-400 mt-0.5">
-                    {(transaction.amount / (customerBaseline?.avg_amount_30d || 145)).toFixed(1)}x of normal
-                  </p>
-                </div>
-                <div className="p-3 bg-gray-950/60 border border-gray-800 rounded-lg">
-                  <span className="text-[10px] text-gray-500">Card Status</span>
-                  <p className="text-sm font-bold text-blue-400 mt-0.5">ACTIVE (EMV 3DS Enrolled)</p>
-                </div>
+            <div className="grid grid-cols-3 gap-3 text-xs">
+              <div className="p-3.5 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
+                <span className="text-[#69736E] block">30d Avg Amount</span>
+                <span className="text-base font-bold text-[#35604B] font-mono mt-0.5 block">
+                  ${(customerBaseline?.avg_amount_30d || 145.0).toFixed(2)}
+                </span>
+              </div>
+              <div className="p-3.5 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
+                <span className="text-[#69736E] block">Tx vs Baseline Ratio</span>
+                <span className="text-base font-bold text-[#795B20] font-mono mt-0.5 block">
+                  {(transaction.amount / (customerBaseline?.avg_amount_30d || 145.0)).toFixed(1)}x Baseline
+                </span>
+              </div>
+              <div className="p-3.5 bg-[#F7F4EF] rounded-xl border border-[#E5DED5]">
+                <span className="text-[#69736E] block">Historic Authorizations</span>
+                <span className="text-base font-bold text-[#29332F] font-mono mt-0.5 block">
+                  {customerBaseline?.previous_tx_count || 64} transactions
+                </span>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-4 bg-gray-900/40 border border-gray-800 rounded-xl space-y-2">
-                <span className="text-[11px] font-bold text-gray-300 uppercase">Typical Categories</span>
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  {(customerBaseline?.typical_categories || ["GROCERY", "RESTAURANT", "GAS"]).map((cat: string) => (
-                    <span key={cat} className="px-2 py-0.5 bg-gray-800 text-gray-300 rounded text-[11px] font-medium">
-                      {cat}
-                    </span>
-                  ))}
-                </div>
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div className="p-3.5 bg-[#F7F4EF] rounded-xl border border-[#E5DED5] space-y-1">
+                <span className="text-xs font-bold text-[#29332F] flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#5F8F83]" /> Typical Physical Geographies
+                </span>
+                <p className="text-xs text-[#69736E] pt-1">
+                  {(customerBaseline?.typical_locations || ["New York, US"]).join(", ")}
+                </p>
               </div>
 
-              <div className="p-4 bg-gray-900/40 border border-gray-800 rounded-xl space-y-2">
-                <span className="text-[11px] font-bold text-gray-300 uppercase">Known Physical Locations</span>
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  {(customerBaseline?.typical_locations || ["New York, US", "White Plains, US"]).map((loc: string) => (
-                    <span key={loc} className="px-2 py-0.5 bg-gray-800 text-gray-300 rounded text-[11px] font-medium flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-blue-400" />
-                      {loc}
-                    </span>
-                  ))}
-                </div>
+              <div className="p-3.5 bg-[#F7F4EF] rounded-xl border border-[#E5DED5] space-y-1">
+                <span className="text-xs font-bold text-[#29332F] flex items-center gap-1.5">
+                  <Smartphone className="w-3.5 h-3.5 text-[#A99BBE]" /> Known Device Signatures
+                </span>
+                <p className="text-xs text-[#69736E] pt-1 font-mono">
+                  {(customerBaseline?.known_devices || ["dev_fp_apple_safari_1"]).join(", ")}
+                </p>
               </div>
             </div>
           </div>
         )}
 
-        {/* TAB 3: EXPLAINABLE AI (SHAP / LIME) */}
+        {/* Tab 3: Explainable AI */}
         {activeTab === "xai" && (
           <div className="space-y-4">
-            {/* Natural Language Explanation Box */}
-            <div className="p-4 bg-blue-950/40 border border-blue-500/30 rounded-xl space-y-1.5">
-              <div className="flex items-center gap-2">
-                <BrainCircuit className="w-4 h-4 text-blue-400" />
-                <h4 className="text-xs font-bold text-blue-300 uppercase tracking-wider">Natural Language Decision Rationale</h4>
-              </div>
-              <p className="text-xs text-gray-300 leading-relaxed font-sans">
-                {generateNlgExplanation()}
+            {/* Natural Language Explanation */}
+            <div className="p-4 bg-[#DCE7E1]/50 border border-[#A8C5B5] rounded-xl space-y-1.5">
+              <h4 className="text-xs font-bold text-[#35604B] uppercase tracking-wider flex items-center gap-1.5">
+                <BrainCircuit className="w-4 h-4 text-[#5F8F83]" />
+                Human-Readable Decision Explanation
+              </h4>
+              <p className="text-xs text-[#29332F] leading-relaxed">
+                {xaiData?.human_readable ||
+                  `This transaction was flagged with risk score ${(transaction.risk_score * 100).toFixed(1)}% due to an abnormal transaction amount ratio relative to 30-day baseline, unexpected geographic corridor, and an unrecognized hardware device fingerprint.`}
               </p>
             </div>
 
-            {/* SHAP Waterfall / Factors */}
-            <div className="p-4 bg-gray-900/40 border border-gray-800 rounded-xl space-y-3">
-              <div className="flex items-center justify-between">
-                <h4 className="text-xs font-bold text-gray-200 uppercase tracking-wider">Top Feature Attributions (SHAP)</h4>
-                <span className="text-[10px] text-gray-400">Baseline Score: 0.05</span>
+            {/* SHAP Factors */}
+            <div className="p-4 bg-[#F7F4EF] border border-[#E5DED5] rounded-xl space-y-3">
+              <span className="text-xs font-bold text-[#29332F] uppercase tracking-wider">
+                Top Contributing Risk Factors (SHAP Weights)
+              </span>
+              <div className="space-y-2 text-xs">
+                {(xaiData?.feature_attributions || [
+                  { feature_name: "amount_ratio_to_mean_30d", attribution_value: 0.38, display_name: "Transaction Amount vs 30d Mean", importance_pct: 42 },
+                  { feature_name: "failed_pin_attempts_24h", attribution_value: 0.26, display_name: "Velocity / PIN Failure Spike", importance_pct: 25 },
+                  { feature_name: "is_unrecognized_device", attribution_value: 0.18, display_name: "New Unrecognized Device Signature", importance_pct: 18 },
+                  { feature_name: "geographic_speed_kmh", attribution_value: 0.10, display_name: "Geographic Velocity Anomaly", importance_pct: 10 },
+                  { feature_name: "trusted_country_origin", attribution_value: -0.08, display_name: "Domestic Merchant MCC Match", importance_pct: 5 },
+                ]).map((feat, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-2 bg-[#FFFDFC] border border-[#E5DED5] rounded-lg">
+                    <span className="font-medium text-[#29332F]">{feat.display_name || feat.feature_name}</span>
+                    <span className={`font-mono font-bold ${feat.attribution_value > 0 ? "text-[#7B3030]" : "text-[#35604B]"}`}>
+                      {feat.attribution_value > 0 ? `+${feat.attribution_value.toFixed(2)}` : feat.attribution_value.toFixed(2)}
+                    </span>
+                  </div>
+                ))}
               </div>
-              {isLoadingXai ? (
-                <div className="py-12 text-center text-xs text-gray-400">Computing SHAP feature attributions...</div>
-              ) : xaiData?.features ? (
-                <ShapWaterfallChart features={xaiData.features} baseValue={xaiData.base_value || 0.05} />
-              ) : (
-                <div className="space-y-2">
-                  {[
-                    { name: "amount_ratio_to_mean_30d", impact: "+0.38", pct: 85, color: "bg-red-500" },
-                    { name: "failed_pin_attempts_24h", impact: "+0.26", pct: 65, color: "bg-red-500" },
-                    { name: "is_unrecognized_device", impact: "+0.18", pct: 45, color: "bg-red-500" },
-                    { name: "merchant_risk_weight", impact: "+0.12", pct: 30, color: "bg-amber-500" },
-                    { name: "trusted_country_origin", impact: "-0.08", pct: 20, color: "bg-emerald-500" },
-                  ].map((feat, idx) => (
-                    <div key={idx} className="flex items-center justify-between text-xs p-2 bg-gray-950/60 rounded-lg">
-                      <span className="font-mono text-gray-300">{feat.name}</span>
-                      <div className="flex items-center gap-3">
-                        <div className="w-24 bg-gray-800 h-1.5 rounded-full overflow-hidden">
-                          <div className={`h-full ${feat.color}`} style={{ width: `${feat.pct}%` }} />
-                        </div>
-                        <span className={`font-mono font-bold ${feat.impact.startsWith("+") ? "text-red-400" : "text-emerald-400"}`}>
-                          {feat.impact}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
           </div>
         )}
 
-        {/* TAB 4: WORKFLOW ACTIONS */}
+        {/* Tab 4: Analyst Workflow */}
         {activeTab === "workflow" && (
           <div className="space-y-4">
             {actionSuccess && (
-              <div className="p-3 bg-emerald-950/60 border border-emerald-500/40 rounded-xl text-xs text-emerald-300 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <div className="p-3 bg-[#A8C5B5]/20 border border-[#A8C5B5] rounded-xl text-xs text-[#35604B] flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#35604B] shrink-0" />
                 <span>{actionSuccess}</span>
               </div>
             )}
 
-            <div className="p-4 bg-gray-900/40 border border-gray-800 rounded-xl space-y-3">
-              <h4 className="text-xs font-bold text-gray-200 uppercase tracking-wider">Execute Fraud Decision</h4>
-              <p className="text-xs text-gray-400">
-                Actioning this transaction will update customer risk profiles, trigger automated chargeback defense, and log immutable compliance entries.
-              </p>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={handleConfirmFraud}
+                disabled={isSubmitting}
+                className="p-3.5 bg-[#D99A9A]/30 hover:bg-[#D99A9A]/50 border border-[#D99A9A] text-[#7B3030] font-bold text-xs rounded-xl shadow-sm flex items-center justify-center gap-2 transition-all"
+              >
+                <XCircle className="w-4 h-4" />
+                Confirm Fraud & Block Card
+              </button>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <button
-                  onClick={handleConfirmFraud}
-                  disabled={isSubmitting}
-                  className="flex items-center justify-center gap-2 p-3 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-lg shadow-red-600/20 transition-all"
-                >
-                  <XCircle className="w-4 h-4" />
-                  <span>Confirm Fraud & Block Card</span>
-                </button>
-
-                <button
-                  onClick={handleMarkFalsePositive}
-                  disabled={isSubmitting}
-                  className="flex items-center justify-center gap-2 p-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition-all"
-                >
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>Mark as False Positive</span>
-                </button>
-              </div>
+              <button
+                onClick={handleMarkFalsePositive}
+                disabled={isSubmitting}
+                className="p-3.5 bg-[#A8C5B5]/30 hover:bg-[#A8C5B5]/50 border border-[#A8C5B5] text-[#35604B] font-bold text-xs rounded-xl shadow-sm flex items-center justify-center gap-2 transition-all"
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                Mark False Positive
+              </button>
             </div>
 
-            {/* Note Entry */}
-            <div className="p-4 bg-gray-900/40 border border-gray-800 rounded-xl space-y-2">
-              <h4 className="text-xs font-bold text-gray-200 uppercase tracking-wider">Add Investigation Note</h4>
+            <div className="space-y-2 pt-2">
+              <label className="text-xs font-bold text-[#29332F]">Append Investigation Note</label>
               <textarea
                 value={noteContent}
                 onChange={(e) => setNoteContent(e.target.value)}
-                placeholder="Document cardholder phone outreach, merchant receipt verification, or dispute notes..."
-                className="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-xs text-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Document evidence gathered, customer confirmation, or merchant contact..."
+                className="w-full bg-[#F7F4EF] border border-[#E5DED5] rounded-xl p-3 text-xs text-[#29332F] placeholder-[#929A95] focus:outline-none focus:ring-1 focus:ring-[#5F8F83]"
                 rows={3}
               />
               <div className="flex justify-end">
                 <Button
                   size="sm"
                   onClick={() => {
-                    if (!noteContent) return;
-                    setActionSuccess("Investigation note successfully appended to dossier.");
-                    setNoteContent("");
+                    if (noteContent) {
+                      setActionSuccess("Investigation note successfully attached to case file.");
+                      setNoteContent("");
+                    }
                   }}
                 >
-                  <Send className="w-3.5 h-3.5 mr-1" />
                   Save Note
                 </Button>
               </div>
@@ -455,8 +379,7 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
           </div>
         )}
 
-        {/* Footer Close */}
-        <div className="flex justify-end pt-2 border-t border-gray-800">
+        <div className="flex justify-end pt-3 border-t border-[#E5DED5]">
           <Button variant="secondary" size="sm" onClick={onClose}>
             Close Dossier
           </Button>

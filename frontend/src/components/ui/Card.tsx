@@ -9,8 +9,8 @@ export const Card: React.FC<CardProps> = ({ children, className, hover = false, 
   return (
     <div
       className={cn(
-        "bg-gray-900/70 border border-gray-800 rounded-xl p-5 backdrop-blur-md",
-        hover && "hover:border-gray-700 hover:bg-gray-900/90 transition-all",
+        "bg-[#FFFDFC] border border-[#E5DED5] rounded-xl p-5 shadow-[0_1px_3px_rgba(41,51,47,0.04)]",
+        hover && "hover:border-[#CCD9D2] hover:shadow-[0_2px_6px_rgba(41,51,47,0.07)] transition-all",
         className
       )}
       {...props}
@@ -21,19 +21,19 @@ export const Card: React.FC<CardProps> = ({ children, className, hover = false, 
 };
 
 export const CardHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, className, ...props }) => (
-  <div className={cn("flex items-center justify-between pb-4 mb-4 border-b border-gray-800/80", className)} {...props}>
+  <div className={cn("flex items-center justify-between pb-3.5 mb-3.5 border-b border-[#E5DED5]", className)} {...props}>
     {children}
   </div>
 );
 
 export const CardTitle: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = ({ children, className, ...props }) => (
-  <h3 className={cn("text-base font-semibold text-gray-100", className)} {...props}>
+  <h3 className={cn("text-base font-bold text-[#29332F] tracking-tight", className)} {...props}>
     {children}
   </h3>
 );
 
 export const CardDescription: React.FC<React.HTMLAttributes<HTMLParagraphElement>> = ({ children, className, ...props }) => (
-  <p className={cn("text-xs text-gray-400 mt-1", className)} {...props}>
+  <p className={cn("text-xs text-[#69736E] mt-0.5", className)} {...props}>
     {children}
   </p>
 );
