@@ -68,7 +68,7 @@ export default function CasesPage() {
         card_id: c.card_id,
         cardholder_id: c.cardholder_id,
         amount: c.amount,
-        currency: "USD",
+        currency: "INR",
         merchant_id: "M_SAMPLE",
         merchant_name: "Online Merchant",
         merchant_category: "ELECTRONICS",

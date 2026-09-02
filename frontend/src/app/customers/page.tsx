@@ -166,7 +166,7 @@ export default function CustomersPage() {
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div className="p-2.5 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]">
                   <span className="text-[10px] text-[#4B5563]">30d Avg Amount</span>
-                  <p className="font-bold text-[#111827] mt-0.5">${cust.avg_amount_30d.toFixed(2)}</p>
+                  <p className="font-bold text-[#111827] mt-0.5">{formatCurrency(cust.avg_amount_30d)}</p>
                 </div>
                 <div className="p-2.5 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]">
                   <span className="text-[10px] text-[#4B5563]">Total Tx Count</span>
@@ -216,11 +216,11 @@ export default function CustomersPage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <div className="p-3 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg">
                 <span className="text-[10px] text-[#4B5563] font-semibold">30d Avg Amount</span>
-                <p className="text-sm font-bold text-gray-900 mt-1">${(dossier?.behavioral_baseline?.avg_amount_30d || 145.00).toFixed(2)}</p>
+                <p className="text-sm font-bold text-gray-900 mt-1">{formatCurrency(dossier?.behavioral_baseline?.avg_amount_30d || 145.00)}</p>
               </div>
               <div className="p-3 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg">
                 <span className="text-[10px] text-[#4B5563] font-semibold">Max Historic Amount</span>
-                <p className="text-sm font-bold text-gray-900 mt-1">${(dossier?.behavioral_baseline?.max_amount_single || 1800.00).toFixed(2)}</p>
+                <p className="text-sm font-bold text-gray-900 mt-1">{formatCurrency(dossier?.behavioral_baseline?.max_amount_single || 1800.00)}</p>
               </div>
               <div className="p-3 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg">
                 <span className="text-[10px] text-[#4B5563] font-semibold">Total Tx Records</span>
@@ -240,7 +240,7 @@ export default function CustomersPage() {
                   Typical Geographies
                 </span>
                 <div className="flex flex-wrap gap-1.5 pt-1">
-                  {(dossier?.behavioral_baseline?.typical_locations || ["New York, US"]).map((loc, i) => (
+                  {(dossier?.behavioral_baseline?.typical_locations || ["Mumbai, IN", "Delhi, IN"]).map((loc, i) => (
                     <span key={i} className="px-2 py-0.5 rounded bg-gray-100 text-gray-800 text-xs">
                       {loc}
                     </span>

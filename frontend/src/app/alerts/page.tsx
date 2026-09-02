@@ -105,7 +105,7 @@ export default function AlertsPage() {
         transaction_id: alt.transaction_id,
         card_id: alt.card_id,
         amount: 3850.0,
-        currency: "USD",
+        currency: "INR",
         merchant_name: "Online Merchant",
         merchant_category: "ELECTRONICS",
         entry_mode: "CNP",

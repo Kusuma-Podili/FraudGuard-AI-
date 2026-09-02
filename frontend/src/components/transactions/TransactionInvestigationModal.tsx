@@ -67,7 +67,7 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
         setCustomerBaseline({
           avg_amount_30d: 145.0,
           typical_categories: ["GROCERY", "RESTAURANT", "GAS"],
-          typical_locations: ["New York, US"],
+          typical_locations: ["Mumbai, IN", "Delhi, IN"],
           known_devices: ["dev_fp_apple_safari_1"],
           previous_tx_count: 64,
           previous_alerts_count: 0,
@@ -148,7 +148,7 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
 
           <div className="text-right">
             <span className="text-xl font-bold text-[#111827] block font-mono">
-              {formatCurrency(transaction.amount, transaction.currency)}
+              {formatCurrency(transaction.amount, transaction.currency || "INR")}
             </span>
             <span className={`px-2 py-0.5 rounded text-[10px] font-bold inline-block mt-0.5 ${actionBadge.className}`}>
               {actionBadge.label}
@@ -203,7 +203,7 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
               <div className="p-3 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB]">
                 <span className="text-[#4B5563] block font-medium">Origin Country</span>
                 <span className="text-xs font-bold text-[#111827] mt-0.5 block">
-                  {transaction.country_code || "US"} ({transaction.city || "Online"})
+                  {transaction.country_code || "IN"} ({transaction.city || "Online"})
                 </span>
               </div>
             </div>
@@ -237,7 +237,7 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
               <div className="p-3.5 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB]">
                 <span className="text-[#4B5563] block">30d Avg Amount</span>
                 <span className="text-base font-bold text-gray-900 font-mono mt-0.5 block">
-                  ${(customerBaseline?.avg_amount_30d || 145.0).toFixed(2)}
+                  {formatCurrency(customerBaseline?.avg_amount_30d || 145.0)}
                 </span>
               </div>
               <div className="p-3.5 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB]">
@@ -260,7 +260,7 @@ export const TransactionInvestigationModal: React.FC<Props> = ({
                   <MapPin className="w-3.5 h-3.5 text-gray-700" /> Typical Physical Geographies
                 </span>
                 <p className="text-xs text-[#4B5563] pt-1">
-                  {(customerBaseline?.typical_locations || ["New York, US"]).join(", ")}
+                  {(customerBaseline?.typical_locations || ["Mumbai, IN", "Delhi, IN"]).join(", ")}
                 </p>
               </div>
 

@@ -38,12 +38,12 @@ export default function AnalyticsPage() {
   }, [dateRange]);
 
   const categoriesData = [
-    { name: "Electronics & High-Tech", code: "ELECTRONICS", txCount: 3420, fraudRate: "4.15%", riskScore: 0.58, volume: "$1,250,000" },
-    { name: "Crypto Asset Exchanges", code: "CRYPTO_EXCHANGE", txCount: 890, fraudRate: "11.01%", riskScore: 0.72, volume: "$740,000" },
-    { name: "Luxury Goods & Jewelry", code: "LUXURY_JEWELRY", txCount: 420, fraudRate: "9.05%", riskScore: 0.64, volume: "$950,000" },
-    { name: "Airlines & Travel", code: "TRAVEL_AIRLINE", txCount: 2150, fraudRate: "2.88%", riskScore: 0.35, volume: "$890,000" },
-    { name: "General E-Commerce", code: "E_COMMERCE", txCount: 12400, fraudRate: "1.69%", riskScore: 0.28, volume: "$2,400,000" },
-    { name: "Grocery & Supermarkets", code: "GROCERY", txCount: 28500, fraudRate: "0.30%", riskScore: 0.08, volume: "$1,850,000" },
+    { name: "Electronics & High-Tech", code: "ELECTRONICS", txCount: 3420, fraudRate: "4.15%", riskScore: 0.58, volume: "₹12,50,000" },
+    { name: "Crypto Asset Exchanges", code: "CRYPTO_EXCHANGE", txCount: 890, fraudRate: "11.01%", riskScore: 0.72, volume: "₹7,40,000" },
+    { name: "Luxury Goods & Jewelry", code: "LUXURY_JEWELRY", txCount: 420, fraudRate: "9.05%", riskScore: 0.64, volume: "₹9,50,000" },
+    { name: "Airlines & Travel", code: "TRAVEL_AIRLINE", txCount: 2150, fraudRate: "2.88%", riskScore: 0.35, volume: "₹8,90,000" },
+    { name: "General E-Commerce", code: "E_COMMERCE", txCount: 12400, fraudRate: "1.69%", riskScore: 0.28, volume: "₹24,00,000" },
+    { name: "Grocery & Supermarkets", code: "GROCERY", txCount: 28500, fraudRate: "0.30%", riskScore: 0.08, volume: "₹18,50,000" },
   ];
 
   const channelsData = [
@@ -95,10 +95,10 @@ export default function AnalyticsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
           title="Total Fraud Prevented"
-          value={kpis ? formatCurrency(kpis.fraud_prevented_usd || 184200.0) : "$184,200.00"}
-          change="+14.2% dollar savings"
+          value={kpis ? formatCurrency(kpis.fraud_prevented_usd || 184200.0) : "₹1,84,200.00"}
+          change="+14.2% rupee savings"
           isPositive={true}
-          icon={<DollarSign className="w-5 h-5 text-gray-700" />}
+          icon={<span className="font-bold text-base">₹</span>}
         />
         <MetricCard
           title="Global Fraud Rate"
@@ -109,7 +109,7 @@ export default function AnalyticsPage() {
         />
         <MetricCard
           title="Total Gross Volume"
-          value={kpis ? formatCurrency(kpis.total_volume_usd || 8450200.0) : "$8,450,200.00"}
+          value={kpis ? formatCurrency(kpis.total_volume_usd || 8450200.0) : "₹84,50,200.00"}
           subtitle="Processed Across All Rails"
           icon={<Activity className="w-5 h-5 text-gray-700" />}
         />
@@ -127,8 +127,8 @@ export default function AnalyticsPage() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Fraud Velocity & Dollar Exposure Trend</CardTitle>
-              <CardDescription>Continuous time-series tracking of total volume vs blocked fraudulent transactions.</CardDescription>
+              <CardTitle>Fraud Velocity & Exposure Trend</CardTitle>
+              <CardDescription>Continuous time-series tracking of total volume vs blocked fraudulent transactions in ₹.</CardDescription>
             </div>
             <span className="text-[10px] px-2 py-0.5 rounded bg-gray-100 text-gray-700 border border-gray-300 font-mono font-semibold">
               Live Aggregate

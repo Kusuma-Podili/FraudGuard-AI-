@@ -76,7 +76,7 @@ export default function DashboardPage() {
           </h1>
           <p className="text-xs text-[#4B5563] mt-1">
             {isAdmin
-              ? "Real-time telemetry, dollar savings, and machine learning gateway health."
+              ? "Real-time telemetry, rupee savings, and machine learning gateway health."
               : `Welcome back, ${user?.full_name || "Analyst"}. Prioritized high-risk authorizations requiring operational review.`}
           </p>
         </div>
@@ -96,12 +96,12 @@ export default function DashboardPage() {
           title={isAdmin ? "Total Fraud Prevented" : "My Assigned Cases"}
           value={
             isAdmin
-              ? kpis ? formatCurrency(kpis.fraud_prevented_usd) : "$184,200.00"
+              ? kpis ? formatCurrency(kpis.fraud_prevented_usd) : "₹1,84,200.00"
               : `${openCases.length} Pending`
           }
-          change={isAdmin ? "+14.2% dollar savings" : "2 Critical SLA"}
+          change={isAdmin ? "+14.2% rupee savings" : "2 Critical SLA"}
           isPositive={true}
-          icon={isAdmin ? <DollarSign className="w-5 h-5 text-gray-700" /> : <ShieldAlert className="w-5 h-5 text-[#EA580C]" />}
+          icon={isAdmin ? <span className="font-bold text-base">₹</span> : <ShieldAlert className="w-5 h-5 text-[#EA580C]" />}
         />
         <MetricCard
           title={isAdmin ? "Global Fraud Rate" : "High-Risk Queue"}
@@ -205,7 +205,7 @@ export default function DashboardPage() {
                       <td className="py-3.5 px-4 font-bold text-[#111827]">{formatCurrency(tx.amount)}</td>
                       <td className="py-3.5 px-4">
                         <div className="font-semibold text-[#111827]">{tx.merchant_name || tx.merchant_id}</div>
-                        <div className="text-[10px] text-[#9CA3AF]">{tx.merchant_category} • {tx.country_code || "US"}</div>
+                        <div className="text-[10px] text-[#9CA3AF]">{tx.merchant_category} • {tx.country_code || "IN"}</div>
                       </td>
                       <td className="py-3.5 px-4 font-mono text-[11px] text-[#4B5563]">{tx.entry_mode || "CNP"}</td>
                       <td className="py-3.5 px-4">

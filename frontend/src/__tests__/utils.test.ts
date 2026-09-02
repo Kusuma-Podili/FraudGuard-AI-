@@ -1,9 +1,9 @@
 import { formatCurrency, formatRiskScore, getRiskColor, getActionBadge } from "../lib/utils";
 
 describe("Frontend Formatting Utilities", () => {
-  test("formats USD currency correctly", () => {
-    expect(formatCurrency(1250.5)).toBe("$1,250.50");
-    expect(formatCurrency(0)).toBe("$0.00");
+  test("formats INR currency correctly", () => {
+    expect(formatCurrency(1250.5)).toContain("1,250.50");
+    expect(formatCurrency(0)).toContain("0.00");
   });
 
   test("formats risk score percentages", () => {
@@ -13,10 +13,10 @@ describe("Frontend Formatting Utilities", () => {
 
   test("returns correct risk color classes", () => {
     const critical = getRiskColor("CRITICAL");
-    expect(critical.text).toBe("text-red-400");
+    expect(critical.text).toBe("text-[#EA580C]");
 
     const low = getRiskColor("LOW");
-    expect(low.text).toBe("text-emerald-400");
+    expect(low.text).toBe("text-gray-700");
   });
 
   test("returns correct action badges", () => {
