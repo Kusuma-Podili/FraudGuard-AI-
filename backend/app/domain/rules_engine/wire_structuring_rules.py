@@ -19,11 +19,11 @@ class WireStructuringRuleSuiteRuleItem:
 
 
 class WireStructuringRuleSuite:
-    """Production AST-compiled rule evaluation suite for Wire Transfer BSA $3,000 Travel Rule Evasion."""
+    """Production AST-compiled rule evaluation suite for Wire Transfer BSA ₹3,000 Travel Rule Evasion."""
 
     def __init__(self, suite_code: str = "WIRE_STR"):
         self.suite_code = suite_code
-        self.suite_title = "Wire Transfer BSA $3,000 Travel Rule Evasion"
+        self.suite_title = "Wire Transfer BSA ₹3,000 Travel Rule Evasion"
         self.rules: List[WireStructuringRuleSuiteRuleItem] = self._compile_rule_definitions()
 
     def _compile_rule_definitions(self) -> List[WireStructuringRuleSuiteRuleItem]:
@@ -33,7 +33,7 @@ class WireStructuringRuleSuite:
             action = "DECLINE" if i % 4 == 0 else "CHALLENGE_3DS" if i % 2 == 0 else "REVIEW"
             items.append(WireStructuringRuleSuiteRuleItem(
                 rule_id=rid,
-                rule_name=f"Wire Transfer BSA $3,000 Travel Rule Evasion Guardrail #{i:03d}",
+                rule_name=f"Wire Transfer BSA ₹3,000 Travel Rule Evasion Guardrail #{i:03d}",
                 risk_score_impact=round(0.10 + (i * 0.04), 4),
                 recommended_action=action,
                 condition_expression=f"amount > {500 * i} and velocity_1h > {i % 5 + 1}",

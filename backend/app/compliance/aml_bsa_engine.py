@@ -1,8 +1,8 @@
 """Anti-Money Laundering (AML) & Bank Secrecy Act (BSA) Regulatory Filing Engine.
 
 Implements statutory transaction monitoring for:
-- Currency Transaction Reports (CTR) for aggregate daily cash/debit > $10,000
-- Structuring / Smurfing detection ($9,000 - $9,999 sequential split transfers)
+- Currency Transaction Reports (CTR) for aggregate daily cash/debit > ₹10,000
+- Structuring / Smurfing detection (₹9,000 - ₹9,999 sequential split transfers)
 - FinCEN Suspicious Activity Report (SAR) Form 111 XML serialization
 - High-Risk Jurisdiction & Offshore Haven money laundering pattern alerts
 """
@@ -84,7 +84,7 @@ class AmlBsaMonitoringEngine:
     def check_ctr_requirement(self, amount: float) -> Tuple[bool, str]:
         """Verify if Currency Transaction Report (CTR) filing is statutorily mandated."""
         if amount >= self.CTR_MANDATORY_THRESHOLD:
-            return True, f"Mandatory CTR filing required: Single transaction ${amount:,.2f} >= $10,000 threshold."
+            return True, f"Mandatory CTR filing required: Single transaction ₹{amount:,.2f} >= ₹10,000 threshold."
         return False, "CTR not required."
 
     def detect_structuring(self, cardholder_id: str, amount: float, timestamp: Optional[datetime] = None) -> Tuple[bool, Optional[str]]:
@@ -95,9 +95,9 @@ class AmlBsaMonitoringEngine:
 
         self.rolling_account_volumes[cardholder_id].append((amount, ts))
 
-        # Check single transaction structuring ($8,500 - $9,999)
+        # Check single transaction structuring (₹8,500 - ₹9,999)
         if self.STRUCTURING_THRESHOLD_MIN <= amount <= self.STRUCTURING_THRESHOLD_MAX:
-            return True, f"High-confidence structuring pattern: Single amount ${amount:,.2f} deliberately below $10,000 CTR cutoff."
+            return True, f"High-confidence structuring pattern: Single amount ₹{amount:,.2f} deliberately below ₹10,000 CTR cutoff."
 
         # Check rolling 24h aggregate structuring
         recent = [
@@ -108,7 +108,7 @@ class AmlBsaMonitoringEngine:
         if len(recent) >= 2 and sum(recent) >= self.CTR_MANDATORY_THRESHOLD:
             all_below_cutoff = all(a < self.CTR_MANDATORY_THRESHOLD for a in recent)
             if all_below_cutoff:
-                return True, f"Smurfing pattern detected: {len(recent)} transactions totaling ${sum(recent):,.2f} in 24h."
+                return True, f"Smurfing pattern detected: {len(recent)} transactions totaling ₹{sum(recent):,.2f} in 24h."
 
         return False, None
 

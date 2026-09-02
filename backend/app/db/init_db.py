@@ -145,7 +145,7 @@ async def seed_initial_data(db: AsyncSession) -> None:
             FraudRule(
                 rule_code="RULE_AMT_003",
                 name="Extreme High-Ticket Outlier",
-                description="Requires analyst manual review for single transactions exceeding $4,000 with 5x baseline ratio",
+                description="Requires analyst manual review for single transactions exceeding ₹4,000 with 5x baseline ratio",
                 category="AMOUNT",
                 condition_expression="amount >= 4000.0 AND amount_ratio_to_mean_30d > 5.0",
                 action=RuleAction.REVIEW,
@@ -500,7 +500,7 @@ async def seed_initial_data(db: AsyncSession) -> None:
                 risk_score=0.91,
                 severity=CaseSeverity.CRITICAL,
                 status=CaseStatus.OPEN,
-                summary="Account Takeover flagged for single $3,850 electronics purchase on unobserved device with 3 failed PIN attempts",
+                summary="Account Takeover flagged for single ₹3,850 electronics purchase on unobserved device with 3 failed PIN attempts",
                 assigned_analyst_name="Sarah Chen",
                 evidence_payload={"flag": "ACCOUNT_TAKEOVER", "failed_pins": 3, "device_match": False, "amount_ratio": 6.2}
             ),

@@ -32,7 +32,7 @@ class CredentialReplayAttackDetector:
         indicators = []
 
         if amount > 2500.0:
-            indicators.append(f"High-value capital velocity detected: ${amount:,.2f}")
+            indicators.append(f"High-value capital velocity detected: ₹{amount:,.2f}")
         if len(history) > 5:
             indicators.append(f"Elevated interaction cadence across {len(history)} recent events.")
 
