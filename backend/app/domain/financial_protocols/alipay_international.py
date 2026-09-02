@@ -43,7 +43,7 @@ class AlipayInternationalGateway:
             sender_bic=self.institution_bic,
             receiver_bic="CHASUS33XXX",
             transfer_amount=12500.00,
-            currency="USD",
+            currency="INR",
             settlement_reference=ref,
             structured_remittance_info=f"Invoice Settlement via {self.protocol_name}",
             validation_status="VALIDATED",

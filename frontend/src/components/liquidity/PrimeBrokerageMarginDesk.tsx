@@ -2,7 +2,7 @@
 // Title: Prime Brokerage Portfolio Margin & Haircut Desk
 
 import React, { useState } from 'react';
-import { Shield, TrendingUp, CheckCircle2, FileText, Activity, Lock, Users, BarChart3, Clock, DollarSign, PieChart } from 'lucide-react';
+import { Shield, TrendingUp, CheckCircle2, FileText, Activity, Lock, Users, BarChart3, Clock, IndianRupee, PieChart } from 'lucide-react';
 
 export interface PrimeBrokerageMarginDeskProps {
   portfolioId?: string;

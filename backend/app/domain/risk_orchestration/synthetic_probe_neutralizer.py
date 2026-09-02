@@ -21,10 +21,10 @@ class SyntheticProbeNeutralizingEngineDecision:
 
 
 class SyntheticProbeNeutralizingEngine:
-    """High-throughput risk policy execution for Sub-Dollar Automated Probe & Micro-Charge Neutralizer."""
+    """High-throughput risk policy execution for Sub-Rupee Automated Probe & Micro-Charge Neutralizer."""
 
     def __init__(self, target_sla_ms: float = 2.5):
-        self.policy_name = "Sub-Dollar Automated Probe & Micro-Charge Neutralizer"
+        self.policy_name = "Sub-Rupee Automated Probe & Micro-Charge Neutralizer"
         self.target_sla_ms = target_sla_ms
 
     def evaluate_policy(self, transaction_payload: Dict[str, Any]) -> SyntheticProbeNeutralizingEngineDecision:

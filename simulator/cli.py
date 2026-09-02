@@ -53,7 +53,7 @@ def main():
         txs = sim.generate_next_batch(count=args.count)
         print(f"Generated {len(txs)} transactions:")
         for tx in txs:
-            print(f"  [{tx.get('fraud_archetype', 'LEGITIMATE')}] ${tx['amount']:.2f} at {tx.get('merchant_name', tx.get('merchant_id'))} ({tx.get('country_code', 'US')})")
+            print(f"  [{tx.get('fraud_archetype', 'LEGITIMATE')}] ₹{tx['amount']:.2f} at {tx.get('merchant_name', tx.get('merchant_id'))} ({tx.get('country_code', 'US')})")
 
 
     else:

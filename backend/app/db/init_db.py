@@ -424,7 +424,7 @@ async def seed_initial_data(db: AsyncSession) -> None:
                     card_id=card_id,
                     cardholder_id=f"USR_{card_id[-4:]}",
                     amount=amt,
-                    currency="USD",
+                    currency="INR",
                     merchant_id=merch[0],
                     merchant_name=merch[1],
                     merchant_category=merch[2],

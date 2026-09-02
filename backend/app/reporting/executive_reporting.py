@@ -1,7 +1,7 @@
 """Executive Risk Intelligence & Fraud Loss ROI Reporting Engine.
 
 Computes:
-- Net Dollar Savings = (True Positive Fraud Dollar Intercepted) - (False Positive Friction Cost)
+- Net Rupee Savings = (True Positive Fraud Dollar Intercepted) - (False Positive Friction Cost)
 - Chargeback Basis Point (bps) ratio against total gross payment volume (GPV)
 - Model ROC-AUC & PR-AUC performance stability over monthly audit cycles
 """
@@ -35,9 +35,9 @@ class ExecutiveRiskReport:
 ---
 
 ## 1. Key Financial Defense Metrics
-- **Gross Processed Volume (GPV):** ${self.gross_payment_volume:,.2f} across {self.total_transactions_count:,} authorizations
-- **Net Fraud Intercepted & Saved:** ${self.fraud_prevented_dollar_amount:,.2f}
-- **Incurred Net Chargeback Losses:** ${self.fraud_loss_dollar_amount:,.2f}
+- **Gross Processed Volume (GPV):** ₹{self.gross_payment_volume:,.2f} across {self.total_transactions_count:,} authorizations
+- **Net Fraud Intercepted & Saved:** ₹{self.fraud_prevented_dollar_amount:,.2f}
+- **Incurred Net Chargeback Losses:** ₹{self.fraud_loss_dollar_amount:,.2f}
 - **Global Portfolio Fraud Rate:** **{self.basis_points_fraud_rate:.2f} bps** (Industry Standard Target < 10.0 bps)
 - **False Positive Friction Rate:** **{self.false_positive_ratio * 100:.2f}%**
 - **Platform Net ROI Multiple:** **{self.net_roi_multiple:.1f}x Return on Defense Spend**
@@ -46,7 +46,7 @@ class ExecutiveRiskReport:
 
 ## 2. Top Adversarial Attack Vectors Mitigated
 """ + "\n".join([
-            f"- **{v['vector']}**: ${v['amount']:,.2f} saved ({v['incidents_count']} attempts blocked)"
+            f"- **{v['vector']}**: ₹{v['amount']:,.2f} saved ({v['incidents_count']} attempts blocked)"
             for v in self.top_fraud_vectors
         ])
 

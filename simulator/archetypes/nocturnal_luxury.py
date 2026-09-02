@@ -19,7 +19,7 @@ class NocturnalLuxuryArchetype:
                 "card_id": card_id,
                 "cardholder_id": f"USR_{card_id[-5:]}",
                 "amount": 7850.00,
-                "currency": "USD",
+                "currency": "INR",
                 "merchant_id": "M_ROLEX_BOUTIQUE_01",
                 "merchant_name": "Luxury Timepieces International",
                 "merchant_category": "LUXURY_JEWELRY",

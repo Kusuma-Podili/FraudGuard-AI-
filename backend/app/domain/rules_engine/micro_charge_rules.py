@@ -19,11 +19,11 @@ class MicroChargeRuleSuiteRuleItem:
 
 
 class MicroChargeRuleSuite:
-    """Production AST-compiled rule evaluation suite for Zero-Dollar Auth & Pre-Authorization Probes."""
+    """Production AST-compiled rule evaluation suite for Zero-Rupee Auth & Pre-Authorization Probes."""
 
     def __init__(self, suite_code: str = "MICRO_CH"):
         self.suite_code = suite_code
-        self.suite_title = "Zero-Dollar Auth & Pre-Authorization Probes"
+        self.suite_title = "Zero-Rupee Auth & Pre-Authorization Probes"
         self.rules: List[MicroChargeRuleSuiteRuleItem] = self._compile_rule_definitions()
 
     def _compile_rule_definitions(self) -> List[MicroChargeRuleSuiteRuleItem]:
@@ -33,7 +33,7 @@ class MicroChargeRuleSuite:
             action = "DECLINE" if i % 4 == 0 else "CHALLENGE_3DS" if i % 2 == 0 else "REVIEW"
             items.append(MicroChargeRuleSuiteRuleItem(
                 rule_id=rid,
-                rule_name=f"Zero-Dollar Auth & Pre-Authorization Probes Guardrail #{i:03d}",
+                rule_name=f"Zero-Rupee Auth & Pre-Authorization Probes Guardrail #{i:03d}",
                 risk_score_impact=round(0.10 + (i * 0.04), 4),
                 recommended_action=action,
                 condition_expression=f"amount > {500 * i} and velocity_1h > {i % 5 + 1}",

@@ -54,7 +54,7 @@ class ReportService:
                 {
                     "Transaction ID": r.transaction_id,
                     "Card Masked": f"**** **** **** {r.card_id[-4:]}",
-                    "Amount": f"${r.amount:,.2f}",
+                    "Amount": f"₹{r.amount:,.2f}",
                     "Merchant": r.merchant_name or r.merchant_id,
                     "Category": r.merchant_category,
                     "Risk Score": f"{r.risk_score:.2f}",
@@ -88,7 +88,7 @@ class ReportService:
                 {
                     "Case #": c.case_number,
                     "Transaction ID": c.transaction_id,
-                    "Amount": f"${c.amount:,.2f}",
+                    "Amount": f"₹{c.amount:,.2f}",
                     "Severity": c.severity.value if hasattr(c.severity, 'value') else str(c.severity),
                     "Status": c.status.value if hasattr(c.status, 'value') else str(c.status),
                     "Risk Score": f"{c.risk_score:.2f}",
@@ -122,7 +122,7 @@ class ReportService:
                     "Status": a.status.value if hasattr(a.status, 'value') else str(a.status),
                     "Risk Score": f"{a.risk_score:.2f}",
                     "Reason": a.reason,
-                    "Amount": f"${a.amount:,.2f}",
+                    "Amount": f"₹{a.amount:,.2f}",
                     "Created": a.created_at.strftime("%Y-%m-%d %H:%M:%S") if a.created_at else "N/A"
                 }
                 for a in alerts[:25]

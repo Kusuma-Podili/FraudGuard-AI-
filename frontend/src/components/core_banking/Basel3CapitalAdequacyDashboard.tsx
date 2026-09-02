@@ -2,7 +2,7 @@
 // Title: Basel III Tier 1 Capital & RWA Stress Dashboard
 
 import React, { useState } from 'react';
-import { Shield, AlertTriangle, CheckCircle2, FileText, Activity, Lock, Users, BarChart3, Clock, DollarSign, Database } from 'lucide-react';
+import { Shield, AlertTriangle, CheckCircle2, FileText, Activity, Lock, Users, BarChart3, Clock, IndianRupee, Database } from 'lucide-react';
 
 export interface Basel3CapitalAdequacyDashboardProps {
   portfolioId?: string;
@@ -41,7 +41,7 @@ export const Basel3CapitalAdequacyDashboard: React.FC<Basel3CapitalAdequacyDashb
 
         <div className="flex items-center gap-3">
           <span className="px-3 py-1 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold">
-            ${(balance).toLocaleString('en-US', { minimumFractionDigits: 2 })}
+            ₹{(balance).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
           </span>
           <button
             onClick={handleExecutePosting}

@@ -88,7 +88,7 @@ class AmlBsaMonitoringEngine:
         return False, "CTR not required."
 
     def detect_structuring(self, cardholder_id: str, amount: float, timestamp: Optional[datetime] = None) -> Tuple[bool, Optional[str]]:
-        """Detect structured transaction amounts intended to evade $10k reporting thresholds."""
+        """Detect structured transaction amounts intended to evade ₹10k reporting thresholds."""
         ts = timestamp or datetime.now(timezone.utc)
         if cardholder_id not in self.rolling_account_volumes:
             self.rolling_account_volumes[cardholder_id] = []

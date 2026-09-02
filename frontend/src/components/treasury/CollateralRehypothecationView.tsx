@@ -2,7 +2,7 @@
 // Title: Broker-Dealer Collateral Rehypothecation View
 
 import React, { useState } from 'react';
-import { Shield, DollarSign, CheckCircle2, FileText, Activity, Lock, Users, BarChart3, Clock, Landmark, TrendingUp } from 'lucide-react';
+import { Shield, IndianRupee, CheckCircle2, FileText, Activity, Lock, Users, BarChart3, Clock, Landmark, TrendingUp } from 'lucide-react';
 
 export interface CollateralRehypothecationViewProps {
   deskId?: string;

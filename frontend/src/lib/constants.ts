@@ -24,7 +24,7 @@ export const ATTACK_SCENARIOS = [
   {
     id: "CARD_TESTING",
     name: "Card Testing Probe Attack",
-    description: "Rapid micro-authorizations ($0.25 - $2.50) from rotating IPs to test card numbers",
+    description: "Rapid micro-authorizations (₹0.25 - ₹2.50) from rotating IPs to test card numbers",
     severity: "HIGH",
     color: "amber",
   },
@@ -38,14 +38,14 @@ export const ATTACK_SCENARIOS = [
   {
     id: "ACCOUNT_TAKEOVER",
     name: "Account Takeover (ATO) Electronics Burst",
-    description: "Sudden $3,500+ electronics purchase with new device fingerprint and address change",
+    description: "Sudden ₹3,500+ electronics purchase with new device fingerprint and address change",
     severity: "CRITICAL",
     color: "red",
   },
   {
     id: "CRYPTO_VELOCITY",
     name: "Offshore Crypto Cash-Out",
-    description: "High-value $1,500+ withdrawal surge at offshore cryptocurrency exchange gateways",
+    description: "High-value ₹1,500+ withdrawal surge at offshore cryptocurrency exchange gateways",
     severity: "HIGH",
     color: "purple",
   },

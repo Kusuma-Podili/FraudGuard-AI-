@@ -2,7 +2,7 @@
 // Title: Interest Rate Risk in Banking Book (IRRBB) EVE Radar
 
 import React, { useState } from 'react';
-import { Shield, TrendingUp, CheckCircle2, FileText, Activity, Lock, Users, BarChart3, Clock, DollarSign, PieChart } from 'lucide-react';
+import { Shield, TrendingUp, CheckCircle2, FileText, Activity, Lock, Users, BarChart3, Clock, IndianRupee, PieChart } from 'lucide-react';
 
 export interface IrrbbEconomicValueRadarProps {
   portfolioId?: string;

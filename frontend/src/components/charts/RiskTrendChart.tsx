@@ -38,8 +38,8 @@ export const RiskTrendChart: React.FC<RiskTrendChartProps> = ({ data }) => {
           <Tooltip
             contentStyle={{ backgroundColor: "#111827", borderColor: "#374151", borderRadius: "0.75rem", fontSize: "12px" }}
             formatter={(val: any, name: string) => {
-              if (name === "blocked_volume_usd") return [formatCurrency(val), "Fraud Blocked ($)"];
-              if (name === "volume_usd") return [formatCurrency(val), "Total Volume ($)"];
+              if (name === "blocked_volume_usd") return [formatCurrency(val), "Fraud Blocked (₹)"];
+              if (name === "volume_usd") return [formatCurrency(val), "Total Volume (₹)"];
               return [val, name];
             }}
           />

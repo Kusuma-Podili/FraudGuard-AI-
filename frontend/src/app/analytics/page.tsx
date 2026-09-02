@@ -11,7 +11,7 @@ import {
   BarChart3,
   Globe,
   Store,
-  DollarSign,
+  IndianRupee,
   Activity,
   Layers,
   CreditCard,

@@ -1,5 +1,5 @@
 // Enterprise Next.js 14 / React 18 Orchestration Component: SyntheticProbeNeutralizingEngine
-// Title: Sub-Dollar Automated Probe & Micro-Charge Neutralizer
+// Title: Sub-Rupee Automated Probe & Micro-Charge Neutralizer
 
 import React, { useState } from 'react';
 import { Shield, GitFork, CheckCircle2, FileText, Activity, Lock, Users, BarChart3, Clock, Sparkles } from 'lucide-react';
@@ -32,7 +32,7 @@ export const SyntheticProbeNeutralizingEngine: React.FC<SyntheticProbeNeutralizi
             <GitFork className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-gray-100">Sub-Dollar Automated Probe & Micro-Charge Neutralizer</h3>
+            <h3 className="text-base font-bold text-gray-100">Sub-Rupee Automated Probe & Micro-Charge Neutralizer</h3>
             <p className="text-xs text-gray-400 font-mono">Policy ID: {policyId}</p>
           </div>
         </div>

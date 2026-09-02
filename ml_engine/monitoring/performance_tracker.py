@@ -1,7 +1,7 @@
 """Rolling Model Performance Metrics and Realized Financial Loss Tracker.
 
 Maintains sliding-window confusion matrices, rolling ROC-AUC, and computes
-actual financial dollar savings vs analyst manual review costs.
+actual financial rupee savings vs analyst manual review costs.
 """
 
 from __future__ import annotations

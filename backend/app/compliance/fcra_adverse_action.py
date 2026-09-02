@@ -143,7 +143,7 @@ class FcraComplianceEngine:
         },
         "amount_ratio_to_mean_30d": {
             "code": "FCR_AMT_004",
-            "desc": "Transaction dollar amount significantly exceeds 30-day historical average spend.",
+            "desc": "Transaction rupee amount significantly exceeds 30-day historical average spend.",
             "guidance": "Request a temporary authorized single-purchase limit increase via customer support.",
         },
         "is_impossible_travel": {

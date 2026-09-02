@@ -1,7 +1,7 @@
 """Financial Cost Matrix and Revenue Optimization Model for Fraud Decisions.
 
 In corporate fraud management, maximizing statistical accuracy or F1-score is secondary
-to maximizing dollar savings while minimizing customer insult rates (false decline friction).
+to maximizing rupee savings while minimizing customer insult rates (false decline friction).
 """
 
 from __future__ import annotations

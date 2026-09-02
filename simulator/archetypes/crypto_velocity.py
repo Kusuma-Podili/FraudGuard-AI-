@@ -18,7 +18,7 @@ class CryptoVelocityArchetype:
                 "card_id": card_id,
                 "cardholder_id": f"USR_{card_id[-5:]}",
                 "amount": round(random.uniform(980.0, 4800.0), 2),
-                "currency": "USD",
+                "currency": "INR",
                 "merchant_id": "M_BINANCE_OFFSHORE_01",
                 "merchant_name": "Offshore Crypto Exchange",
                 "merchant_category": "CRYPTO_EXCHANGE",

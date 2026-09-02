@@ -24,7 +24,7 @@ class AccountTakeoverArchetype:
                 "card_id": card_id,
                 "cardholder_id": f"USR_{card_id[-5:]}",
                 "amount": price + round(random.uniform(-50.0, 150.0), 2),
-                "currency": "USD",
+                "currency": "INR",
                 "merchant_id": m_id,
                 "merchant_name": m_name,
                 "merchant_category": cat,

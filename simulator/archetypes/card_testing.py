@@ -1,6 +1,6 @@
 """Card Testing Probe Attack Archetype Generator.
 
-Simulates fraud rings testing stolen card lists with sub-$3 authorizations
+Simulates fraud rings testing stolen card lists with sub-₹3 authorizations
 across varied merchant categories using rotating proxy IPs.
 """
 
@@ -29,7 +29,7 @@ class CardTestingArchetype:
                 "card_id": card_id,
                 "cardholder_id": f"USR_{card_id[-5:]}",
                 "amount": round(random.uniform(0.35, 2.50), 2),
-                "currency": "USD",
+                "currency": "INR",
                 "merchant_id": m_id,
                 "merchant_name": m_name,
                 "merchant_category": cat,

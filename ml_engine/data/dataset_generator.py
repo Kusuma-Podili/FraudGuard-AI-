@@ -124,7 +124,7 @@ class SyntheticTransactionGenerator:
             fraud_scenario = archetype
 
             if archetype == "CARD_TESTING":
-                # Micro authorization probe ($0.25 - $2.50) from unusual IP
+                # Micro authorization probe (₹0.25 - ₹2.50) from unusual IP
                 amount = round(float(self.rng.uniform(0.25, 2.50)), 2)
                 entry_mode = "CNP"
                 merchant = next((m for m in self._merchants if m["category"] == "DIGITAL_GOODS"), merchant)
@@ -196,7 +196,7 @@ class SyntheticTransactionGenerator:
             "card_id": cardholder["card_id"],
             "cardholder_id": cardholder["cardholder_id"],
             "amount": amount,
-            "currency": "USD",
+            "currency": "INR",
             "merchant_id": merchant["id"],
             "merchant_name": merchant["name"],
             "merchant_category": merchant["category"],

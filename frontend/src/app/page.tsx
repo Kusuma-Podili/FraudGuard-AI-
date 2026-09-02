@@ -15,7 +15,7 @@ import { formatCurrency, getRiskColor, getActionBadge } from "@/lib/utils";
 import Link from "next/link";
 import {
   ShieldAlert,
-  DollarSign,
+  IndianRupee,
   TrendingDown,
   Bell,
   Radio,

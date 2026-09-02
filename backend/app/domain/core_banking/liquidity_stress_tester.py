@@ -36,7 +36,7 @@ class LiquidityStressTestingEngine:
             account_number=account_num,
             debit_amount=amount if is_debit else 0.0,
             credit_amount=0.0 if is_debit else amount,
-            currency="USD",
+            currency="INR",
             gl_account_code=gl_code,
             entry_description=f"Automated Posting: {self.subsystem_title}",
             posted_timestamp=datetime.now(timezone.utc).isoformat(),
